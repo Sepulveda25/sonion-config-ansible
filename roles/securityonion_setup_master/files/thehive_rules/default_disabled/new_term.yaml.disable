@@ -1,0 +1,58 @@
+# Alert on never before seen username
+# In this example, Winlogbeat logs contain subject username which user has never been seen before.
+
+# (Required)
+# Rule name, must be unique
+name: Security Onion Elastalert - New Term Alert
+
+# (Required)
+# Type of alert.
+# the frequency rule type alerts when num_events events occur with timeframe time
+type: new_term
+
+# (Required)
+# Index to search, wildcard supported
+index: "*:logstash-beats*"
+
+# (Required, new_term specific)
+# Monitor the field ip_address
+fields:
+ - "event_data.SubjectUserName"
+
+# (Optional, new_term specific)
+# This means that we will query 90 days worth of data when ElastAlert starts to find which values of ip_address already exist
+# If they existed in the last 90 days, no alerts will be triggered for them when they appear
+terms_window_size:
+  days: 90
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+# We are filtering for only "login_event" type documents with username "admin"
+filter:
+- term:
+    event_type: "wineventlog"
+
+# Only count number of records, instead of bringing all data back
+use_count_query: true
+doc_type: 'doc'
+
+# Specify how we would like to alert.  Default is to the log in /var/log/elastalert/elastalert_stderr.log
+# We can specify multiple outputs as well.
+# Ex.  alert:
+#      -debug 
+#      -email
+
+alert:
+- "debug"
+#- "email"
+
+# Email options
+#alert_subject: "No connection logs found in the the last 15 minutes!"
+#email:
+#- "youremail@company.com"
+#smtp_host: "smtp.yourcompany.com"
+#smtp_port: 25
+#from_addr: "so-elastalert@yourcompany.com"
+

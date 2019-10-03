@@ -102,8 +102,9 @@ ansible -i hosts.txt webservers -m ping -u nombreuser
 
 
 ### COMANDO PARA CORRER
-
+ansible-playbook -i hosts -l master so_setup.yml  -vvv
 ansible-playbook -i hosts -l forward_nodes so_setup.yml  -vvv
+
 
 
 

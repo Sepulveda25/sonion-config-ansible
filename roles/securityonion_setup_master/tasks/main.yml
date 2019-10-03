@@ -53,3 +53,19 @@
 - name: Reboot machine
   reboot:
     reboot_timeout: 1000
+
+- name: Copy classification.config in /etc/nsm/rules/ (backup)
+  become: yes
+  become_user: root
+  copy:
+    src: "{{ role_path }}/files/clasiffication_rules/classification.config" #from files folder roles"
+    dest: /etc/nsm/rules/classification.config
+    backup: yes
+    mode: 'preserve' #preserve permissions
+
+- name: Copy TheHive Rules in /etc/elastalert/rules
+  become: yes
+  become_user: root
+  copy:
+    src: "{{ role_path }}/files/thehive_rules/" #from files folder roles"
+    dest: /etc/elastalert/rules/

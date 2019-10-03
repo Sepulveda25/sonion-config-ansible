@@ -1,0 +1,44 @@
+#Esta alerta es la primera prueba. Detecta la direccion de IP del campo apache2.access.remote_ip, si hay una coincidencia se genera el alerta
+# y se envia a slack. 
+# Elasticsearch Host
+es_host: elasticsearch
+es_port: 9200
+# (Required)
+# Rule name, must be unique
+name: "IP Detectada"
+
+type: any
+# (Required)
+# Index to search, wildcard supported
+index: "*:logstash-beats-*"
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+- query_string:
+    query: 'apache2.access.remote_ip:190.16.14.23'
+
+doc_type: 'doc'
+
+alert_text: "
+timestamp: {0}\n
+source:  {1}\n
+kibana link: {2}\n
+message: \n
+{3}"
+alert_text_type: alert_text_only
+alert_text_args: ["@timestamp", "source", "kibana_link","message"]
+
+
+# (Required)
+# The alert is use when a match is found
+alert:
+- "slack"
+slack:
+slack_webhook_url: "https://hooks.slack.com/services/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"
+
+# Kibana
+generate_kibana_link: true
+use_kibana4_dashboard: "https://172.16.81.50/app/kibana#/dashboard/AWBLNS3CRuBloj96jxub"

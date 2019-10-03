@@ -1,0 +1,56 @@
+# Elasticsearch Host
+es_host: elasticsearch
+es_port: 9200
+# (Required)
+# Rule name, must be unique
+name: "Alerta de Troyano email"
+
+type: any
+# (Required)
+# Index to search, wildcard supported
+index: "*:logstash-ids-*"
+
+use_strftime_index: true
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+- query_string:
+    query: 'classification:"Network Trojan"'
+
+doc_type: 'doc'
+
+alert_subject: "Alerta: {0}"
+alert_subject_args: 
+        - alert
+
+alert_text: "
+Alerta: {0}\n
+Timestamp: {1}\n
+IP Destino:  {2}\n
+Puerto Destino: {3}\n
+IP Origen:  {4}\n
+Puerto Origen: {5}\n
+Interfaz del Sensor: {6}\n
+Tipo de evento: {7}\n
+Informacion sobre la Firma: {8}\n
+Mensaje: \n
+{9}"
+alert_text_type: alert_text_only
+alert_text_args: ["alert", "@timestamp", "destination_ip", "destination_port", "source_ip", "source_port", "interface", "event_type", "signature_info", "message"]
+
+
+# (Required)
+# The alert is use when a match is found
+alert:
+- "email"
+email: "alertas.ids@csirt.unc.edu.ar"
+from_addr: "alertas.ids@csirt.unc.edu.ar"
+smtp_host: "medusa.psi.unc.edu.ar"
+smtp_port: 25
+
+# Kibana
+generate_kibana_link: true
+#use_kibana4_dashboard: "https://sonion.csirt.unc.edu.ar/app/kibana#/dashboard/1d98d620-7dce-11e7-846a-150cdcaf3374"

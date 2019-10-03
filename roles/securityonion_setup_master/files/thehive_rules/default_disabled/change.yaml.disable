@@ -1,0 +1,62 @@
+# Alert when some field changes between documents
+# This rule would alert on documents similar to the following:
+# username: bob  aAND source_ip: 192.168.1.2
+# username: bob  AND source_ip: 192.168.1.3
+# Because the user  (query_key) bob logged in from different countries (compare_key) in the same day (timeframe)
+
+# (Required)
+# Rule name, must be unique
+name: Security Onion Elastalert - FTP - User login from different IP
+
+# (Required)
+# Type of alert.
+# the change rule will alert when a certain field changes in two documents within a timeframe
+type: change
+
+# (Required)
+# Index to search, wildcard supported
+index: "*:logstash-*"
+
+# (Required, change specific)
+# The field to look for changes in
+compare_key: source_ip
+
+# (Required, change specific)
+# Ignore documents without the compare_key (source_ip) field
+ignore_null: true
+
+# (Required, change specific)
+# The change must occur in two documents with the same query_key
+query_key: username
+
+# (Required, change specific)
+# The value of compare_key must change in two events that are less than timeframe apart to trigger an alert
+timeframe:
+  days: 1
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+- query:
+    query_string:
+      query: "event_type: bro_ftp"
+
+# Specify how we would like to alert.  Default is to the log in /var/log/elastalert/elastalert_stderr.log
+# We can specify multiple outputs as well.
+# Ex.  alert:
+#      -debug 
+#      -email
+
+alert:
+- "debug"
+#- "email"
+
+# Email options
+#alert_subject: "No connection logs found in the the last 15 minutes!"
+#email:
+#- "youremail@company.com"
+#smtp_host: "smtp.yourcompany.com"
+#smtp_port: 25
+

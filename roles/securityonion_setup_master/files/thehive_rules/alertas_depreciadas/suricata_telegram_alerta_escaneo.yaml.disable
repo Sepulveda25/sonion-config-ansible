@@ -1,0 +1,69 @@
+# Elasticsearch Host
+es_host: elasticsearch
+es_port: 9200
+# (Required)
+# Rule name, must be unique
+name: "Alerta de escaneos"
+
+type: any
+# (Required)
+# Index to search, wildcard supported
+index: "*:logstash-ids-*"
+
+use_strftime_index: true
+
+aggregation_key: "source_ip"
+
+#num_events: 50000
+#    is_enabled: true
+#    timeframe:
+#      minutes: 1
+
+# (Required)
+# A list of Elasticsearch filters used for find events
+# These filters are joined with AND and nested in a filtered query
+# For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+filter:
+- query_string:
+    query: 'category:"scan"'
+
+doc_type: 'doc'
+
+# Alertas que se dan en una ventana de tiempo especificada son agrupadas como 1 evento (0 no se agrupan)
+#realert:
+#  minutes: 10
+
+# (Required)
+# The alert is use when a match is found
+alert:
+- "telegram"
+
+alert_subject: "Alerta: {0}"
+alert_subject_args: 
+        - alert
+
+alert_text: "
+Timestamp: {0}\n
+IP Destino:  {1}\n
+Puerto Destino: {2}\n
+IP Origen:  {3}\n
+Puerto Origen: {4}\n
+Interfaz del Sensor: {5}\n
+Tipo de evento: {6}\n
+Informacion sobre la Firma: {7}\n
+Mensaje: {8}\n
+Link a kibana: {9}\n"
+
+alert_text_type: alert_text_only
+alert_text_args: ["@timestamp", "destination_ip", "destination_port", "source_ip", "source_port", "interface", "event_type", "signature_info", "message", "kibana_link"]
+
+# from botfather
+telegram_bot_token: 751448313:AAEFr3HiGrKGQSdvxnob3855AlelYojslbI
+# Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+# https://api.telegram.org/bot_token/getUpdates
+telegram_room_id: "637721221"
+
+# Kibana
+generate_kibana_link: true
+use_kibana4_dashboard: "https://172.16.81.50/app/kibana#/dashboard/AWBLNS3CRuBloj96jxub"
+
