@@ -1,0 +1,82 @@
+---
+
+
+vars_prompt:
+
+ - name: 'so_ssh_master_password'
+   prompt: 'SSH password for Security Onion Master'
+   private: yes
+
+
+- name: Check if {{ SNIFFING_INTERFACES }} exist
+  fail:
+    msg: "Interface {{ SNIFFING_INTERFACES }} no existe "
+  failed_when: not (ansible_interfaces | intersect(SNIFFING_INTERFACES))
+
+- name: Check if {{ MGMT_INTERFACE }} exist
+  fail:
+    msg: "Interface {{ MGMT_INTERFACE }} no existe "
+  failed_when: not (ansible_interfaces | intersect(MGMT_INTERFACE))
+
+- name: Create a file named ansible.{random}.conf
+  tempfile:
+    state:  file
+    suffix: .conf
+  register: temp_config
+  
+- name: Copy content sosetup_forward.conf in "{{ temp_config.path }}"
+  copy:
+    src:  sosetup_forward.conf #from files folder in this role
+    dest: "{{ temp_config.path }}"
+    
+- name: Remplazo variables de host_vars en el config para el forward
+  lineinfile: 
+   path: "{{ temp_config.path }}"
+   regexp:  "{{ item.regexp }}"
+   line: "{{ item.line }}"
+  with_items:
+   - {regexp: '^MGMT_INTERFACE=', line: "MGMT_INTERFACE='{{ MGMT_INTERFACE }}'"}
+   - {regexp: '^MGMT_CONFIG_TYPE=', line: "MGMT_CONFIG_TYPE='{{ MGMT_CONFIG_TYPE }}'"}
+   - {regexp: '^ADDRESS=', line: "ADDRESS='{{ ADDRESS }}'"}
+   - {regexp: '^NETMASK=', line: "NETMASK='{{ NETMASK }}'"}
+   - {regexp: '^GATEWAY=', line: "GATEWAY='{{ GATEWAY }}'"}
+   - {regexp: '^NAMESERVER=', line: "NAMESERVER='{{ NAMESERVER }}'"}
+   - {regexp: '^DOMAIN=', line: "DOMAIN='{{ DOMAIN }}'"}
+   - {regexp: '^SNIFFING_INTERFACES=', line: "SNIFFING_INTERFACES='{{ SNIFFING_INTERFACES }}'"}
+   - {regexp: '^SERVERNAME=', line: "SERVERNAME='{{ SERVERNAME }}'"}
+   - {regexp: '^SSH_USERNAME=', line: "SSH_USERNAME='{{ SSH_USERNAME }}'"}
+   - {regexp: '^PF_RING_SLOTS=', line: "PF_RING_SLOTS={{ PF_RING_SLOTS }}"} 
+   - {regexp: '^IDS_ENGINE=', line: "IDS_ENGINE='{{ IDS_ENGINE }}'"}
+   - {regexp: '^IDS_LB_PROCS=', line: "IDS_LB_PROCS='{{ IDS_LB_PROCS }}'"}
+   - {regexp: '^HOME_NET=', line: "HOME_NET='{{ HOME_NET }}'"}
+   - {regexp: '^BRO_LB_PROCS=', line: "BRO_LB_PROCS='{{ BRO_LB_PROCS }}'"}
+   - {regexp: '^PCAP_OPTIONS=', line: "PCAP_OPTIONS='{{ PCAP_OPTIONS }}'"}
+
+   
+- name: Execute sosetup for foward
+  include_role:
+    name: securityonion_run_sosetup
+  vars:
+    sosetupfilepath: "{{ temp_config.path }}"
+    
+- name: Execute BRO config
+  import_tasks: affinity_BRO.yml
+
+- name:  Execute SURICATA config
+  import_tasks: affinity_SURICATA.yml
+
+- name:  Configure Linux Disk Caching
+  import_tasks: cache_linux.yml
+
+- name: Print path temp file "{{ temp_config.path }}"
+  debug:
+    msg: "{{ temp_config.path }}"
+
+- name: Install telegraf
+  include_role:
+    name: telegraf_install
+
+- name: Reboot machine
+  reboot:
+    reboot_timeout: 1000
+

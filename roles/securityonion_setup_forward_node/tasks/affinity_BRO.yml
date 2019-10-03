@@ -1,0 +1,18 @@
+---
+### AFINIDAD DE BRO
+ 
+- name: Remove the content for pin_cpu in /opt/bro/etc/node.cfg
+  become: yes
+  become_user: root
+  lineinfile: 
+   path: /opt/bro/etc/node.cfg
+   regexp: 'pin_cpu' 
+   state: absent
+
+- name: Append the content of pin_cpus varible to the CPU affinity section of /opt/bro/etc/node.cfg
+  become: yes
+  become_user: root
+  lineinfile: 
+   path: /opt/bro/etc/node.cfg
+   insertafter: '^lb_procs'
+   line: "pin_cpus= {{ BRO_PIN_CPU }}"

@@ -1,0 +1,49 @@
+---
+
+- name: Modify variable set-cpu-affinity in suricata_affinity.yaml 
+  become: yes
+  become_user: root
+  replace:
+    path: /etc/nsm/{{ansible_hostname}}-{{ SNIFFING_INTERFACES }}/suricata.yaml
+    regexp: (?<=set-cpu-affinity:\s).* # toma y reemplaza lo que esta despues de "set-cpu-affinity:"
+    replace: "{{ set_cpu_affinity }}" 
+
+- name: Modify variable management_cpu_set in suricata_affinity.yaml
+  become: yes
+  become_user: root
+  replace:
+    path: /etc/nsm/{{ansible_hostname}}-{{ SNIFFING_INTERFACES }}/suricata.yaml
+    after:  'management-cpu-set:'
+    before: 'receive-cpu-set:'
+    regexp: (?<=\[).+?(?=\]) # toma y reemplaza lo que esta entre parentesis cpu:[ "all" ]
+    replace: "{{management_cpu_set}}"
+
+- name: Modify variable receive_cpu_set in suricata_affinity.yaml
+  become: yes
+  become_user: root
+  replace:
+    path: /etc/nsm/{{ansible_hostname}}-{{ SNIFFING_INTERFACES }}/suricata.yaml
+    after:  'receive-cpu-set:'
+    before: 'worker-cpu-set:'
+    regexp: (?<=\[).+?(?=\]) # toma y reemplaza lo que esta entre parentesis cpu:[ "all" ]
+    replace: "{{receive_cpu_set}}"
+
+- name: Modify variable worker-cpu-set in suricata_affinity.yaml
+  become: yes
+  become_user: root
+  replace:
+    path: /etc/nsm/{{ansible_hostname}}-{{ SNIFFING_INTERFACES }}/suricata.yaml
+    after: 'worker-cpu-set:'
+    before: 'mode:'
+    regexp: (?<=\[).+?(?=\]) # toma y reemplaza lo que esta entre parentesis cpu:[ "all" ]
+    replace: "{{worker_cpu_set}}"
+
+### CONFIGURANDO PFRING o AFPACKET
+
+- name:  Set pfring as the load balancer (af-packet is the default) in sensor.conf
+  become: yes
+  become_user: root
+  lineinfile: 
+   path: /etc/nsm/{{ansible_hostname}}-{{ SNIFFING_INTERFACES }}/sensor.conf
+   regexp: '^SURICATA_CAPTURE'
+   line: 'SURICATA_CAPTURE="{{SURICATA_CAPTURE}}"'

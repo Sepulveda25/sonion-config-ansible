@@ -1,0 +1,13 @@
+
+#agregar a sudo visudo al final
+#soniontest ALL=(ALL) ALL
+
+
+--- 
+- name: Install Security Onion
+  hosts: all
+#  become: yes
+  gather_facts: yes
+
+  roles:
+    - securityonion_setup

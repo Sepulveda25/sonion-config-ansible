@@ -1,0 +1,11 @@
+[all:vars]
+master_ip=172.16.81.127
+
+[master]
+sonionmaster
+
+[forward_nodes]
+soniontest
+
+[storage_nodes]
+

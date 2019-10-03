@@ -1,0 +1,14 @@
+---
+### Cache linux
+
+- name: Configure Linux Disk Caching in /etc/sysctl.conf (append if not match)
+  become: yes
+  become_user: root
+  lineinfile: 
+   path: /etc/sysctl.conf
+   regexp:  "{{ item.regexp }}"
+   line: "{{ item.replace }}"
+  with_items: 
+   - {regexp: '^(vm[.]dirty_background_ratio).*', replace: "vm.dirty_background_ratio = {{ dirty_background_ratio }}"}
+   - {regexp: '^(vm[.]dirty_ratio).*', replace: "vm.dirty_ratio = {{ dirty_ratio }}"}
+   - {regexp: '^(vm[.]swappiness).*', replace: "vm.swappiness = {{ swappiness }}"}

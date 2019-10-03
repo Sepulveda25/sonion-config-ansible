@@ -1,0 +1,41 @@
+---
+
+- name: Add an Apt signing key
+  become: yes
+  become_user: root
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
+
+- name: Insert a line at the end of a file.
+  become: yes
+  become_user: root
+  lineinfile:  # |lower pasa a minuscula
+    path: /etc/apt/sources.list.d/influxdb.list
+    line: deb https://repos.influxdata.com/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable
+    create: yes
+    
+- name: Update repositories cache and install "Telegraf" package
+  become: yes
+  become_user: root
+  apt:
+    name: telegraf
+    update_cache: yes
+
+- name: Copy Telegraf.conf in /etc/telegraf/
+  become: yes
+  become_user: root
+  copy:
+    src: telegraf.conf #from files folder in this role
+    dest: /etc/telegraf/telegraf.conf
+    
+- name: Restart service Telegraf
+  become: yes
+  become_user: root
+  service:
+    name: telegraf
+    state: restarted
+
+
+
+
