@@ -12,7 +12,7 @@ ansible-playbook -i hosts -l forward_nodes so_setup.yml  -vvv
 ## Tabla de contenidos
 
 1. [Pre-requisitos](#pre-requisitos)
-2. [Instrucciones para el despliegue](#instrucciones-para-el-despliegue)
+2. [Instrucciones para el despliegue de un nodo Forward](#Instrucciones-para-el-despliegue-de-un-nodo-Forward)
 
 
 
@@ -31,18 +31,16 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
 
 ```
 
-## Instrucciones para el despliegue
+## Instrucciones para el despliegue de un nodo Forward
 
-*  Despliegue de un nodo forward:
+*  Agregar nombre de usuario del nodo forward al archivo hosts en el gurpo forward_nodes (ejemplo user sonionforward):
 
-    * Agregar nombre de usuario del nodo forward al archivo hosts en el gurpo forward_nodes (ejemplo user sonionforward):
-    
     ```
     [forward_nodes]
     sonionforward
     ```
     
-    * En la carpeta host_vars agregar un archivo yml (nombre_usuario.yml) en la que se especifiquen las siguiente variables (sonionforward.yml):
+*  En la carpeta host_vars agregar un archivo yml (nombre_usuario.yml) en la que se especifiquen las siguiente variables (sonionforward.yml):
    
     ```
         ansible_host: '172.16.81.126'
@@ -85,18 +83,11 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
         swappiness: 10
     ```
     
-    * Ejecutar ansible sobre el servidor "soniontest" (el username se define en extra var):
-    
-    ```
+*  Ejecutar ansible sobre el servidor "soniontest" (el username se define en extra var):
+        ```
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=soniontest" --ask-sudo-pass
-    
     ```
-    
-    Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor SONIONMASTER
-    
-
-*  Despliegue de un nodo forward:
-
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor SONIONMASTER
 
 ## Referencias
 
