@@ -47,7 +47,6 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
     ```
     [forward_nodes]
     soniontest
-
     ```
     * En la carpeta host_vars agregar un archivo en la que se especifiquen las siguiente variables:
     
@@ -91,13 +90,10 @@ dirty_background_ratio: 50
 dirty_ratio: 80
 swappiness: 10
 
-
-
-
-    ```
+```
     
     
-    * 
+    *  Nodo master
 
 1.  Pegar carpeta webhooks en home y acceder a dicha carpeta.
 2.  Eliminar carpeta `webhooksenv` en caso de existir.
