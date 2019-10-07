@@ -1,105 +1,3 @@
-# Uso basico de Ansible
-
-## Instalar ultima version de ansible
-
-sudo apt-add-repository ppa:ansible/ansible   
-sudo apt-get update
-sudo apt install ansible
-
-### Especificar inventarios (direcciones y dominios a desplegar)
-
-Existe un inventario global por defecto en el archivo /etc/ansible/hosts, se modifica y se agregan los host a desplegar, o bien, se puede crear un txt para hacer un inventario local :
-
-```bash
-[all:vars]
-master_ip=XXX.XXX.XXX.XXX
-
-[forward_nodes]
-172.16.81.71 
-
-[master]
-172.16.81.70 ##para pasar contraseña agrego: ansible_sudo_pass=csirt
-
-[storage_nodes]
-```
-### Prueba de alcance y conexion de hosts con comandos ad-hoc
-
-```bash
-ansible nombrehost (o all) -m ping          ##-m es para indicar el modulo que vamos a usar
-ansible all -m ping --ask-pass -u csirt     ##para probar un ping en el server de prueba
-##por defecto el modulo que se usa es el shell
-```
-
-### Comandos sueltos
-
-Por ejemplo, instalar programa usando apt:
-
-```bash
-ansible hostobjetivo -m apt -a 'name=vim state=present' -b -K   ##instalo el vim y me aseguro q este presente, -b es para cambiar el usuario a root, -K es para pasar la contraseña si pide
-```
-### Playbook ejemplo para la ejecución anterior
-
-playbook ejemplo.yml 
-
-```bash
-	---                     //indica que es un yml
-	hosts: all              //o un grupo, o un especifico
-	//become: true          //especificar el become aca indica que todo el playbook se ejecute como root
-	remote_user: username	
-	tasks:
-		-name: instalar vim
-		  apt: name=vim state=present
-		  become: true
-```
-
-### Ejecutar un playbook pasando usuario y contraseña por linea de comandos
-
-```bash
-ansible-playbook nombre_playbook.yml -i inventory.ini --user=username \--extra-vars "ansible_sudo_pass=yourPassword"  ##Siendo inventory.ini un inventario, username un nombre de usuario y 'yourPassword' la contraseña
-```
-
-### Usar vault para encriptar variables,passwords, keys, etc:
-
-```bash
-~/.ansible$ ansible-vault create my_vault.yml   #crea el vault
-su_password: <myreallyspecialpassword>          #Guardar los datos
-```
-
-Ahora la contraseña será encriptada y la unica forma de verla será con:
-
-```
-ansible-vault edit my_vault.yml
-```
-
-Para usarla en el playbook, se usa el comando:
-```
-ansible-playbook myawesome_playbook.yml --ask-vault-pass  ##ask-vault-pass especifica buscar la contraseña en el vault
-```
-
-El playbook queda:
-
-```
----
-- name: My Awesome Playbook
-  hosts: remote
-  become: yes
-
-  vars_files:
-    - ~/.ansible/my_vault.yml 
-
-  vars:
-    ansible_become_pass: '{{ su_password }}'
-
-  roles:
-      - some_awesome_role
-```
-
-### Escribir comando para conectar con un usario remotamente
-
-```
-ansible -i hosts.txt webservers -m ping -u nombreuser
-```
-
 
 ### COMANDO PARA CORRER
 ansible-playbook -i hosts -l master so_setup.yml  -vvv
@@ -108,6 +6,82 @@ ansible-playbook -i hosts -l forward_nodes so_setup.yml  -vvv
 
 
 
+
+
+# Ansible para la instalacion de nodos FORWARD y MASTER para Security Onion.
+
+## Tabla de contenidos
+
+1. [Pre-requisitos](#pre-requisitos)
+2. [Instrucciones para el despliegue](#instrucciones-para-el-despliegue)
+
+
+
+## Pre-requisitos
+
+1. Instalacion de las maquinas virtuales, con la ultima version de Security Onion:
+    
+    LINK DE REPO DE TINCHO.    
+
+2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en las maquinas vituales con Security Onion,
+   (no efectuar ninguna operacion sobre el usuario ROOT), ejemplo:
+
+ 
+
+    
+''
+
+
+3. s
+4. 
+
+## Instrucciones para el despliegue
+
+(Para ver detalles del desarollo ver archivo `Instrucciones de desarollo` en carpeta Documentacion).
+
+
+1.  Pegar carpeta webhooks en home y acceder a dicha carpeta.
+2.  Eliminar carpeta `webhooksenv` en caso de existir.
+3. Crear entorno virtual:
+    <br />`$ python3.6 -m venv webhooksenv`
+4.  Activar entorno virtual:
+	<br />`$ source webhooksenv/bin/activate`
+5.  Instalar librerias Flask, Gunicorn, Wheel, Request y Netaddr:
+	<br />`$ pip install wheel`
+	<br />`$ pip install gunicorn`
+	<br />`$ pip install flask`
+	<br />`$ pip install requests`
+    <br />`$ pip install netaddr`
+    <br />`$ pip install thehive4py`
+6.  Salir del entorno virtual:
+    <br />`$ deactivate`
+7.  Permitir acceso puerto 5000:
+	<br />`$ sudo ufw allow 5000`
+8.  Dentro de la carpeta webhooks modificar el archivo `parametros.py` con los valores de `hiveUR`L y `hookURL` correspodientes.
+9.  Copiar archivo `webhooks.service` en `/etc/systemd/system/`
+10. Iniciar el servicio:
+	<br />`$ sudo systemctl start webhooks.service`
+11. Comprobar el estado del servicio:
+	<br />`$ sudo systemctl enable webhooks.service`
+12. Modificar TheHive para que envie acciones al ENDPOINT HTTP creado, agregando al archivo `/etc/thehive/application.conf`:
+
+```
+webhooks {
+  myLocalWebHook {
+    url = "http://my_HTTP_endpoint/webhook"
+  }
+}
+```
+
+
+## Referencias
+
+* https://github.com/TheHive-Project/TheHiveDocs/blob/master/admin/webhooks.md#configuration
+* https://github.com/TheHive-Project/TheHiveHooks
+* https://github.com/cybergoatpsyops/TheHive-SideProjects
+* https://github.com/TheHive-Project/TheHive4py/blob/master/thehive4py/api.py
+* https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04
+* https://securityonion.readthedocs.io/en/latest/hive.html
 
 
 
