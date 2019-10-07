@@ -137,8 +137,10 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
 
 ## Referencias
 
-* https://github.com/TheHive-Project/TheHiveDocs/blob/master/admin/webhooks.md#configuration
-
+* https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-to-the-server-for-authentication/
+* https://docs.ansible.com/ansible/latest/modules/expect_module.html
+* https://unix.stackexchange.com/questions/453859/when-i-use-ansible-module-expect-i-get-this-msg-the-pexpect-python-module-is-r
+* https://stackoverflow.com/questions/35095481/how-to-find-list-membership-in-a-list-in-ansible
 
 
 
