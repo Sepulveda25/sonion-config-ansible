@@ -51,46 +51,47 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
     * En la carpeta host_vars agregar un archivo en la que se especifiquen las siguiente variables:
     
     ```
-ansible_host: '172.16.81.126'
-ansible_user: 'soniontest'
+        ansible_host: '172.16.81.126'
+        ansible_user: 'soniontest'
+        
+        MGMT_INTERFACE: 'ens160'
+        MGMT_CONFIG_TYPE: 'static'
+        ADDRESS: '172.16.81.126'
+        NETMASK: '255.255.255.0'
+        GATEWAY: '172.16.81.1'
+        NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
+        DOMAIN: 'sonioneco.local.psi' 
+        
+        SNIFFING_INTERFACES: 'ens160'
+        
+        SERVERNAME: '172.16.81.127'
+        SSH_USERNAME: 'soniontest2' 
+        
+        PF_RING_SLOTS: 4096 
+         
+        IDS_ENGINE: 'suricata' 
+        IDS_LB_PROCS: '3'
+        HOME_NET: '192.168.1.1/16,10.0.0.0/8,172.16.0.0/12,200.16.0.0/16'
+        
+        BRO_LB_PROCS: '3'
+        
+        PCAP_OPTIONS: '--mmap -b0'
+        
+        BRO_PIN_CPU: '5,6,7'
+        
+        set_cpu_affinity: 'yes'
+        management_cpu_set: '1'
+        receive_cpu_set: '1'
+        worker_cpu_set: '2-4'
+        
+        SURICATA_CAPTURE: 'pfring' #af-packet
+        
+        dirty_background_ratio: 50
+        dirty_ratio: 80
+        swappiness: 10
+    ```
 
-MGMT_INTERFACE: 'ens160'
-MGMT_CONFIG_TYPE: 'static'
-ADDRESS: '172.16.81.126'
-NETMASK: '255.255.255.0'
-GATEWAY: '172.16.81.1'
-NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
-DOMAIN: 'sonioneco.local.psi' 
-
-SNIFFING_INTERFACES: 'ens160'
-
-SERVERNAME: '172.16.81.127'
-SSH_USERNAME: 'soniontest2' 
-
-PF_RING_SLOTS: 4096 
- 
-IDS_ENGINE: 'suricata' 
-IDS_LB_PROCS: '3'
-HOME_NET: '192.168.1.1/16,10.0.0.0/8,172.16.0.0/12,200.16.0.0/16'
-
-BRO_LB_PROCS: '3'
-
-PCAP_OPTIONS: '--mmap -b0'
-
-BRO_PIN_CPU: '5,6,7'
-
-set_cpu_affinity: 'yes'
-management_cpu_set: '1'
-receive_cpu_set: '1'
-worker_cpu_set: '2-4'
-
-SURICATA_CAPTURE: 'pfring' #af-packet
-
-dirty_background_ratio: 50
-dirty_ratio: 80
-swappiness: 10
-
-```
+    
     
     
     *  Nodo master
