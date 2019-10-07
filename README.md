@@ -12,7 +12,9 @@ ansible-playbook -i hosts -l forward_nodes so_setup.yml  -vvv
 ## Tabla de contenidos
 
 1. [Pre-requisitos](#pre-requisitos)
-2. [Instrucciones para el despliegue de un nodo Forward](#instrucciones-para-el-despliegue-de-un-nodo-forward)
+2. [Instrucciones para el despliegue de un nodo Master](#instrucciones-para-el-despliegue-de-un-nodo-master)
+3. [Instrucciones para el despliegue de un nodo Forward](#instrucciones-para-el-despliegue-de-un-nodo-forward)
+
 
 
 
@@ -31,16 +33,58 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
 
 ```
 
+
+## Instrucciones para el despliegue de un nodo Master
+
+*  Agregar nombre de usuario del nodo master al archivo `host` en el grupo `master` (Ej. user sonionmaster):
+
+    ```
+    [master]
+    sonionmaster
+    ```
+    
+*  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las siguiente variables (Ej. sonionmaster.yml):
+   
+    ```
+    ansible_host: '172.16.81.127'
+    ansible_user: 'soniontest2'
+    
+    MGMT_INTERFACE: 'ens160'
+    MGMT_CONFIG_TYPE: 'static'
+    ADDRESS: '172.16.81.127'
+    NETMASK: '255.255.255.0'
+    GATEWAY: '172.16.81.1'
+    NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
+    DOMAIN: 'sonionmaster.local.psi' 
+    
+    LOG_SIZE_LIMIT: '75000000000'
+     
+    IDS_RULESET: 'ETOPEN'
+    
+    WARN_DISK_USAGE: '80'
+    CRIT_DISK_USAGE: '90'
+    DAYSTOKEEP: '30'
+    DAYSTOREPAIR: '7'
+    ```
+    
+*  Ejecutar ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
+    
+    ```
+    $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-sudo-pass
+    ```
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor target.
+   
+
 ## Instrucciones para el despliegue de un nodo Forward
 
-*  Agregar nombre de usuario del nodo forward al archivo hosts en el gurpo forward_nodes (ejemplo user sonionforward):
+*  Agregar nombre de usuario del nodo forward al archivo `host` en el grupo `forward_nodes` (Ej. user sonionforward):
 
     ```
     [forward_nodes]
     sonionforward
     ```
     
-*  En la carpeta host_vars agregar un archivo yml (nombre_usuario.yml) en la que se especifiquen las siguiente variables (sonionforward.yml):
+*  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las siguiente variables (Ej. sonionforward.yml):
    
     ```
         ansible_host: '172.16.81.126'
@@ -83,21 +127,18 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
         swappiness: 10
     ```
     
-*  Ejecutar ansible sobre el servidor "soniontest" (el username se define en extra var):
+*  Ejecutar ansible sobre el servidor `"soniontest"` (el username se define en la opcion extra_var):
     
     ```
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=soniontest" --ask-sudo-pass
     ```
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor SONIONMASTER
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor SONIONMASTER.
+   
 
 ## Referencias
 
 * https://github.com/TheHive-Project/TheHiveDocs/blob/master/admin/webhooks.md#configuration
-* https://github.com/TheHive-Project/TheHiveHooks
-* https://github.com/cybergoatpsyops/TheHive-SideProjects
-* https://github.com/TheHive-Project/TheHive4py/blob/master/thehive4py/api.py
-* https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04
-* https://securityonion.readthedocs.io/en/latest/hive.html
+
 
 
 
