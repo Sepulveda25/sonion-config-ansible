@@ -43,16 +43,16 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
 
 *  Despliegue de un nodo forward:
 
-    * Agregar nombre de usuario del nodo forward al archivo hosts en el gurpo forward_nodes:
+    * Agregar nombre de usuario del nodo forward al archivo hosts en el gurpo forward_nodes (ejemplo user sonionforward):
     ```
     [forward_nodes]
-    soniontest
+    sonionforward
     ```
-    * En la carpeta host_vars agregar un archivo en la que se especifiquen las siguiente variables:
+    * En la carpeta host_vars agregar un archivo yml (nombre_usuario.yml) en la que se especifiquen las siguiente variables (sonionforward.yml) :
     
     ```
         ansible_host: '172.16.81.126'
-        ansible_user: 'soniontest'
+        ansible_user: 'sonionforward'
         
         MGMT_INTERFACE: 'ens160'
         MGMT_CONFIG_TYPE: 'static'
