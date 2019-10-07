@@ -3,11 +3,21 @@
 #soniontest ALL=(ALL) ALL
 
 
---- 
+---
+
 - name: Install Security Onion
   hosts: all
 #  become: yes
   gather_facts: yes
 
+  vars_prompt:
+  - name: 'so_ssh_master_password'
+    prompt: 'SSH password for Security Onion Master'
+    private: yes
+    encrypt: "sha512_crypt"
+    when: "'forward_nodes' in group_names"
+
   roles:
     - securityonion_setup
+
+  

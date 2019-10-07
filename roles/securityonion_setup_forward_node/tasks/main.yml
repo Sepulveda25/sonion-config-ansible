@@ -1,13 +1,5 @@
 ---
 
-
-vars_prompt:
-
- - name: 'so_ssh_master_password'
-   prompt: 'SSH password for Security Onion Master'
-   private: yes
-
-
 - name: Check if {{ SNIFFING_INTERFACES }} exist
   fail:
     msg: "Interface {{ SNIFFING_INTERFACES }} no existe "
@@ -77,6 +69,8 @@ vars_prompt:
     name: telegraf_install
 
 - name: Reboot machine
+  become: yes
+  become_user: root
   reboot:
     reboot_timeout: 1000
 

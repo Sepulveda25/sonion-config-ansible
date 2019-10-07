@@ -50,10 +50,6 @@
   include_role:
     name: telegraf_install
 
-- name: Reboot machine
-  reboot:
-    reboot_timeout: 1000
-
 - name: Copy classification.config in /etc/nsm/rules/ (backup)
   become: yes
   become_user: root
@@ -69,3 +65,9 @@
   copy:
     src: "{{ role_path }}/files/thehive_rules/" #from files folder roles"
     dest: /etc/elastalert/rules/
+
+- name: Reboot machine
+  become: yes
+  become_user: root
+  reboot:
+    reboot_timeout: 1000
