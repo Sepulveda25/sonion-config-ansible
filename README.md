@@ -1,4 +1,3 @@
-
 ### COMANDO PARA CORRER
 ansible-playbook -i hosts -l master so_setup.yml  -vvv
 ansible-playbook -i hosts -l forward_nodes so_setup.yml  -vvv
@@ -24,7 +23,12 @@ ansible-playbook -i hosts -l forward_nodes so_setup.yml  -vvv
     LINK DE REPO DE TINCHO.    
 
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en las maquinas vituales con Security Onion,
-   (no efectuar ninguna operacion sobre el usuario ROOT), ejemplo:
+   (no efectuar ninguna operacion sobre el usuario ROOT), un tutorial ejemplo:
+```
+
+    https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-to-the-server-for-authentication/
+```
+
 
  
 
