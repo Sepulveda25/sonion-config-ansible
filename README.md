@@ -31,17 +31,6 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
 
 ```
 
-3. Darle permisos de sudo al usuario creado del nodo Forward o Master. En el nodo Forward o Master hacer:
-
-    *  $ sudo visudo
-    * Agregar la siguiente linea al final del archivo (ejemplo nodo forward):
-    
-    ```
-    soniontest ALL=(ALL) NOPASSWD: ALL
-    ```
-    
-    * Una vez finalizada el despliegue de Ansible la linea agregada anteriormente debe ser borrada.
-
 ## Instrucciones para el despliegue
 
 *  Despliegue de un nodo forward:
@@ -53,7 +42,7 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
     sonionforward
     ```
     
-    * En la carpeta host_vars agregar un archivo yml (nombre_usuario.yml) en la que se especifiquen las siguiente variables (sonionforward.yml) :
+    * En la carpeta host_vars agregar un archivo yml (nombre_usuario.yml) en la que se especifiquen las siguiente variables (sonionforward.yml):
    
     ```
         ansible_host: '172.16.81.126'
@@ -95,44 +84,17 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
         dirty_ratio: 80
         swappiness: 10
     ```
-
     
+    * Ejecutar ansible sobre el servidor "soniontest" (el username se define en extra var):
     
+    ```
+    ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=soniontest" --ask-sudo-pass
     
-    *  Nodo master
+    ```
+        Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor SONIONMASTER
+    
 
-1.  Pegar carpeta webhooks en home y acceder a dicha carpeta.
-2.  Eliminar carpeta `webhooksenv` en caso de existir.
-3. Crear entorno virtual:
-    <br />`$ python3.6 -m venv webhooksenv`
-4.  Activar entorno virtual:
-	<br />`$ source webhooksenv/bin/activate`
-5.  Instalar librerias Flask, Gunicorn, Wheel, Request y Netaddr:
-	<br />`$ pip install wheel`
-	<br />`$ pip install gunicorn`
-	<br />`$ pip install flask`
-	<br />`$ pip install requests`
-    <br />`$ pip install netaddr`
-    <br />`$ pip install thehive4py`
-6.  Salir del entorno virtual:
-    <br />`$ deactivate`
-7.  Permitir acceso puerto 5000:
-	<br />`$ sudo ufw allow 5000`
-8.  Dentro de la carpeta webhooks modificar el archivo `parametros.py` con los valores de `hiveUR`L y `hookURL` correspodientes.
-9.  Copiar archivo `webhooks.service` en `/etc/systemd/system/`
-10. Iniciar el servicio:
-	<br />`$ sudo systemctl start webhooks.service`
-11. Comprobar el estado del servicio:
-	<br />`$ sudo systemctl enable webhooks.service`
-12. Modificar TheHive para que envie acciones al ENDPOINT HTTP creado, agregando al archivo `/etc/thehive/application.conf`:
-
-```
-webhooks {
-  myLocalWebHook {
-    url = "http://my_HTTP_endpoint/webhook"
-  }
-}
-```
+*  Despliegue de un nodo forward:
 
 
 ## Referencias
