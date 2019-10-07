@@ -24,19 +24,21 @@ ansible-playbook -i hosts -l forward_nodes so_setup.yml  -vvv
 
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en las maquinas vituales con Security Onion,
    (no efectuar ninguna operacion sobre el usuario ROOT), un tutorial ejemplo:
+
+```
+https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-to-the-server-for-authentication/
+
 ```
 
-    https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-to-the-server-for-authentication/
-```
+3. Darle permisos de sudo al usuario creado del nodo Forward o Master. En el nodo Forward o Master hacer:
+
+    *  $ sudo visudo
+    * Agregar la siguiente linea al final del archivo:
+    ```
+    soniontest ALL=(ALL) NOPASSWD: ALL
+    ```
 
 
- 
-
-    
-''
-
-
-3. s
 4. 
 
 ## Instrucciones para el despliegue
