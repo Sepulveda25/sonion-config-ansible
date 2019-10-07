@@ -70,7 +70,7 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
 *  Ejecutar ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
     
     ```
-    $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-sudo-pass
+   ` $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass`
     ```
    Una vez ejecutado el comando se le solicitara el pass root para el servidor target.
    
@@ -130,7 +130,7 @@ https://adamdehaven.com/blog/how-to-generate-an-ssh-key-and-add-your-public-key-
 *  Ejecutar ansible sobre el servidor `"soniontest"` (el username se define en la opcion extra_var):
     
     ```
-    $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=soniontest" --ask-sudo-pass
+   ` $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=soniontest" --ask-become-pass`
     ```
    Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor SONIONMASTER.
    
