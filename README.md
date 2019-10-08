@@ -25,12 +25,16 @@
 5. Mantener actualizado el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Master server.
 
 6. Mantener actualizadas las reglas para TheHive en `/roles/securityonion_setup_master/files/clasiffication_rules`, comprobar en cada regla las variables:
-   
+ 
     *  hive_host
     *  hive_port
     *  hive_apikey
+    
+7. [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive)
+   
 
-[Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive)
+
+
 
 
 ## Instrucciones para el despliegue de un nodo Master
