@@ -10,7 +10,7 @@
 
 ## Pre-requisitos
 
-1. Tener un servidor de Security Onion con la interfaz pre-configurada:
+1. Contar con un servidor de Security Onion con la interfaz pre-configurada:
 
     ```
         REPO TINCHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
@@ -18,8 +18,9 @@
     
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en las maquinas vituales con Security Onion. (no efectuar ninguna operacion sobre el usuario ROOT).
 
+3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards creados seran integrados con Grafana.
 
-3.
+4. Comprobar configuracion de archivo roles/telegraf_install/files/telegraf.conf
 
 
 ## Instrucciones para el despliegue de un nodo Master
