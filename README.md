@@ -30,11 +30,8 @@
     *  hive_port
     *  hive_apikey
 
-Repositorio de las reglas para theHive:
+[Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive)
 
-   ```
-    https://gitlab.unc.edu.ar/csirt/sonion-config-ansible/tree/master/roles/securityonion_setup_master/files/thehive_rules
-   ```
 
 ## Instrucciones para el despliegue de un nodo Master
 
