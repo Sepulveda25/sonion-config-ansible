@@ -24,13 +24,11 @@
 
 5. Mantener actualizada el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Master server:
 
+6. Mantener actualizado las reglas para TheHive en `/roles/securityonion_setup_master/files/clasiffication_rules`:
 
     ```
-        REPO TINCHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+    https://gitlab.unc.edu.ar/csirt/sonion-config-ansible/tree/master/roles/securityonion_setup_master/files/thehive_rules
     ```
-
-6. w
-7. 
 
 
 ## Instrucciones para el despliegue de un nodo Master
