@@ -22,14 +22,18 @@
 
 4. Comprobar configuracion de archivo `roles/telegraf_install/files/telegraf.conf`
 
-5. Mantener actualizada el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Master server:
+5. Mantener actualizado el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Master server.
 
-6. Mantener actualizado las reglas para TheHive en `/roles/securityonion_setup_master/files/clasiffication_rules`:
+6. Mantener actualizadas las reglas para TheHive en `/roles/securityonion_setup_master/files/clasiffication_rules`, comprobar en cada regla las variables:
+   
+    *  hive_host
+    *  hive_port
+    *  hive_apikey
+Repositorio de las reglas:
 
-    ```
+   ```
     https://gitlab.unc.edu.ar/csirt/sonion-config-ansible/tree/master/roles/securityonion_setup_master/files/thehive_rules
-    ```
-
+   ```
 
 ## Instrucciones para el despliegue de un nodo Master
 
