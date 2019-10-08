@@ -1,12 +1,3 @@
-### COMANDO PARA CORRER
-ansible-playbook -i hosts -l master so_setup.yml  -vvv
-ansible-playbook -i hosts -l forward_nodes so_setup.yml  -vvv
-
-
-
-
-
-
 # Ansible para la instalacion de nodos FORWARD y MASTER para Security Onion.
 
 ## Tabla de contenidos
