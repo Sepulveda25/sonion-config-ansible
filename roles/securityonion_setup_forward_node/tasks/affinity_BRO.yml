@@ -15,4 +15,4 @@
   lineinfile: 
    path: /opt/bro/etc/node.cfg
    insertafter: '^lb_procs'
-   line: "pin_cpus= {{ BRO_PIN_CPU }}"
+   line: "pin_cpus= {{ pin_cpu }}"
