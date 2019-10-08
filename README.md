@@ -20,7 +20,7 @@
 
 3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards creados seran integrados con Grafana.
 
-4. Comprobar configuracion de archivo roles/telegraf_install/files/telegraf.conf
+4. Comprobar configuracion de archivo `roles/telegraf_install/files/telegraf.conf`
 
 
 ## Instrucciones para el despliegue de un nodo Master
