@@ -24,8 +24,8 @@
 *  Agregar nombre de usuario del nodo master al archivo `host` en el grupo `master` (Ej. user sonionmaster):
 
     ```
-    [master]
-    sonionmaster
+        [master]
+        sonionmaster
     ```
     
 *  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las variables
@@ -94,8 +94,8 @@
 *  Agregar nombre de usuario del nodo forward al archivo `host` en el grupo `forward_nodes` (Ej. user sonionforward):
 
     ```
-    [forward_nodes]
-    sonionforward
+        [forward_nodes]
+        sonionforward
     ```
     
 *  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las variables
