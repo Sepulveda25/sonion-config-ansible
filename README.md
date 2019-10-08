@@ -22,6 +22,16 @@
 
 4. Comprobar configuracion de archivo `roles/telegraf_install/files/telegraf.conf`
 
+5. Mantener actualizada el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Master server:
+
+
+    ```
+        REPO TINCHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+    ```
+
+6. w
+7. 
+
 
 ## Instrucciones para el despliegue de un nodo Master
 
