@@ -10,13 +10,16 @@
 
 ## Pre-requisitos
 
-1. Instalacion de las maquinas virtuales, con la ultima version de Security Onion:
+1. Tener un servidor de Security Onion con la interfaz pre-configurada:
+
+    ```
+        REPO TINCHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+    ```
     
-    LINK DE REPO DE TINCHO.    
+2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en las maquinas vituales con Security Onion. (no efectuar ninguna operacion sobre el usuario ROOT).
 
-2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en las maquinas vituales con Security Onion,
-   (no efectuar ninguna operacion sobre el usuario ROOT).
 
+3.
 
 
 ## Instrucciones para el despliegue de un nodo Master
