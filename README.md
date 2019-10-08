@@ -29,7 +29,8 @@
     *  hive_host
     *  hive_port
     *  hive_apikey
-Repositorio de las reglas:
+
+Repositorio de las reglas para theHive:
 
    ```
     https://gitlab.unc.edu.ar/csirt/sonion-config-ansible/tree/master/roles/securityonion_setup_master/files/thehive_rules
