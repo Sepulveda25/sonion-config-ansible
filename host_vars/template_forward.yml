@@ -62,7 +62,7 @@ PCAP_OPTIONS: '--mmap -b0'
 ##########################################
 #pin_cpus
 #Pin the BRO lb_procs processes to certain CPU cores.
-pin_cpu: '5,6,7'
+BRO_PIN_CPU: '5,6,7'
 
 
 ##########################################

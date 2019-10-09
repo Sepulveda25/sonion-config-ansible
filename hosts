@@ -5,7 +5,7 @@ master_ip=172.16.81.127
 sonionmaster
 
 [forward_nodes]
-soniontest
+sonionforward
 
 [storage_nodes]
 
