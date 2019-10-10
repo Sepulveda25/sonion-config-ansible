@@ -10,9 +10,10 @@
 
 ## Pre-requisitos
 
-1. Contar con un servidor de Security Onion con la interfaz pre-configurada:
+1. Contar con un servidor de Security Onion con la interfaz pre-configurada: 
+2. [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
 
-         [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
+         
  
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en las maquinas vituales con Security Onion. (no efectuar ninguna operacion sobre el usuario ROOT).
 
