@@ -31,20 +31,21 @@
    - {regexp: '^DOMAIN=', line: "DOMAIN='{{ DOMAIN }}'"}
    - {regexp: '^LOG_SIZE_LIMIT=', line: "LOG_SIZE_LIMIT='{{ LOG_SIZE_LIMIT }}'"}
    - {regexp: '^IDS_RULESET=', line: "IDS_RULESET='{{ IDS_RULESET }}'"}
+   - {regexp: '^IDS_ENGINE=', line: "IDS_ENGINE='{{ IDS_ENGINE }}'"}
    - {regexp: '^WARN_DISK_USAGE=', line: "WARN_DISK_USAGE='{{ WARN_DISK_USAGE }}'"}
-   - {regexp: '^CRIT_DISK_USAGE=', line: "IDS_ENGINE='{{ CRIT_DISK_USAGE }}'"}
+   - {regexp: '^CRIT_DISK_USAGE=', line: "CRIT_DISK_USAGE='{{ CRIT_DISK_USAGE }}'"}
    - {regexp: '^DAYSTOKEEP=', line: "DAYSTOKEEP='{{ DAYSTOKEEP }}'"}
    - {regexp: '^DAYSTOREPAIR=', line: "DAYSTOREPAIR='{{ DAYSTOREPAIR }}'"}
-
-- name: Execute sosetup for foward
-  include_role:
-    name: securityonion_run_sosetup
-  vars:
-    sosetupfilepath: "{{ temp_config.path }}"
 
 - name: Print path temp file "{{ temp_config.path }}"
   debug:
     msg: "{{ temp_config.path }}"
+
+- name: Execute sosetup for master
+  include_role:
+    name: securityonion_run_sosetup
+  vars:
+    sosetupfilepath: "{{ temp_config.path }}"
 
 - name: Install telegraf
   include_role:

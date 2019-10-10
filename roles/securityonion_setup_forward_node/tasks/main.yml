@@ -21,7 +21,7 @@
     src:  sosetup_forward.conf #from files folder in this role
     dest: "{{ temp_config.path }}"
     
-- name: Remplazo variables de host_vars en el config para el forward
+- name: Remplazo variables de host_vars en el config para el forward en "{{ temp_config.path }}"
   lineinfile: 
    path: "{{ temp_config.path }}"
    regexp:  "{{ item.regexp }}"
@@ -44,13 +44,12 @@
    - {regexp: '^BRO_LB_PROCS=', line: "BRO_LB_PROCS='{{ BRO_LB_PROCS }}'"}
    - {regexp: '^PCAP_OPTIONS=', line: "PCAP_OPTIONS='{{ PCAP_OPTIONS }}'"}
 
-   
-- name: Execute sosetup for foward
+- name: Execute sosetup for forward
   include_role:
     name: securityonion_run_sosetup
   vars:
     sosetupfilepath: "{{ temp_config.path }}"
-    
+
 - name: Execute BRO config
   import_tasks: affinity_BRO.yml
 
@@ -73,4 +72,7 @@
   become_user: root
   reboot:
     reboot_timeout: 1000
+   
+
+    
 

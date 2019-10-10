@@ -4,16 +4,16 @@
      become: yes
      become_user: root
      apt:
-      name:  python-pexpect
+      name: python-pexpect
       update_cache: yes
 
 
-   - name: Run SOSETUP
+   - name: Run SOSETUP with "{{ sosetupfilepath }}"
      become: yes
      become_user: root
      expect:
        command: sosetup -y -f {{ sosetupfilepath }}
-       timeout: 200 #modify timeout for command 
+       timeout: 300 #modify timeout for command 
        responses:
          "Are you sure you want to continue connecting": "yes"
          'password': "{{ so_ssh_master_password }}" #si contiene la cadena password

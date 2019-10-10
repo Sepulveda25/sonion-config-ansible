@@ -23,7 +23,7 @@ DOMAIN: 'sonionmaster.local.psi'
 # This setting controls how much disk space Elastic uses.
 # 100GB = 100000000000
 # LOG_SIZE_LIMIT='100000000000'
-LOG_SIZE_LIMIT: '75000000000'
+LOG_SIZE_LIMIT: '100000000000'
 
 # IDS_RULESET
 # Which IDS ruleset would you like to use?
@@ -32,6 +32,17 @@ LOG_SIZE_LIMIT: '75000000000'
 # Sourcefire Talos (requires Talos oinkcode): TALOS
 # TALOS and ET (requires TALOS oinkcode): TALOSET
 IDS_RULESET: 'ETOPEN'
+
+# IDS_ENGINE
+# Which IDS engine would you like to run?  snort/suricata
+# Whatever you choose here will apply to the master server
+# and then sensors inherit this setting from the master server.
+# To run Snort:
+# IDS_ENGINE='snort'
+# To run Suricata:
+# IDS_ENGINE='suricata'
+IDS_ENGINE: 'suricata'
+
 
 # WARN_DISK_USAGE
 # Begin warning when disk usage reaches this level

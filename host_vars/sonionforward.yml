@@ -1,5 +1,5 @@
 ansible_host: '172.16.81.126'
-ansible_user: 'soniontest'
+ansible_user: 'sonion'
 
 MGMT_INTERFACE: 'ens160'
 MGMT_CONFIG_TYPE: 'static'
@@ -9,10 +9,10 @@ GATEWAY: '172.16.81.1'
 NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
 DOMAIN: 'sonioneco.local.psi' 
 
-SNIFFING_INTERFACES: 'ens160'
+SNIFFING_INTERFACES: 'ens192'
 
 SERVERNAME: '172.16.81.127'
-SSH_USERNAME: 'soniontest2' 
+SSH_USERNAME: 'soniontest2'
 
 PF_RING_SLOTS: 4096 
  

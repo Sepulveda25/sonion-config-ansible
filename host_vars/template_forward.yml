@@ -28,7 +28,7 @@ SNIFFING_INTERFACES: 'ens160'
 SERVERNAME: '172.16.81.127'
 # SSH_USERNAME
 # This should be the name of an account on the separate Master server.
-SSH_USERNAME: 'soniontest' 
+SSH_USERNAME: 'soniontest2' 
 
 # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
 PF_RING_SLOTS: 4096 
