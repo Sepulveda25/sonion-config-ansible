@@ -13,7 +13,7 @@
 1. Contar con un servidor de Security Onion con la interfaz pre-configurada:
 
     ```
-        REPO TINCHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+       [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs) 
     ```
     
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en las maquinas vituales con Security Onion. (no efectuar ninguna operacion sobre el usuario ROOT).
@@ -29,9 +29,9 @@
     *  hive_port
     *  hive_apikey
     
-
-  [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive)
-   
+    ```
+     [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive)
+   ```
 
 
 
