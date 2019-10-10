@@ -11,7 +11,7 @@
 ## Pre-requisitos
 
 1. Contar con un servidor de Security Onion con la interfaz pre-configurada: 
-2. [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
+         [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
 
          
  
@@ -29,7 +29,6 @@
     *  hive_apikey
     
          [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive)
-[Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
 
 
 
