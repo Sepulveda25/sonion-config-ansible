@@ -11,7 +11,6 @@
 ## Pre-requisitos
 
 1. Contar con un servidor de Security Onion con la interfaz pre-configurada: 
-        
         [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
 
          
