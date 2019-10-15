@@ -10,15 +10,15 @@
 
 ## Pre-requisitos
 
-1. Contar con un servidor de Security Onion con la interfaz de red pre-configurada: 
-        [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
+1. Contar con un servidor de Security Onion con la interfaz de red pre-configurada: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
 
-         
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion. (no efectuar ninguna operacion sobre el usuario ROOT).
 
 3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
-   Comprobar configuracion de archivo `roles/telegraf_install/files/telegraf.conf`
-
+   Comprobar configuracion de archivo
+    ```
+    `roles/telegraf_install/files/telegraf.conf`
+    ```
 4. Mantener actualizado el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Master server.
 
 5. Mantener actualizadas las reglas para TheHive en `/roles/securityonion_setup_master/files/clasiffication_rules`, comprobar en cada regla las variables:
