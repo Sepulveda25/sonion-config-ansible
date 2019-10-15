@@ -30,11 +30,11 @@
 
 ## Instrucciones para el despliegue de un nodo Master
 
- Seguir las instrucciones del documento: [Instrucciones para el despligue de un Master Node](Documentacion/instructions-master-node.md)
+ Seguir las instrucciones del documento: [Instrucciones para el despligue de un Master Node](documentacion/instructions-master-node.md)
 
 ## Instrucciones para el despliegue de un nodo Forward
 
- Seguir las instrucciones del documento: [Instrucciones para el despligue de un Forward Node](Documentacion/instructions-forward-node.md)
+ Seguir las instrucciones del documento: [Instrucciones para el despligue de un Forward Node](documentacion/instructions-forward-node.md)
 
 ## Referencias
 
