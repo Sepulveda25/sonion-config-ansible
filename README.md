@@ -15,19 +15,16 @@
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion. (no efectuar ninguna operacion sobre el usuario ROOT).
 
 3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
-   Comprobar configuracion de archivo
-    ```
-    `roles/telegraf_install/files/telegraf.conf`
-    ```
+   Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
+
 4. Mantener actualizado el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Master server.
 
-5. Mantener actualizadas las reglas para TheHive en `/roles/securityonion_setup_master/files/clasiffication_rules`, comprobar en cada regla las variables:
+5. Mantener actualizadas las reglas de TheHive. Las mismas se encuentran en el [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive) 
+   y se almacenan en `/roles/securityonion_setup_master/files/clasiffication_rules`, comprobar en cada regla las variables:
     *  hive_host
     *  hive_port
     *  hive_apikey
     
-         [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive)
-
 
 
 ## Instrucciones para el despliegue de un nodo Master
