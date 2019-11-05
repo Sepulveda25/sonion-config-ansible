@@ -47,25 +47,18 @@
   vars:
     sosetupfilepath: "{{ temp_config.path }}"
 
-- name: Install telegraf
-  include_role:
-    name: telegraf_install
-
-- name: Copy classification.config in /etc/nsm/rules/ (backup)
-  become: yes
-  become_user: root
-  copy:
-    src: "{{ role_path }}/files/clasiffication_rules/classification.config" #from files folder roles"
-    dest: /etc/nsm/rules/classification.config
-    backup: yes
-    mode: 'preserve' #preserve permissions
-
 - name: Copy TheHive Rules in /etc/elastalert/rules
   become: yes
   become_user: root
   copy:
     src: "{{ role_path }}/files/thehive_rules/" #from files folder roles"
     dest: /etc/elastalert/rules/
+  when:  ' "{{ COPY_THEHIVE_RULES }}" in "yes" ' 
+
+- name: Install telegraf
+  include_role:
+    name: telegraf_install
+  when:  ' "{{ INSTALL_TELEGRAF }}" in "yes" '
 
 - name: Reboot machine
   become: yes

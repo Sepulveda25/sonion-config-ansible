@@ -1,5 +1,6 @@
 ---
 
+
    - name: Install pexpect
      become: yes
      become_user: root
@@ -7,18 +8,18 @@
       name: python-pexpect
       update_cache: yes
 
-
    - name: Run SOSETUP with "{{ sosetupfilepath }}"
+#     ignore_errors: True ##############
      become: yes
      become_user: root
      expect:
        command: sosetup -y -f {{ sosetupfilepath }}
-       timeout: 300 #modify timeout for command 
+       timeout: 20 #modify timeout for command 
        responses:
-         "Are you sure you want to continue connecting": "yes"
+         'Type yes to continue or anything else to exit.': "yes"
          'password': "{{ so_ssh_master_password }}" #si contiene la cadena password
+#         '\n\s': "{{ so_ssh_master_password }}"
      register: sosetup_output
 
    - debug:
        var: sosetup_output
-

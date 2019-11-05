@@ -50,4 +50,36 @@
   vars:
     sosetupfilepath: "{{ temp_config.path }}"
 
+- name: Execute BRO config
+  import_tasks: affinity_BRO.yml
+
+- name:  Execute SURICATA config
+  import_tasks: affinity_SURICATA.yml
+
+- name:  Configure Linux Disk Caching
+  import_tasks: cache_linux.yml
+
+- name: Copy classification.config in /etc/nsm/rules/ (backup)
+  become: yes
+  become_user: root
+  copy:
+    src: "{{ role_path }}/files/clasiffication_rules/classification.config" #from files folder roles"
+    dest: /etc/nsm/rules/classification.config
+    backup: yes
+    mode: 'preserve' #preserve permissions
+
+- name: Install telegraf
+  include_role:
+    name: telegraf_install
+  when:  ' "{{ INSTALL_TELEGRAF }}" in "yes" '
+
+- name: Reboot machine
+  become: yes
+  become_user: root
+  reboot:
+    reboot_timeout: 1000
+   
+
+    
+
 
