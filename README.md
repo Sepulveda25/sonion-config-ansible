@@ -31,8 +31,6 @@
     *  hive_port
     *  hive_apikey
    
-
-
    Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a la variable
    `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`.
 
