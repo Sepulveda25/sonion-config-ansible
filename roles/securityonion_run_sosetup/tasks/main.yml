@@ -14,7 +14,7 @@
      become_user: root
      expect:
        command: sosetup -y -f {{ sosetupfilepath }}
-       timeout: 20 #modify timeout for command 
+       timeout: 200 #modify timeout for command 
        responses:
          'Type yes to continue or anything else to exit.': "yes"
          'password': "{{ so_ssh_master_password }}" #si contiene la cadena password
