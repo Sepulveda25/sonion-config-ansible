@@ -32,7 +32,7 @@
     *  hive_apikey
    
    Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a la variable
-   `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`.
+   `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`, en el archivo de variables de la carpeta `host_vars`.
 
 
 ## Instrucciones para el despliegue de un nodo Master
