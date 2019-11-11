@@ -13,7 +13,7 @@
      become_user: root
      expect:
        command: sosetup -y -f {{ sosetupfilepath }}
-       timeout: 200 #modify timeout for command 
+       timeout: 500 #modify timeout for command 
        responses:
          'Type yes to continue or anything else to exit.': "yes"
          'Are you sure you want to continue connecting.': "yes"
