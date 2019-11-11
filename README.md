@@ -23,7 +23,7 @@
 
 4. Mantener actualizado el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Forward node.
 
-5. Contar con un servidor con TheHive instalado y mantener actualizadas las reglas de TheHive que seran copiadas en el Master node. 
+5. Contar con un servidor con TheHive instalado y mantener actualizadas las reglas de TheHive que seran copiadas en el Master Node. 
    Las reglas actualizadas se encuentran en el [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive) 
    y deben guardarse en `/roles/securityonion_setup_master/files/clasiffication_rules`, es necesario definir dentro del archivo de variables
    del Master (en carpeta host_vars) las variables:
@@ -32,7 +32,7 @@
     *  hive_apikey
    
    Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a la variable
-   `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`.
+   `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`, en el archivo de variables de la carpeta `host_vars`.
 
 
 ## Instrucciones para el despliegue de un nodo Master
