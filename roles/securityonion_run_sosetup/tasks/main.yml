@@ -17,6 +17,7 @@
        timeout: 200 #modify timeout for command 
        responses:
          'Type yes to continue or anything else to exit.': "yes"
+         'Are you sure you want to continue connecting.': "yes"
          'password': "{{ so_ssh_master_password }}" #si contiene la cadena password
 #         '\n\s': "{{ so_ssh_master_password }}"
      register: sosetup_output

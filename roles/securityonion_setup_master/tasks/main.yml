@@ -1,5 +1,12 @@
 ---
 
+vars:
+  varhivehost: " '{{hive_host }}' | regex_replace('1', '2') " #for sed command add "\/" for every "/" in http:// direction
+
+- debug:
+   msg: "The 'foo' variable value is {{ varhivehost }}"
+
+
 - name: Copy TheHive Rules in /etc/elastalert/rules
   become: yes
   become_user: root
@@ -8,8 +15,29 @@
     dest: /etc/elastalert/rules/
   when:  ' "{{ COPY_THEHIVE_RULES }}" in "yes" '
 
-#find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_host: \)\(.*\)/\1REEMPLAZO/' {} \;
+- debug:
+   var:  " '{{hive_host }}' | regex_replace('1', '2') " #for sed command add "\/" for every "/" in http:// direction
+
+#find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_host: \)\(.*\)/\1 REEMPLAZO/' {} \;
 - name: Remplazo variables de hive_host de los archivos en /etc/elastalert/rules/ 
   become: yes
   become_user: root
-  shell:  find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_host":" \)\(.*\)/\1R/' {} \;  
+  shell: find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_host:\)\(.*\)/\1 {{ varhivehost }} /' {} \;
+  when:  '"{{ COPY_THEHIVE_RULES }}" in "yes" '
+
+
+#find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_host: \)\(.*\)/\1 REEMPLAZO/' {} \;
+- name: Remplazo variables de hive_port de los archivos en /etc/elastalert/rules/ 
+  become: yes
+  become_user: root
+  shell: find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_port:\)\(.*\)/\1 {{ hive_port }}/' {} \;
+  when:  '"{{ COPY_THEHIVE_RULES }}" in "yes" '
+
+#find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_host: \)\(.*\)/\1 REEMPLAZO/' {} \;
+- name: Remplazo variables de hive_apikey de los archivos en /etc/elastalert/rules/ 
+  become: yes
+  become_user: root
+  shell: find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_apikey:\)\(.*\)/\1 {{ hive_apikey }}/' {} \;
+  when:  '"{{ COPY_THEHIVE_RULES }}" in "yes" '
+
+
