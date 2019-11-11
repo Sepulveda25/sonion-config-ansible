@@ -9,7 +9,6 @@
       update_cache: yes
 
    - name: Run SOSETUP with "{{ sosetupfilepath }}"
-#     ignore_errors: True ##############
      become: yes
      become_user: root
      expect:
@@ -19,7 +18,6 @@
          'Type yes to continue or anything else to exit.': "yes"
          'Are you sure you want to continue connecting.': "yes"
          'password': "{{ so_ssh_master_password }}" #si contiene la cadena password
-#         '\n\s': "{{ so_ssh_master_password }}"
      register: sosetup_output
 
    - debug:
