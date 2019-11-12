@@ -26,7 +26,8 @@
 *  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml` donde nombre_usuario es el nombre del usuario definido en el paso anterior) en la que se especifiquen las variables
    del archivo template_master.yml (Ej. sonionmaster.yml):
    
-       ```yaml
+    ```yaml
+
         ansible_host: '172.16.81.127'
         ansible_user: 'sonionmaster'
         
@@ -96,7 +97,8 @@
         INSTALL_TELEGRAF: 'yes' #'no'
         
         
-        ```
+    ```
+
         
 ## Despliegue con Ansible
 
