@@ -23,7 +23,7 @@
 
 ## Template Master Node
 
-*  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml` donde nombre_usuario es el nombre del usuario definido en el paso anterior) en la que se especifiquen las variables
+*  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml` donde `nombre_usuario` es utilizado en el paso siguiente y en la variable `ansible_user`) en la que se especifiquen las variables
    del archivo template_master.yml (Ej. sonionmaster.yml):
    
     ```yaml
