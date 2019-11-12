@@ -104,7 +104,8 @@
 ## Despliegue con Ansible
 
 
-*  Agregar nombre de usuario del servidor master al archivo `hosts` en el grupo `[master]` (Ej. user sonionmaster):
+*  Agregar nombre de usuario del nodo Master al archivo `hosts` en el grupo `[master]` 
+(Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
 
     ```yaml
     [master]
