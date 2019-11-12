@@ -39,7 +39,7 @@
 *  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las variables
    del archivo template_forward.yml (Ej. sonionforward.yml):
 
-    ```
+    ```yaml
         ansible_host: '172.16.81.126'
         ansible_user: 'sonionforward'
         
@@ -167,7 +167,7 @@
         [forward_nodes]
         sonionforward
 
-*  Ejecutar ansible sobre el servidor `"sonionforward"` (el username se define en la opcion extra_var):
+*  Ejecutar Ansible sobre el servidor `"sonionforward"` (el username se define en la opcion extra_var):
     
     ```
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
