@@ -105,9 +105,10 @@
 
 *  Agregar nombre de usuario del servidor master al archivo `hosts` en el grupo `[master]` (Ej. user sonionmaster):
 
-```yaml
+    ```yaml
     [master]
     sonionmaster
+    
     ```
 
 
@@ -115,5 +116,5 @@
 
     ```bash
     $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
-```
+    ```
 Una vez ejecutado el comando se le solicitara el pass root para el servidor.
