@@ -4,7 +4,7 @@
 
 1. [Pre-requisitos](#pre-requisitos)
 2. [Template Forward Node](#template-forward-node)
-3. [Despliegue con Ansible](#depliegue-con-ansible)
+3. [Despliegue con Ansible](#despliegue-con-ansible)
 
 ## Pre-requisitos
 
