@@ -10,7 +10,6 @@
 ## Pre-requisitos
 
 1. Contar con un servidor de Security Onion con la interfaz de red pre-configurada: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
-   Se debe contar con al menos dos interfaces una para administracion y otra para realizar el monitoreo. 
 
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion
    (No agregar claves SSH  sobre el usuario ROOT del servidor con SECURITY ONION ).
