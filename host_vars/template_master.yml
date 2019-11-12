@@ -67,17 +67,4 @@ DAYSTOREPAIR: '7'
 INSTALL_TELEGRAF: 'yes' #'no'
 
 
-#########################################################
-#Copy Rules TheHive to ElastAlert
-#(From file /roles/securityonion_setup_master/files/thehive_rules)
-#########################################################
-
-COPY_THEHIVE_RULES: 'yes' #'no'
-
-#IP del servidor con TheHive
-hive_host: 'http://172.16.81.110'
-#Puerto del servicio TheHive
-hive_port: '9000'
-#API-KEY del user creado en TheHive
-hive_apikey: 'xLuixewzDP6zXcVgLvyaFUoeUZcZgKu4'
 

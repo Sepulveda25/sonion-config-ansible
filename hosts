@@ -1,5 +1,4 @@
 [all:vars]
-master_ip=172.16.81.127
 
 [master]
 testmaster

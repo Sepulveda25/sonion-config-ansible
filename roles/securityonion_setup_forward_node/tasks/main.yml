@@ -68,6 +68,11 @@
     backup: yes
     mode: 'preserve' #preserve permissions
 
+- name: Copy TheHive rules to elastalert in MasterNode
+  include_role:
+    name: copy_hive_rules_to_master
+  when:  ' "{{ COPY_THEHIVE_RULES }}" in "yes" '
+
 - name: Install telegraf
   include_role:
     name: telegraf_install
@@ -78,3 +83,5 @@
   become_user: root
   reboot:
     reboot_timeout: 1000
+
+
