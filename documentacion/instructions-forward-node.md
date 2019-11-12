@@ -174,4 +174,4 @@
     ```
    Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor Master.
 
-    ```
+
