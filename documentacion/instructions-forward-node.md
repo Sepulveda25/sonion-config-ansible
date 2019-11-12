@@ -3,7 +3,7 @@
 ## Tabla de contenidos
 
 1. [Pre-requisitos](#pre-requisitos)
-2. [Template Forward Node](#template-foward-node)
+2. [Template](#template)
 3. [Referencias](#referencias)
 
 ## Pre-requisitos
@@ -33,7 +33,7 @@
    Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a la variable
    `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`, en el archivo de variables de la carpeta `host_vars`.
 
-## Template Forward Node
+## Template
 
     
 *  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las variables
