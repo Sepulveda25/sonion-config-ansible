@@ -36,8 +36,10 @@
 ## Template Forward Node
 
     
-*  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las variables
-   del archivo template_forward.yml (Ej. sonionforward.yml):
+*   En la carpeta `host_vars` agregar un archivo .yml que tiene la forma del archivo `template_forward.yml`, renombrar de la forma `nombre_usuario.yml` 
+ (Ej. sonionforward.yml) y modificar las variables de configuracion para el despliguete del Foward Node  (`nombre_usuario` es utilizado en el paso siguiente y en la variable `ansible_user`).
+
+   
 
     ```yaml
         ansible_host: '172.16.81.126'
