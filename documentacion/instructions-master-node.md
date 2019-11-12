@@ -114,7 +114,7 @@
     ```
 
 
-*  Ejecutar ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
+*  Ejecutar Ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
 
     ```bash
     $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
