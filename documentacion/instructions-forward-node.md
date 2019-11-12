@@ -41,7 +41,7 @@
 
     ```
         ansible_host: '172.16.81.126'
-        ansible_user: 'soniontest'
+        ansible_user: 'sonionforward'
         
         ##########################################
         #Variables for file sosetup_forward.conf
