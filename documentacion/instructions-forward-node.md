@@ -163,13 +163,13 @@
 
 *  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `forward_nodes` (Ej. user sonionforward):
 
-    ```
+    ```yaml
         [forward_nodes]
         sonionforward
 
 *  Ejecutar Ansible sobre el servidor `"sonionforward"` (el username se define en la opcion extra_var):
     
-    ```
+    ```bash
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
    Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor Master.
