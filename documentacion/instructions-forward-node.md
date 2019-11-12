@@ -1,10 +1,40 @@
 ## Instrucciones para el despliegue de un nodo Forward
 
-*  Agregar nombre de usuario del nodo forward al archivo `host` en el grupo `forward_nodes` (Ej. user sonionforward):
+## Tabla de contenidos
 
-    ```
-        [forward_nodes]
-        sonionforward
+1. [Pre-requisitos](#pre-requisitos)
+2. [Template Forward Node](#template-foward-node)
+3. [Referencias](#referencias)
+
+## Pre-requisitos
+
+1. Contar con un servidor de Security Onion con la interfaz de red pre-configurada: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
+   Se debe contar con al menos dos interfaces una para administracion y otra para realizar el monitoreo. 
+
+2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion
+   (No agregar claves SSH  sobre el usuario ROOT del servidor con SECURITY ONION ).
+
+3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
+   Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
+ 
+   Este paso es opcional, en caso de no contar con el servidor con InfluxDB y Grafana instalados setear a la variable
+   `INSTALL_TELEGRAF: 'no'` en lugar de  `INSTALL_TELEGRAF: 'yes'`
+
+4. Mantener actualizado el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Forward node.
+
+5. Contar con un servidor con TheHive instalado y mantener actualizadas las reglas de TheHive que seran copiadas en el Master Node desde el Forward Node. 
+   Las reglas actualizadas se encuentran en el [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive) 
+   y deben guardarse en `/roles/copy_hive_rules_to_master/files/thehive_rules`, es necesario definir dentro del archivo de variables
+   del Foward Node (en carpeta host_vars) las variables:
+    *  hive_host
+    *  hive_port
+    *  hive_apikey
+   
+   Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a la variable
+   `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`, en el archivo de variables de la carpeta `host_vars`.
+
+## Template Forward Node
+
     ```
     
 *  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las variables
@@ -135,3 +165,10 @@
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
    Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor Master.
+   
+   
+*  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `forward_nodes` (Ej. user sonionforward):
+
+    ```
+        [forward_nodes]
+        sonionforward
