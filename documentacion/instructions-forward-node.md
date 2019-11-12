@@ -161,7 +161,7 @@
 
 ## Despliegue con Ansible
 
-*  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `forward_nodes` (Ej. user sonionforward):
+*  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `[forward_nodes]` (Ej. user sonionforward):
 
     ```yaml
         [forward_nodes]
