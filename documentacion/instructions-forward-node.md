@@ -35,7 +35,6 @@
 
 ## Template Forward Node
 
-    ```
     
 *  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las variables
    del archivo template_forward.yml (Ej. sonionforward.yml):
@@ -172,3 +171,5 @@
     ```
         [forward_nodes]
         sonionforward
+        
+    ```
