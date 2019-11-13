@@ -56,3 +56,15 @@ DAYSTOKEEP: '30'
 # DAYSTOREPAIR
 # Only applies to Sguil database ('securityonion_db')
 DAYSTOREPAIR: '7'
+
+
+
+#########################################################
+#Install Telegraf 
+#(Modify File roles/telegraf_install/files/telegraf.conf)
+#########################################################
+
+INSTALL_TELEGRAF: 'yes' #'no'
+
+
+

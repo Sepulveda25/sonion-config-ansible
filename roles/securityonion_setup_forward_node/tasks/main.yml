@@ -10,6 +10,19 @@
     msg: "Interface {{ MGMT_INTERFACE }} no existe "
   failed_when: not (ansible_interfaces | intersect(MGMT_INTERFACE))
 
+- name: Make interface "{{ SNIFFING_INTERFACES }}" up
+  become: yes
+  become_user: root
+  shell: sudo ip link set dev "{{ SNIFFING_INTERFACES }}" up
+
+- name: Make interface "{{ MGMT_INTERFACE }}" up
+  become: yes
+  become_user: root
+  shell: sudo ip link set dev "{{ MGMT_INTERFACE }}" up
+
+- name: Create user "{{ ansible_user_id }}" with Sudo privileges in Master Node #crea usuario ansible_username en sonion Master
+  import_tasks: user_create_master_node.yml
+
 - name: Create a file named ansible.{random}.conf
   tempfile:
     state:  file
@@ -20,7 +33,7 @@
   copy:
     src:  sosetup_forward.conf #from files folder in this role
     dest: "{{ temp_config.path }}"
-    
+
 - name: Remplazo variables de host_vars en el config para el forward en "{{ temp_config.path }}"
   lineinfile: 
    path: "{{ temp_config.path }}"
@@ -36,13 +49,15 @@
    - {regexp: '^DOMAIN=', line: "DOMAIN='{{ DOMAIN }}'"}
    - {regexp: '^SNIFFING_INTERFACES=', line: "SNIFFING_INTERFACES='{{ SNIFFING_INTERFACES }}'"}
    - {regexp: '^SERVERNAME=', line: "SERVERNAME='{{ SERVERNAME }}'"}
-   - {regexp: '^SSH_USERNAME=', line: "SSH_USERNAME='{{ SSH_USERNAME }}'"}
+   - {regexp: '^SSH_USERNAME=', line: "SSH_USERNAME='{{ ansible_user_id }}'"}
    - {regexp: '^PF_RING_SLOTS=', line: "PF_RING_SLOTS={{ PF_RING_SLOTS }}"} 
    - {regexp: '^IDS_ENGINE=', line: "IDS_ENGINE='{{ IDS_ENGINE }}'"}
    - {regexp: '^IDS_LB_PROCS=', line: "IDS_LB_PROCS='{{ IDS_LB_PROCS }}'"}
    - {regexp: '^HOME_NET=', line: "HOME_NET='{{ HOME_NET }}'"}
    - {regexp: '^BRO_LB_PROCS=', line: "BRO_LB_PROCS='{{ BRO_LB_PROCS }}'"}
    - {regexp: '^PCAP_OPTIONS=', line: "PCAP_OPTIONS='{{ PCAP_OPTIONS }}'"}
+
+
 
 - name: Execute sosetup for forward
   include_role:
@@ -77,6 +92,9 @@
   include_role:
     name: telegraf_install
   when:  ' "{{ INSTALL_TELEGRAF }}" in "yes" '
+
+- name: Delete privileges for user "{{ ansible_user_id }}" in Master Node #Elimina los privilegios del usuario en el nodo master
+  import_tasks: user_delete_master_node.yml
 
 - name: Reboot machine
   become: yes

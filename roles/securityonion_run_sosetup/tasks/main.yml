@@ -8,7 +8,14 @@
       name: python-pexpect
       update_cache: yes
 
-   - name: Run SOSETUP with "{{ sosetupfilepath }}"
+   - name: Install pexpect
+     become: yes
+     become_user: root
+     apt:
+      name: python3-pexpect
+      update_cache: yes
+
+   - name: Run SOSETUP with "{{ sosetupfilepath }}" in Master Node #Para el Master
      become: yes
      become_user: root
      expect:
@@ -19,6 +26,20 @@
          'Are you sure you want to continue connecting.': "yes"
          'password': "{{ so_ssh_master_password }}" #si contiene la cadena password
      register: sosetup_output
+     when: "'master' in group_names"
+
+   - name: Run SOSETUP with "{{ sosetupfilepath }}" in Forward Node #Para el Forward
+     become: yes
+     become_user: root
+     expect:
+       command: sosetup -y -f {{ sosetupfilepath }}
+       timeout: 500 #modify timeout for command 
+       responses:
+         'Type yes to continue or anything else to exit.': "yes"
+         'Are you sure you want to continue connecting.': "yes"
+         'password': "{{ so_ssh_foward_pass_to_master }}" #si contiene la cadena password
+     register: sosetup_output
+     when: "'forward_nodes' in group_names"
 
    - debug:
        var: sosetup_output
