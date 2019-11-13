@@ -1,18 +1,36 @@
-## Instrucciones para el despliegue de un nodo Master
+## Instrucciones para el despliegue de un servidor Master
 
-*  Agregar nombre de usuario del nodo master al archivo `host` en el grupo `master` (Ej. user sonionmaster):
+## Tabla de contenidos
 
-    ```
-        [master]
-        sonionmaster
-    ```
+1. [Pre-requisitos](#pre-requisitos)
+2. [Template Forward Node](#template-forward-node)
+3. [Despliegue con Ansible](#despliegue-con-ansible)
+
+
+## Pre-requisitos
+
+1. Contar con un servidor de Security Onion con la interfaz de red pre-configurada: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
+
+2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion
+   (No agregar claves SSH  sobre el usuario ROOT del servidor con SECURITY ONION ).
+
+3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
+   Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
+ 
+   Este paso es opcional, en caso de no contar con el servidor con InfluxDB y Grafana instalados setear a la variable
+   `INSTALL_TELEGRAF: 'no'` en lugar de  `INSTALL_TELEGRAF: 'yes'`
+
+
+## Template Master Node
+
+*  En la carpeta `host_vars` agregar un archivo .yml que tiene la forma del archivo `template_master.yml`, renombrar de la forma `nombre_usuario.yml` 
+ (Ej. sonionmaster.yml) y modificar las variables de configuracion para el despliguete del Master Node  (`nombre_usuario` es utilizado en el paso siguiente y en la variable `ansible_user`).
     
-*  En la carpeta `host_vars` agregar un archivo yml (`nombre_usuario.yml`) en la que se especifiquen las variables
-   del archivo template_master.yml (Ej. sonionmaster.yml):
    
-    ```
+    ```yaml
+
         ansible_host: '172.16.81.127'
-        ansible_user: 'soniontest2'
+        ansible_user: 'sonionmaster'
         
         ##########################################
         #Variables for file sosetup_forward.conf
@@ -78,13 +96,25 @@
         #########################################################
         
         INSTALL_TELEGRAF: 'yes' #'no'
+    ```
+
+        
+## Despliegue con Ansible
 
 
-    ```
+*  Agregar nombre de usuario del nodo Master al archivo `hosts` en el grupo `[master]` 
+(Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
+
+    ```yaml
+    [master]
+    sonionmaster
     
-*  Ejecutar ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
-    
     ```
+
+
+*  Ejecutar Ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
+
+    ```bash
     $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
     ```
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor.
+Una vez ejecutado el comando se le solicitara el pass root para el servidor.
