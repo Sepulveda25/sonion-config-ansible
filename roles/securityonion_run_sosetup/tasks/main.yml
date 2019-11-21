@@ -1,20 +1,5 @@
 ---
 
-
-   - name: Install pexpect
-     become: yes
-     become_user: root
-     apt:
-      name: python-pexpect
-      update_cache: yes
-
-   - name: Install pexpect
-     become: yes
-     become_user: root
-     apt:
-      name: python3-pexpect
-      update_cache: yes
-
    - name: Run SOSETUP with "{{ sosetupfilepath }}" in Master Node #Para el Master
      become: yes
      become_user: root

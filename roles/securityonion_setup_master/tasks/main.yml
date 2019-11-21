@@ -1,17 +1,12 @@
 ---
 
-- name: Run SOSETUP with "{{ sosetupfilepath }}" in Forward Node #Para el Forward
+- name: Allow Analyst ports 22/tcp, 443/tcp, and 7734/tcp for {{analyst_network}}
   become: yes
   become_user: root
-  expect:
-   command:
-   timeout: 20 #modify timeout for command 
+  expect: 
+   command: so-allow
    responses:
-    'Please enter your selection': "yes"
-    'Are you sure you want to continue connecting.': "yes"
-  register: sosetup_output
-
-
-
-
-
+     'Please enter your selection': "a"
+     'Please enter the IP address': "{{ analyst_network }}"
+     'To continue and add this rule, press Enter.': "\r\n"
+  when:  ' "{{ allow_analyst_network }}" in "yes" '

@@ -5,6 +5,29 @@
     msg: "Interface {{ MGMT_INTERFACE }} no existe "
   failed_when: not (ansible_interfaces | intersect(MGMT_INTERFACE))
 
+- name: Install pexpect
+  become: yes
+  become_user: root
+  apt:
+    name: python-pexpect
+    update_cache: yes
+
+- name: Install python3-pexpect
+  become: yes
+  become_user: root
+  apt:
+    name: python3-pexpect
+    update_cache: yes
+
+- name: Check if Security Onion package exists 
+  shell: command -v sosetup
+  register: installed_sosetup
+  ignore_errors: True
+
+- name: Install Security Onion packages if they do not exist in the system
+  import_tasks: install_packages_master.yml
+  when: installed_sosetup is failed 
+
 - name: Create a file named ansible.{random}.conf
   tempfile:
     state:  file
@@ -15,6 +38,7 @@
   copy:
     src:  sosetup_forward.conf #from files folder in this role
     dest: "{{ temp_config.path }}"
+
     
 - name: Remplazo variables de host_vars en el config para el forward
   lineinfile: 
@@ -46,6 +70,17 @@
     name: securityonion_run_sosetup
   vars:
     sosetupfilepath: "{{ temp_config.path }}"
+
+- name: Allow Analyst ports 22/tcp, 443/tcp, and 7734/tcp for {{analyst_network}}
+  become: yes
+  become_user: root
+  expect: 
+   command: so-allow
+   responses:
+     'Please enter your selection': "a"
+     'Please enter the IP address': "{{ analyst_network }}"
+     'To continue and add this rule, press Enter.': "\r\n"
+  when:  ' "{{ allow_analyst_network }}" in "yes" '
 
 - name: Install telegraf
   include_role:

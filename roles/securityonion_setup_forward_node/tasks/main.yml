@@ -20,6 +20,29 @@
   become_user: root
   shell: sudo ip link set dev "{{ MGMT_INTERFACE }}" up
 
+- name: Install pexpect
+  become: yes
+  become_user: root
+  apt:
+    name: python-pexpect
+    update_cache: yes
+
+- name: Install python3-pexpect
+  become: yes
+  become_user: root
+  apt:
+    name: python3-pexpect
+    update_cache: yes
+
+- name: Check if Security Onion package exists 
+  shell: command -v sosetup
+  register: installed_sosetup
+  ignore_errors: True
+
+- name: Install Security Onion packages if they do not exist in the system
+  import_tasks: install_packages_forward.yml
+  when: installed_sosetup is failed 
+
 - name: Create user "{{ ansible_user_id }}" with Sudo privileges in Master Node #crea usuario ansible_username en sonion Master
   import_tasks: user_create_master_node.yml
 
@@ -101,5 +124,6 @@
   become_user: root
   reboot:
     reboot_timeout: 1000
+
 
 

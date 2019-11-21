@@ -56,12 +56,15 @@
   when: user_exists.rc != 0
 
 
-#- debug: 
-#   msg: "{{ password_validation }}"
+- debug: 
+   msg: "{{ password_validation }}"
 
 - fail:
     msg: El usuario "{{ ansible_user }}" que existe en el Master tiene una contraseña distinta a la ingresada.
-  when: password_validation.rc != 0
+  when: 
+    - user_exists.rc != 0 
+    - password_validation.rc != 0
+
 
 - name: Add or verify if user {{ansible_user}} i the Sudo group in Master Node
   expect: 

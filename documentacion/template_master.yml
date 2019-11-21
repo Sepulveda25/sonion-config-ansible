@@ -66,5 +66,15 @@ DAYSTOREPAIR: '7'
 
 INSTALL_TELEGRAF: 'yes' #'no'
 
+#########################################################
+#Configuring firewall for analyst for administration purposes
+#Please enter the IP address (or CIDR range) you'd like 
+#to allow to connect to port(s): 22,443,7734 
+#########################################################
+
+allow_analyst_network: 'yes' #no
+
+analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24)
+
 
 

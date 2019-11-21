@@ -1,0 +1,61 @@
+---
+
+#Esto se ejecuta entero en caso de ser un Ubuntu sin paquetes de SONION 
+
+- name: Run the equivalent of "apt-get update"
+  become: yes
+  become_user: root
+  apt:
+    update_cache: yes
+
+- name: Update all packages to the latest version "apt dist-upgrade"
+  become: yes
+  become_user: root
+  apt:
+    upgrade: dist
+
+- name: Reboot machine
+  become: yes
+  become_user: root
+  reboot:
+    reboot_timeout: 1000
+
+- name: select noninteractive in debconf/frontend
+  become: yes
+  become_user: root
+  shell: > 
+   echo "debconf debconf/frontend select noninteractive" | sudo debconf-set-selections
+
+- name: Install software-properties-common package
+  become: yes
+  become_user: root
+  apt:
+    name: software-properties-common
+    update_cache: yes
+
+- name: Add Security Onion stable repository from PPA
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: ppa:securityonion/stable
+
+- name: Install securityonion-server package
+  become: yes
+  become_user: root
+  apt:
+    name: securityonion-server
+    update_cache: yes
+
+- name: Install syslog-ng-core package
+  become: yes
+  become_user: root
+  apt:
+    name: syslog-ng-core
+    update_cache: yes
+
+- name: Install securityonion-elastic  package
+  become: yes
+  become_user: root
+  apt:
+    name: securityonion-elastic 
+    update_cache: yes

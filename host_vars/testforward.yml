@@ -1,5 +1,5 @@
-ansible_host: '172.16.81.116'
-ansible_user: 'sonionfce'
+ansible_host: '172.16.81.121'
+ansible_user: 'sonionfaud'
 
 ##########################################
 #Variables for file sosetup_forward.conf
@@ -16,7 +16,7 @@ MGMT_CONFIG_TYPE: 'static'
 ADDRESS: '172.16.81.121'
 NETMASK: '255.255.255.0'
 GATEWAY: '172.16.81.1'
-NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
+NAMESERVER: '200.16.16.1 200.16.16.2'
 DOMAIN: 'soniontest.local.psi'
 
 # Which interface(s) will be sniffing network traffic?
@@ -25,7 +25,7 @@ SNIFFING_INTERFACES: 'ens192'
 
 # SERVERNAME 
 # This should be the name/IP of the separate Master server:
-SERVERNAME: '172.16.81.115'
+SERVERNAME: '172.16.81.120'
 # SSH_USERNAME
 # This should be the name of an account on the separate Master server.
 SSH_USERNAME: 'sonionmaster' 
@@ -107,10 +107,9 @@ INSTALL_TELEGRAF: 'yes' #'no'
 COPY_THEHIVE_RULES: 'yes' #'no'
 
 #IP del servidor con TheHive
-hive_host: 'http://172.16.81.116'
+hive_host: 'http://172.16.81.250'
 #Puerto del servicio TheHive
 hive_port: '9000'
 #API-KEY del user creado en TheHive
-hive_apikey: 'xLuixewzDP6zXcVgLvyaFUoeUZcZgKu21'
-
+hive_apikey: 'CpnlZ7Hh4yUtPLttQbAk/e5YWj40Z7Aq'
 

@@ -3,20 +3,30 @@
 #- debug:
 #   var:  " '{{hive_host }}' | regex_replace('/', '\/') " #for sed command add "\/" for every "/" in http:// direction
 
-- name: Create a folder for TheHive Rules
+- name: Create a temporary folder for TheHive Rules named "thehiverules_{{ ansible_user_id }}"
   file:
-    path: "/home/{{ ansible_user_id }}/thehiverules"
+    path: "/home/{{ ansible_user_id }}/thehiverules_{{ ansible_user_id }}"
     state: directory
     mode: '0755'
   register: thehiverules
 
   
-- name: Copy TheHive Rules in "{{ thehiverules.path }}" Foward Node
+- name: Replace '/' for '\/' in "{{  hive_host }}" escape character
   copy:
     src: "{{ role_path }}/files/thehive_rules/" #from files folder roles"
     dest: "{{ thehiverules.path }}"
 - set_fact:
     http_hive_host:  "{{  hive_host | regex_replace( regexp1 , regexp2 ) }}"   #for sed command add "\/" for every "/" in http:// direction
+  vars:
+    regexp1: '/'
+    regexp2: '\/'
+
+- name: Replace '/' for '\/' in "{{  hive_apikey }}" escape character
+  copy:
+    src: "{{ role_path }}/files/thehive_rules/" #from files folder roles"
+    dest: "{{ thehiverules.path }}"
+- set_fact:
+    hive_apikey_escape:  "{{  hive_apikey | regex_replace( regexp1 , regexp2 ) }}"   #for sed command add "\/" for every "/" in http:// direction
   vars:
     regexp1: '/'
     regexp2: '\/'
@@ -37,14 +47,29 @@
 - name: Remplazo variables de hive_apikey de las reglas en "{{ thehiverules.path }}"
   become: yes
   become_user: root
-  shell: find "{{ thehiverules.path }}" -type f -exec sudo sed -i 's/\(hive_apikey:\)\(.*\)/\1 {{ hive_apikey }}/' {} \;
+  shell: find "{{ thehiverules.path }}" -type f -exec sudo sed -i 's/\(hive_apikey:\)\(.*\)/\1 {{ hive_apikey_escape }}/' {} \;
+
+- name: Search all files in "{{ thehiverules.path }}"
+  find:
+   paths: "{{ thehiverules.path }}"
+   recurse: yes
+  register: rules_in_directory
+
+- name: Agregamos "{{ ansible_user_id }}" en el campo name de cada regla
+  lineinfile:
+    path: "{{ item.path }}"
+    backrefs: yes
+    regexp: '(^name:.*$)'
+    line: '\1 - Node {{ ansible_user_id }}'
+  with_items: "{{ rules_in_directory.files }}" #para iterar sobre todas las reglas
 
 
-- name: Create a tar archive of "{{ thehiverules.path }}"
-  archive:
-    path: "{{ thehiverules.path }}/*" 
-    dest: "{{ thehiverules.path }}.tar" #create a file in home
-    format: tar
+
+#- name: Create a tar archive of "{{ thehiverules.path }}"
+#  archive:
+#    path: "{{ thehiverules.path }}/*" 
+#    dest: "{{ thehiverules.path }}.tar" #create a file in home
+#    format: tar
 
 - name: Change permisions in Master Node folder /etc/elastalert/rules
   expect: 
@@ -54,27 +79,34 @@
      'Are you sure you want to continue connecting.': "yes"
 
 
+#- name: Copy TheHive Rules in Master Node folder /etc/elastalert/rules
+#  expect: 
+#   command: scp -r "{{ thehiverules.path }}.tar" {{ ansible_user }}@{{ SERVERNAME }}:/etc/elastalert/rules/
+#   responses:
+#     'password': "{{ so_ssh_foward_pass_to_master }}"
+#     'Are you sure you want to continue connecting.': "yes"
+
 - name: Copy TheHive Rules in Master Node folder /etc/elastalert/rules
   expect: 
-   command: scp -r "{{ thehiverules.path }}.tar" {{ ansible_user }}@{{ SERVERNAME }}:/etc/elastalert/rules/
+   command: scp -r "{{ thehiverules.path }}" {{ ansible_user }}@{{ SERVERNAME }}:/etc/elastalert/rules/
    responses:
      'password': "{{ so_ssh_foward_pass_to_master }}"
      'Are you sure you want to continue connecting.': "yes"
 
 
-- name: Extract "/etc/elastalert/rules/thehiverules.tar" in /etc/elastalert/rules Master Node
-  expect: 
-   command: ssh "{{ ansible_user }}"@"{{ SERVERNAME }}" 'sudo tar -xvf /etc/elastalert/rules/thehiverules.tar -C /etc/elastalert/rules/'
-   responses:
-     'password': "{{ so_ssh_foward_pass_to_master }}"
-     'Are you sure you want to continue connecting.': "yes"
+#- name: Extract "/etc/elastalert/rules/thehiverules.tar" in /etc/elastalert/rules Master Node
+#  expect: 
+#   command: ssh "{{ ansible_user }}"@"{{ SERVERNAME }}" 'sudo tar -xvf /etc/elastalert/rules/thehiverules.tar -C /etc/elastalert/rules/'
+#   responses:
+#     'password': "{{ so_ssh_foward_pass_to_master }}"
+#     'Are you sure you want to continue connecting.': "yes"
 
-- name: Remove "/etc/elastalert/rules/thehiverules.tar" in /etc/elastalert/rules Master Node
-  expect: 
-   command: ssh "{{ ansible_user }}"@"{{ SERVERNAME }}" 'sudo rm /etc/elastalert/rules/thehiverules.tar'
-   responses:
-     'password': "{{ so_ssh_foward_pass_to_master }}"
-     'Are you sure you want to continue connecting.': "yes"
+#- name: Remove "/etc/elastalert/rules/thehiverules.tar" in /etc/elastalert/rules Master Node
+#  expect: 
+#   command: ssh "{{ ansible_user }}"@"{{ SERVERNAME }}" 'sudo rm /etc/elastalert/rules/thehiverules.tar'
+#   responses:
+#     'password': "{{ so_ssh_foward_pass_to_master }}"
+#     'Are you sure you want to continue connecting.': "yes"
 
 - name: Restore permisions in Master Node folder /etc/elastalert/rules
   expect: 
@@ -82,5 +114,7 @@
    responses:
      'password': "{{ so_ssh_foward_pass_to_master }}"
      'Are you sure you want to continue connecting.': "yes"
+
+
 
 

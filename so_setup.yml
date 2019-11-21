@@ -1,8 +1,3 @@
-
-#agregar a sudo visudo al final
-#soniontest ALL=(ALL) ALL
-
-
 ---
 
 - name: Install Security Onion
@@ -18,9 +13,8 @@
   - name: 'so_ssh_foward_pass_to_master'
     prompt: 'SSH password for Foward user created in Master Server'
     private: yes
-    when: "'forward_nodes' in group_names"
+    when: group_names == "forward_nodes"
 
   roles:
     - securityonion_setup
 
-  

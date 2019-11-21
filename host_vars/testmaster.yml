@@ -1,4 +1,4 @@
-ansible_host: '172.16.81.115'
+ansible_host: '172.16.81.120'
 ansible_user: 'sonionmaster'
 
 ##########################################
@@ -13,10 +13,10 @@ MGMT_INTERFACE: 'ens160'
 MGMT_CONFIG_TYPE: 'static'
 # If MGMT_CONFIG_TYPE=static, then provide the details here.
 # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-ADDRESS: '172.16.81.127'
+ADDRESS: '172.16.81.120'
 NETMASK: '255.255.255.0'
 GATEWAY: '172.16.81.1'
-NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
+NAMESERVER: '200.16.16.1 200.16.16.2'
 DOMAIN: 'sonionmaster.local.psi' 
 
 # LOG_SIZE_LIMIT
@@ -67,6 +67,14 @@ DAYSTOREPAIR: '7'
 INSTALL_TELEGRAF: 'yes' #'no'
 
 
+#########################################################
+#Configuring firewall for analyst for administration purposes
+#Please enter the IP address (or CIDR range) you'd like 
+#to allow to connect to port(s): 22,443,7734 
+#########################################################
 
+allow_analyst_network: 'yes' #no
+
+analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24)
 
 
