@@ -72,3 +72,13 @@
        up ip link set $IFACE promisc on arp off up
   when: matched_SNIFFING_INTERFACES.matched == 0
 
+- name: Restart networking.service
+  become: yes
+  become_user: root
+  systemd:
+    name: networking.service
+    state: restarted
+    enabled: yes
+
+
+
