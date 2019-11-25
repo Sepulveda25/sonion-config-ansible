@@ -1,0 +1,74 @@
+---
+
+- name: Check if {{ MGMT_INTERFACE }} exist
+  fail:
+    msg: "Interface {{ MGMT_INTERFACE }} no existe "
+  failed_when: not (ansible_interfaces | intersect(MGMT_INTERFACE))
+
+- name: Check if {{ SNIFFING_INTERFACES }} exist
+  fail:
+    msg: "Interface {{ SNIFFING_INTERFACES }} no existe "
+  failed_when: not (ansible_interfaces | intersect(SNIFFING_INTERFACES))
+
+
+#- name: Make interface "{{ SNIFFING_INTERFACES }}" up
+#  become: yes
+#  become_user: root
+#  shell: sudo ip link set dev "{{ SNIFFING_INTERFACES }}" up
+
+#- name: Make interface "{{ MGMT_INTERFACE }}" up
+#  become: yes
+#  become_user: root
+#  shell: sudo ip link set dev "{{ MGMT_INTERFACE }}" up
+
+
+- name: Check initial entry for interface "{{ MGMT_INTERFACE }}" in file /etc/network/interface exists
+  become: yes
+  become_user: root
+  find:
+    path: /etc/network/interfaces
+    patterns: 'interfaces'
+    contains: .* {{ MGMT_INTERFACE }} .*
+  register: matched_MGMT_INTERFACE
+
+- name: Check initial entry for interface "{{ SNIFFING_INTERFACES }}" in file /etc/network/interface exists
+  become: yes
+  become_user: root
+  find:
+    path: /etc/network/interfaces
+    patterns: 'interfaces'
+    contains: .* {{ SNIFFING_INTERFACES }} .*
+  register: matched_SNIFFING_INTERFACES
+
+
+#- debug: 
+#   msg: "{{ matched_MGMT_INTERFACE }}"
+#  when: matched_MGMT_INTERFACE.matched == 0
+
+#- debug: 
+#   msg: "{{ matched_SNIFFING_INTERFACES }}"
+#  when: matched_SNIFFING_INTERFACES.matched == 0
+
+- name: Add initial entry for interface "{{ MGMT_INTERFACE }}" in file /etc/network/interface if they not exists in this file
+  become: yes
+  become_user: root
+  blockinfile:
+    path: /etc/network/interfaces
+    block: |
+     auto {{ MGMT_INTERFACE }}
+     iface {{ MGMT_INTERFACE }} inet manual
+       up ip link set $IFACE promisc on arp off up
+  when: matched_MGMT_INTERFACE.matched == 0
+ 
+
+- name: Add initial entry for interface "{{ SNIFFING_INTERFACES }}" in file /etc/network/interface if they not exists in this file
+  become: yes
+  become_user: root
+  blockinfile:
+    path: /etc/network/interfaces
+    block: |
+     auto {{ SNIFFING_INTERFACES }}
+     iface {{ SNIFFING_INTERFACES }} inet manual
+       up ip link set $IFACE promisc on arp off up
+  when: matched_SNIFFING_INTERFACES.matched == 0
+
