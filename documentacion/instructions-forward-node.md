@@ -43,10 +43,10 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
 
 - `ansible_host` y `ansible_user` corresponden a la IP y Username del host objetivo (el Forward Node).
 
-    ```yaml
-        ansible_host: '172.16.81.126'
-        ansible_user: 'sonionforwar
-    ```
+```yaml
+    ansible_host: '172.16.81.126'
+    ansible_user: 'sonionforwar
+```
 
 - La seccion `Variables for file sosetup_forward.conf` incluye todos los campos necesarios para ejecutar el setup de Security Onion:
 
@@ -74,77 +74,77 @@ En caso de ser una direccion IP estatica se configuran la direccion IP, mascara 
 
 Se indica el nombre de la interfaz de monitoreo `SNIFFING_INTERFACES`, esta interfaz debe estar conectado a un port mirror del trafico a monitorear.
 
-    ```yaml
-        # Which interface(s) will be sniffing network traffic?
-        # For multiple interfaces, please separate them with spaces.
-        SNIFFING_INTERFACES: 'ens160'
-    ```
+```yaml
+    # Which interface(s) will be sniffing network traffic?
+    # For multiple interfaces, please separate them with spaces.
+    SNIFFING_INTERFACES: 'ens160'
+```
 
 
 Las variable `SERVERNAME` y `SSH_USERNAME` corresponden a la direccion IP y Username del Master Node. 
 
-    ```yaml
-        # SERVERNAME 
-        # This should be the name/IP of the separate Master server:
-        SERVERNAME: '172.16.81.127'
-        # SSH_USERNAME
-        # This should be the name of an account on the separate Master server.
-        SSH_USERNAME: 'soniontest2' 
-    ```
+```yaml
+    # SERVERNAME 
+    # This should be the name/IP of the separate Master server:
+    SERVERNAME: '172.16.81.127'
+    # SSH_USERNAME
+    # This should be the name of an account on the separate Master server.
+    SSH_USERNAME: 'soniontest2' 
+```
 
 La variable `PF_RING_SLOTS` indica la cabtidad de slots de pf_ring. ###???????????????????
 
-    ```yaml
-        # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
-        PF_RING_SLOTS: 4096
-    ```
+```yaml
+    # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
+    PF_RING_SLOTS: 4096
+```
 
 Configuracion del motor IDS, se selecciona que IDS (suricata o snort) se utilizara mediante la variable `IDS_ENGINE`.
 La variable `IDS_LB_PROCS` designa la cantidade de procesos del IDS, este debe ser un valor menor al numero de CPUs. 
 La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a monitorear.
 
-    ```yaml
-        # IDS_ENGINE
-        # Which IDS engine would you like to run?  snort/suricata
-        # IDS_ENGINE='snort' or IDS_ENGINE='suricata'
-        IDS_ENGINE: 'suricata' 
-        # IDS_LB_PROCS. 
-        #How many PF_RING load-balanced processes would you like to run? This value should be lower than your number of CPU cores.
-        IDS_LB_PROCS: '3'
-        # HOME_NET
-        # Setup by default configures Snort/Suricata's HOME_NET variable
-        HOME_NET: '192.168.1.1/16,10.0.0.0/8,172.16.0.0/12,200.16.0.0/16'
-    ```
+```yaml
+    # IDS_ENGINE
+    # Which IDS engine would you like to run?  snort/suricata
+    # IDS_ENGINE='snort' or IDS_ENGINE='suricata'
+    IDS_ENGINE: 'suricata' 
+    # IDS_LB_PROCS. 
+    #How many PF_RING load-balanced processes would you like to run? This value should be lower than your number of CPU cores.
+    IDS_LB_PROCS: '3'
+    # HOME_NET
+    # Setup by default configures Snort/Suricata's HOME_NET variable
+    HOME_NET: '192.168.1.1/16,10.0.0.0/8,172.16.0.0/12,200.16.0.0/16'
+```
 
 Configuracion del motor IDS BRO, la variable `BRO_LB_PROCS` indica la cantidad de procesos del BRO,
 este debe ser un valor menor al numero de CPUs.  
 
-    ```yaml
-        # BRO_LB_PROCS
-        # How many PF_RING load-balanced processes would you like Bro to run?
-        # This value should be lower than your number of CPU cores.
-        BRO_LB_PROCS: '3'
-    ```
+```yaml
+    # BRO_LB_PROCS
+    # How many PF_RING load-balanced processes would you like Bro to run?
+    # This value should be lower than your number of CPU cores.
+    BRO_LB_PROCS: '3'
+```
 
 Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opciones para netsniff-ng.
 
-    ```yaml
-        # PCAP_OPTIONS
-        # The default option here of '-c' is intended for low-volume environments.
-        # If monitoring lots of traffic, you will want to remove the -c to use
-        # netsniff-ng's default scatter/gather I/O or consider netsniff-ng's --mmap option. 
-        #option: b <cpu>, --bind-cpu <cpu> Pin netsniff-ng to a specific CPU and also pin resp.
-        PCAP_OPTIONS: '--mmap -b0'
-    ```
+```yaml
+    # PCAP_OPTIONS
+    # The default option here of '-c' is intended for low-volume environments.
+    # If monitoring lots of traffic, you will want to remove the -c to use
+    # netsniff-ng's default scatter/gather I/O or consider netsniff-ng's --mmap option. 
+    #option: b <cpu>, --bind-cpu <cpu> Pin netsniff-ng to a specific CPU and also pin resp.
+    PCAP_OPTIONS: '--mmap -b0'
+```
 
 - La seccion `Variables for file /opt/bro/etc/node.cfg` asigna los procesos de BRO a cada uno de los CPUs inidicados en la variable `BRO_PIN_CPU`. 
   La cantidad de CPUs inidicados debe ser menor o igual al numero de `BRO_LB_PROCS` definido en la seccion `Variables for file sosetup_forward.conf`.
 
-    ```yaml
-        #pin_cpus
-        #Pin the BRO lb_procs processes to certain CPU cores.
-        BRO_PIN_CPU: '5,6,7'
-    ```
+```yaml
+    #pin_cpus
+    #Pin the BRO lb_procs processes to certain CPU cores.
+    BRO_PIN_CPU: '5,6,7'
+```
 
 - La seccion `Variables for file suricata.yaml` asigna los procesos de suricata a los CPU indicados. <br/>
   La variable `set_cpu_affinity` indica si queremos asignacion de los procesos a los CPUs indicados  <br/>
@@ -156,16 +156,16 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
   y la cantidad de CPUs indicados en esta variable debe ser menor o igual a `IDS_LB_PROCS`
   definido en la seccion `Variables for file sosetup_forward.conf`.
 
-    ```yaml
-        # Tune cpu affinity of threads. Each family of threads can be bound on specific CPUs.
-        set_cpu_affinity: 'yes'
-        # management-cpu-set is used for flow timeout handling, counters
-        management_cpu_set: '1'
-        # receive-cpu-set is used for capture threads
-        receive_cpu_set: '1'
-        # worker-cpu-set is used for 'worker' threads
-        worker_cpu_set: '2-4'
-    ```
+```yaml
+    # Tune cpu affinity of threads. Each family of threads can be bound on specific CPUs.
+    set_cpu_affinity: 'yes'
+    # management-cpu-set is used for flow timeout handling, counters
+    management_cpu_set: '1'
+    # receive-cpu-set is used for capture threads
+    receive_cpu_set: '1'
+    # worker-cpu-set is used for 'worker' threads
+    worker_cpu_set: '2-4'
+```
 
 - La seccion `Variables for file sensor.conf` indica el modo de captura del IDS (af-packet o pfrings) en la variable `SURICATA_CAPTURE`.
 
