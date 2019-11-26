@@ -27,15 +27,25 @@
  (Ej. sonionmaster.yml) y modificar las variables de configuracion para el despliguete del Master Node  (`nombre_usuario` es utilizado en el paso siguiente y en la variable `ansible_user`).
     
    
-    ```yaml
 
+Dentro del archivo `template_master.yml` tenemos las siguientes variables:
+
+
+- `ansible_host` y `ansible_user` corresponden a la IP y Username del host objetivo (el Master Node).
+
+```yaml
 	ansible_host: '172.16.81.127'
 	ansible_user: 'soniontest2'
+```
 
-	##########################################
-	#Variables for file sosetup_forward.conf
-	##########################################
+- La seccion `Variables for file sosetup_forward.conf` incluye todos los campos necesarios para ejecutar el setup de Security Onion:
 
+Se selecciona la interfaz de administracion, se coloca el nombre de la misma en el campo `MGMT_INTERFACE`
+(es necesario un conocimiento previo de las interfaces), se configura tambien el uso de una direccion IP estatica o DHCP. 
+En caso de ser una direccion IP estatica se configuran la direccion IP, mascara de red, gateway, servidores DNS y un nombre de dominio.
+ 
+  
+```yaml
 	# MGMT_INTERFACE
 	# Which network interface should be the management interface?
 	MGMT_INTERFACE: 'ens160'
@@ -49,21 +59,33 @@
 	GATEWAY: '172.16.81.1'
 	NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
 	DOMAIN: 'sonionmaster.local.psi' 
+```
 
+En la variable `LOG_SIZE_LIMIT` se configura la cantidad de disco que puede utilizar Elastic.
+
+```yaml
 	# LOG_SIZE_LIMIT
 	# This setting controls how much disk space Elastic uses.
 	# 100GB = 100000000000
 	# LOG_SIZE_LIMIT='100000000000'
 	LOG_SIZE_LIMIT: '100000000000'
+```
 
-	# IDS_RULESET
+En la variable `IDS_RULESET` se indica el ruleset de reglas que utilizara el motor de IDS.
+
+```yaml
+    # IDS_RULESET
 	# Which IDS ruleset would you like to use?
 	# Emerging Threats Open (no oinkcode required): ETOPEN
 	# Emerging Threats PRO (requires ETPRO oinkcode): ETPRO
 	# Sourcefire Talos (requires Talos oinkcode): TALOS
 	# TALOS and ET (requires TALOS oinkcode): TALOSET
 	IDS_RULESET: 'ETOPEN'
+```
 
+En la variable `IDS_ENGINE` se indica el motor IDS (Suricata o Snort) que se utilizara en los Forwards Nodes.
+
+```yaml
 	# IDS_ENGINE
 	# Which IDS engine would you like to run?  snort/suricata
 	# Whatever you choose here will apply to the master server
@@ -73,8 +95,17 @@
 	# To run Suricata:
 	# IDS_ENGINE='suricata'
 	IDS_ENGINE: 'suricata'
+```
 
 
+En las siguientes variables se definen caracteristicas que tiene que ver con el uso del almacenamiento. <br/>
+La variable `WARN_DISK_USAGE` indica a partir de que porcentaje de uso de disco se comenzara a emitir alertas. <br/>
+La variable `CRIT_DISK_USAGE` indica a partir de que porcentaje de uso de disco se comenzara a eliminar archivos viejos. <br/>
+La variable `DAYSTOKEEP` indica la cantidad de dias que se deben retener los datos en la base de SGUIL. <br/>
+La variable `DAYSTOREPAIR` indica en caso de falla la longitud en dias de los datos a restaurar de la base de SGUIL. <br/>
+
+
+```yaml
 	# WARN_DISK_USAGE
 	# Begin warning when disk usage reaches this level
 	WARN_DISK_USAGE: '80'
@@ -87,28 +118,25 @@
 	# DAYSTOREPAIR
 	# Only applies to Sguil database ('securityonion_db')
 	DAYSTOREPAIR: '7'
+```
 
+- La seccion `Install Telegraf` indica si se llaveara a cabo la integracion del host con Telegraf. 
+  En caso de ser 'yes' la variable `INSTALL_TELEGRAF`,  un servidor con InfluxDB y Grafana. 
+  Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
 
+```yaml
+   INSTALL_TELEGRAF: 'yes' #'no'
+```        
 
-	#########################################################
-	#Install Telegraf 
-	#(Modify File roles/telegraf_install/files/telegraf.conf)
-	#########################################################
+- La seccion `Configuring firewall for analyst for administration purposes` indica si se deben habilitar 
+  los puertos 22,443 y 7734 para el acceso de un analista desde una red determinada.
+  En caso de ser 'yes' la variable `allow_analyst_network`, se debe indicar en la variable `analyst_network`
+  la red desde la que accedera el analista.
 
-	INSTALL_TELEGRAF: 'yes' #'no'
-
-	#########################################################
-	#Configuring firewall for analyst for administration purposes
-	#Please enter the IP address (or CIDR range) you'd like 
-	#to allow to connect to port(s): 22,443,7734 
-	#########################################################
-
+```yaml
 	allow_analyst_network: 'yes' #no
-
 	analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24)
-
-
-    ```
+```
 
         
 ## Despliegue con Ansible
