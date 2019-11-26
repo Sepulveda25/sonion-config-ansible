@@ -41,7 +41,7 @@
 
 Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
 
-- ansible_host y ansible_user corresponden a la IP y Username del host objetivo (el Forward Node).
+- `ansible_host` y `ansible_user` corresponden a la IP y Username del host objetivo (el Forward Node).
 
     ```yaml
         ansible_host: '172.16.81.126'
@@ -94,7 +94,7 @@ La variable `PF_RING_SLOTS` indica la cabtidad de slots de pf_ring. ###?????????
 
     ```yaml
         # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
-        PF_RING_SLOTS: 4096 
+        PF_RING_SLOTS: 4096
     ```
 
 Configuracion del motor IDS, se selecciona que IDS (suricata o snort) se utilizara mediante la variable `IDS_ENGINE`.
@@ -136,7 +136,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     ```
 
 - La seccion `Variables for file /opt/bro/etc/node.cfg` asigna los procesos de BRO a cada uno de los CPUs inidicados en la variable `BRO_PIN_CPU`. 
-La cantidad de CPUs inidicados debe ser menor o igual al numero de `BRO_LB_PROCS` definido en la seccion `Variables for file sosetup_forward.conf`.
+  La cantidad de CPUs inidicados debe ser menor o igual al numero de `BRO_LB_PROCS` definido en la seccion `Variables for file sosetup_forward.conf`.
 
     ```yaml
         #pin_cpus
@@ -152,7 +152,7 @@ La cantidad de CPUs inidicados debe ser menor o igual al numero de `BRO_LB_PROCS
   En la variable `worker-cpu-set` indica a que CPUs se les asignan los workers de Suricata, 
   esta variable puede ser un rango de CPUs como por ejemplo 2-4 (incluye los CPUs 2,3,4) 
   y la cantidad de CPUs indicados en esta variable debe ser menor o igual a `IDS_LB_PROCS`
-  definido en la seccion `Variables for file sosetup_forward.conf`.. 
+  definido en la seccion `Variables for file sosetup_forward.conf`.
 
     ```yaml
         # Tune cpu affinity of threads. Each family of threads can be bound on specific CPUs.
