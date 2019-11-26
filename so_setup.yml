@@ -13,8 +13,18 @@
   - name: 'so_ssh_foward_pass_to_master'
     prompt: 'SSH password for Foward user created in Master Server'
     private: yes
-    when: group_names == "forward_nodes"
+    when: "'forward_nodes' in group_names"
 
-  roles:
-    - securityonion_setup
+  tasks:
+
+    - debug:
+        msg: 'Logging in as {{holis}}'
+
+    - debug:
+        msg: 'Logging in as {{ group_names }}'
+      when: "'master' in group_names"
+
+    - name: Execute sosetup for forward
+      include_role:
+       name: securityonion_setup
 
