@@ -44,10 +44,8 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
 - ansible_host y ansible_user corresponden a la IP y Username del host objetivo (el Forward Node).
 
     ```yaml
-    
         ansible_host: '172.16.81.126'
         ansible_user: 'sonionforwar
-        
     ```
 
 - La seccion `Variables for file sosetup_forward.conf` incluye todos los campos necesarios para ejecutar el setup de Security Onion:
@@ -55,9 +53,8 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
  Se selecciona la interfaz de administracion, se coloca el nombre de la misma en el campo `MGMT_INTERFACE`
  (es necesario un conocimiento previo de las interfaces), se configura tambien el uso de una direccion IP estatica o DHCP. 
  En caso de ser una direccion IP estatica se configuran la direccion IP, mascara de red, gateway, servidores DNS y un nombre de dominio.
-
+ 
     ```yaml
-    
         # MGMT_INTERFACE
         # Which network interface should be the management interface?
         MGMT_INTERFACE: 'ens160'
@@ -71,40 +68,33 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
         GATEWAY: '172.16.81.1'
         NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
         DOMAIN: 'soniontest.local.psi'
-        
     ```
 
 Se indica el nombre de la interfaz de monitoreo `SNIFFING_INTERFACES`, esta interfaz debe estar conectado a un port mirror del trafico a monitorear.
 
     ```yaml
-    
         # Which interface(s) will be sniffing network traffic?
         # For multiple interfaces, please separate them with spaces.
         SNIFFING_INTERFACES: 'ens160'
-        
     ```
 
 
 Las variable `SERVERNAME` y `SSH_USERNAME` corresponden a la direccion IP y Username del Master Node. 
 
     ```yaml
-    
         # SERVERNAME 
         # This should be the name/IP of the separate Master server:
         SERVERNAME: '172.16.81.127'
         # SSH_USERNAME
         # This should be the name of an account on the separate Master server.
         SSH_USERNAME: 'soniontest2' 
-        
     ```
 
-La variable `PF_RING_SLOTS` indica la cabtidad de slots de pf_ring
+La variable `PF_RING_SLOTS` indica la cabtidad de slots de pf_ring. ###???????????????????
 
     ```yaml
-    
         # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
         PF_RING_SLOTS: 4096 
-        
     ```
 
 Configuracion del motor IDS, se selecciona que IDS (suricata o snort) se utilizara mediante la variable `IDS_ENGINE`.
@@ -112,7 +102,6 @@ La variable `IDS_LB_PROCS` designa la cantidade de procesos del IDS, este debe s
 La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a monitorear.
 
     ```yaml
-    
         # IDS_ENGINE
         # Which IDS engine would you like to run?  snort/suricata
         # IDS_ENGINE='snort' or IDS_ENGINE='suricata'
@@ -125,7 +114,8 @@ La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a mon
         HOME_NET: '192.168.1.1/16,10.0.0.0/8,172.16.0.0/12,200.16.0.0/16'
     ```
 
-- Configuracion del motor IDS BRO, se seleccionan la cantidad de procesos del IDS mediante BRO_LB_PROCS, este debe ser un valor menor a numero de cores. 
+Configuracion del motor IDS BRO, la variable `BRO_LB_PROCS` indica la cantidad de procesos del BRO,
+este debe ser un valor menor al numero de CPUs.  
 
     ```yaml
         # BRO_LB_PROCS
@@ -134,7 +124,7 @@ La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a mon
         BRO_LB_PROCS: '3'
     ```
 
-- Configuracion de opcines de netsniff-ng, esta puede variar de acuerdo a la cantidad de trafico.
+Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opciones para netsniff-ng.
 
     ```yaml
         # PCAP_OPTIONS
@@ -145,7 +135,8 @@ La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a mon
         PCAP_OPTIONS: '--mmap -b0'
     ```
 
-- La seccion `Variables for file /opt/bro/etc/node.cfg` asigna los procesos de BRO a cada uno de los CPUs inidicados en la variable BRO_PIN_CPU. La cantidad de CPUs inidicados debe ser menor al numero de BRO_LB_PROCS.
+- La seccion `Variables for file /opt/bro/etc/node.cfg` asigna los procesos de BRO a cada uno de los CPUs inidicados en la variable `BRO_PIN_CPU`. 
+La cantidad de CPUs inidicados debe ser menor o igual al numero de `BRO_LB_PROCS` definido en la seccion `Variables for file sosetup_forward.conf`.
 
     ```yaml
         #pin_cpus
@@ -153,13 +144,17 @@ La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a mon
         BRO_PIN_CPU: '5,6,7'
     ```
 
-- La seccion `Variables for file suricata.yaml` asigna los procesos de suricata a los CPU indicados. La variable set_cpu_affinity indica si queremos asignacion de los procesos a los CPUs indicados en las variables que se encuentran debajo de esta. La variable management_cpu_set indica a que CPU se le asigna el proceso management de Suricata. La variable receive_cpu_set indica a que CPU se le asigna el proceso receive_cpu de Suricata. La variable worker-cpu-set indica a que CPUs se le asignan los workers de Suricata, esta variable puede ser un rango de CPUs como por ejemplo 2-4 (incluye los CPUs 2, 3  y 4) y la cantidad de CPUs indicados en esta variable debe ser menor o igual a IDS_LB_PROCS.
+- La seccion `Variables for file suricata.yaml` asigna los procesos de suricata a los CPU indicados. <br/>
+  La variable `set_cpu_affinity` indica si queremos asignacion de los procesos a los CPUs indicados  <br/>
+  en las variables que se encuentran debajo de esta. <br/>
+  En la variable `management_cpu_set` se indica a que CPU se le asigna el proceso management de Suricata. <br/>
+  En la variable `receive_cpu_set` se indica a que CPU se le asigna el proceso receive de Suricata`. <br/>
+  En la variable `worker-cpu-set` indica a que CPUs se les asignan los workers de Suricata, 
+  esta variable puede ser un rango de CPUs como por ejemplo 2-4 (incluye los CPUs 2,3,4) 
+  y la cantidad de CPUs indicados en esta variable debe ser menor o igual a `IDS_LB_PROCS`
+  definido en la seccion `Variables for file sosetup_forward.conf`.. 
 
     ```yaml
-
-        ##########################################
-        #Variables for file suricata.yaml 
-        ##########################################
         # Tune cpu affinity of threads. Each family of threads can be bound on specific CPUs.
         set_cpu_affinity: 'yes'
         # management-cpu-set is used for flow timeout handling, counters
@@ -170,7 +165,7 @@ La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a mon
         worker_cpu_set: '2-4'
     ```
 
-- La seccion `Variables for file sensor.conf` indica el modo de captura del IDS (af-packet o pfrings)
+- La seccion `Variables for file sensor.conf` indica el modo de captura del IDS (af-packet o pfrings) en la variable `SURICATA_CAPTURE`.
 
     ```yaml
         #Set pfring as the load balancer (af-packet is the default)
