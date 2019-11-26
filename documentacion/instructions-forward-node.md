@@ -34,25 +34,30 @@
    `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`, en el archivo de variables de la carpeta `host_vars`.
 
 ## Template Forward Node
-
+    
     
 *   En la carpeta `host_vars` agregar (copiar) un archivo .yml que tiene la forma del archivo `template_forward.yml`, renombrar de la forma `nombre_usuario.yml` 
  (Ej. sonionforward.yml) y modificar las variables de configuracion para el despliguete del Foward Node  (`nombre_usuario` es utilizado en el paso siguiente y en la variable `ansible_user`).
 
-  Dentro del archivo `template_forward.yml` tenemos los siguientes campos:
+Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
 
-- ansible_host y ansible_user corresponden a la IP y Username del host objetivo.
+- ansible_host y ansible_user corresponden a la IP y Username del host objetivo (el Forward Node).
 
     ```yaml
+    
         ansible_host: '172.16.81.126'
         ansible_user: 'sonionforwar
+        
     ```
 
 - La seccion `Variables for file sosetup_forward.conf` incluye todos los campos necesarios para ejecutar el setup de Security Onion:
 
- Se selecciona la interfaz de administracion `MGMT_INTERFACE`, se coloca el nombre de la misma en el campo MGMT_INTERFACE (es necesario un conocimiento previo de las interfaces), se configura tambien el uso de una direccion IP estatica o DHCP. En caso de ser una direccion IP estatica se configuran la direccion, mascara de red, gateway, servidores DNS y un dominio.
+ Se selecciona la interfaz de administracion, se coloca el nombre de la misma en el campo `MGMT_INTERFACE`
+ (es necesario un conocimiento previo de las interfaces), se configura tambien el uso de una direccion IP estatica o DHCP. 
+ En caso de ser una direccion IP estatica se configuran la direccion IP, mascara de red, gateway, servidores DNS y un nombre de dominio.
 
     ```yaml
+    
         # MGMT_INTERFACE
         # Which network interface should be the management interface?
         MGMT_INTERFACE: 'ens160'
@@ -66,38 +71,48 @@
         GATEWAY: '172.16.81.1'
         NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
         DOMAIN: 'soniontest.local.psi'
+        
     ```
 
-- Seleccion de la interfaz de monitoreo (sniffing), esta interfaz debe estar conectado a un port mirror del trafico a monitorear.
+Se indica el nombre de la interfaz de monitoreo `SNIFFING_INTERFACES`, esta interfaz debe estar conectado a un port mirror del trafico a monitorear.
 
     ```yaml
+    
         # Which interface(s) will be sniffing network traffic?
         # For multiple interfaces, please separate them with spaces.
         SNIFFING_INTERFACES: 'ens160'
+        
     ```
 
 
-- Las variable SERVERNAME y SSH_USERNAME corresponden a la IP y Username del Master Node. 
+Las variable `SERVERNAME` y `SSH_USERNAME` corresponden a la direccion IP y Username del Master Node. 
 
     ```yaml
+    
         # SERVERNAME 
         # This should be the name/IP of the separate Master server:
         SERVERNAME: '172.16.81.127'
         # SSH_USERNAME
         # This should be the name of an account on the separate Master server.
         SSH_USERNAME: 'soniontest2' 
+        
     ```
 
-- Que es esto? PF_RING_SLOTS ################################33
+La variable `PF_RING_SLOTS` indica la cabtidad de slots de pf_ring
 
     ```yaml
+    
         # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
         PF_RING_SLOTS: 4096 
+        
     ```
 
-- Configuracion del motor IDS, se selecciona que IDS (suricata/snort) se utilizara mediante la variable IDS_ENGINE, la cantiadad de procesos del IDS mediante IDS_LB_PROCS, este debe ser un valor menor a numero de cores. La variable HOME_NET especifica las direcciones IPs privadas de la red. 
+Configuracion del motor IDS, se selecciona que IDS (suricata o snort) se utilizara mediante la variable `IDS_ENGINE`.
+La variable `IDS_LB_PROCS` designa la cantidade de procesos del IDS, este debe ser un valor menor al numero de CPUs. 
+La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a monitorear.
 
     ```yaml
+    
         # IDS_ENGINE
         # Which IDS engine would you like to run?  snort/suricata
         # IDS_ENGINE='snort' or IDS_ENGINE='suricata'
