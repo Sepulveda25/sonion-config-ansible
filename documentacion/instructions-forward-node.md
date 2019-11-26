@@ -198,7 +198,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
    Las reglas actualizadas se encuentran en el [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive) 
    y deben guardarse en `/roles/copy_hive_rules_to_master/files/thehive_rules`, la ejecucion del Ansible modificara las reglas automaticamente
    y le asignara las variables `hive_host` (IP del servidor de TheHive), `hive_port` (puerto del servicio de TheHive) y `hive_apikey` 
-   (api key del usuario creado por el Admin de TheHive). 
+   (api key del usuario creado por el Admin de TheHive), por ello dentro de las reglas no hay que realizar ninguna modificacion manualmente.
 
 ```yaml
         COPY_THEHIVE_RULES: 'yes' #'no'
