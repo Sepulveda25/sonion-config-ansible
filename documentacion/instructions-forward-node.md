@@ -150,7 +150,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
   La variable `set_cpu_affinity` indica si queremos asignacion de los procesos a los CPUs indicados
   en las variables que se encuentran debajo de esta. <br/>
   En la variable `management_cpu_set` se indica a que CPU se le asigna el proceso management de Suricata. <br/>
-  En la variable `receive_cpu_set` se indica a que CPU se le asigna el proceso receive de Suricata`. <br/>
+  En la variable `receive_cpu_set` se indica a que CPU se le asigna el proceso receive de Suricata. <br/>
   En la variable `worker-cpu-set` indica a que CPUs se les asignan los workers de Suricata, 
   esta variable puede ser un rango de CPUs como por ejemplo 2-4 (incluye los CPUs 2,3,4) 
   y la cantidad de CPUs indicados en esta variable debe ser menor o igual a `IDS_LB_PROCS`
