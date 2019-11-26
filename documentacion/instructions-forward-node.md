@@ -100,7 +100,7 @@ La variable `PF_RING_SLOTS` indica la cabtidad de slots de pf_ring. ###?????????
 ```
 
 Configuracion del motor IDS, se selecciona que IDS (suricata o snort) se utilizara mediante la variable `IDS_ENGINE`.
-La variable `IDS_LB_PROCS` designa la cantidade de procesos del IDS, este debe ser un valor menor al numero de CPUs. 
+La variable `IDS_LB_PROCS` designa la cantida de de procesos del IDS, este debe ser un valor menor al numero de CPUs. 
 La variable `HOME_NET` especifica las direcciones IPs privadas del trafico a monitorear.
 
 ```yaml
