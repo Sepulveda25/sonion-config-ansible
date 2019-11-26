@@ -225,6 +225,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     ```bash
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward y el pass del servidor Master.
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward, el pass del servidor Master 
+   y una pass para el usuario que se creara en el Master para la integracion del mismo con el Forward.
 
 
