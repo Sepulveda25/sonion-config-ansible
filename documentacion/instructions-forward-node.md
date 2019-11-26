@@ -54,23 +54,23 @@ Se selecciona la interfaz de administracion, se coloca el nombre de la misma en 
 (es necesario un conocimiento previo de las interfaces), se configura tambien el uso de una direccion IP estatica o DHCP. 
 En caso de ser una direccion IP estatica se configuran la direccion IP, mascara de red, gateway, servidores DNS y un nombre de dominio.
  
-    ```yaml
+```yaml
     
-        # MGMT_INTERFACE
-        # Which network interface should be the management interface?
-        MGMT_INTERFACE: 'ens160'
-        # MGMT_CONFIG_TYPE
-        # Should the management interface be configured using DHCP or static IP?
-        MGMT_CONFIG_TYPE: 'static'
-        # If MGMT_CONFIG_TYPE=static, then provide the details here.
-        # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-        ADDRESS: '172.16.81.126'
-        NETMASK: '255.255.255.0'
-        GATEWAY: '172.16.81.1'
-        NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
-        DOMAIN: 'soniontest.local.psi'
+    # MGMT_INTERFACE
+    # Which network interface should be the management interface?
+    MGMT_INTERFACE: 'ens160'
+    # MGMT_CONFIG_TYPE
+    # Should the management interface be configured using DHCP or static IP?
+    MGMT_CONFIG_TYPE: 'static'
+    # If MGMT_CONFIG_TYPE=static, then provide the details here.
+    # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
+    ADDRESS: '172.16.81.126'
+    NETMASK: '255.255.255.0'
+    GATEWAY: '172.16.81.1'
+    NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
+    DOMAIN: 'soniontest.local.psi'
         
-    ```
+```
 
 Se indica el nombre de la interfaz de monitoreo `SNIFFING_INTERFACES`, esta interfaz debe estar conectado a un port mirror del trafico a monitorear.
 
