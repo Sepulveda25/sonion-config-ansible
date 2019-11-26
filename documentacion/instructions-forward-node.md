@@ -174,7 +174,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     SURICATA_CAPTURE: 'pfring' #af-packet
 ```
 
-- La seccion `Variables for file /etc/sysctl.conf` modifican las variables `dirty_background_ratio` `dirty_ratio` y `swappiness` del archivo /etc/sysctl.conf.
+- La seccion `Variables for file /etc/sysctl.conf` modifican las variables `dirty_background_ratio`, `dirty_ratio` y `swappiness` del archivo /etc/sysctl.conf.
 
 ```yaml
     #Configure Linux Disk Caching
