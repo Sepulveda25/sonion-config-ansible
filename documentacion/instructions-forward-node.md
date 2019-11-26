@@ -147,7 +147,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
 ```
 
 - La seccion `Variables for file suricata.yaml` asigna los procesos de suricata a los CPU indicados. <br/>
-  La variable `set_cpu_affinity` indica si queremos asignacion de los procesos a los CPUs indicados  <br/>
+  La variable `set_cpu_affinity` indica si queremos asignacion de los procesos a los CPUs indicados
   en las variables que se encuentran debajo de esta. <br/>
   En la variable `management_cpu_set` se indica a que CPU se le asigna el proceso management de Suricata. <br/>
   En la variable `receive_cpu_set` se indica a que CPU se le asigna el proceso receive de Suricata`. <br/>
