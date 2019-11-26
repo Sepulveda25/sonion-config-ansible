@@ -34,8 +34,8 @@ Dentro del archivo `template_master.yml` tenemos las siguientes variables:
 - `ansible_host` y `ansible_user` corresponden a la IP y Username del host objetivo (el Master Node).
 
 ```yaml
-	ansible_host: '172.16.81.127'
-	ansible_user: 'soniontest2'
+ansible_host: '172.16.81.127'
+ansible_user: 'soniontest2'
 ```
 
 - La seccion `Variables for file sosetup_forward.conf` incluye todos los campos necesarios para ejecutar el setup de Security Onion:
@@ -44,57 +44,57 @@ Se selecciona la interfaz de administracion, se coloca el nombre de la misma en 
 (es necesario un conocimiento previo de las interfaces), se configura tambien el uso de una direccion IP estatica o DHCP. 
 En caso de ser una direccion IP estatica se configuran la direccion IP, mascara de red, gateway, servidores DNS y un nombre de dominio.
  
-  
+
 ```yaml
-	# MGMT_INTERFACE
-	# Which network interface should be the management interface?
-	MGMT_INTERFACE: 'ens160'
-	# MGMT_CONFIG_TYPE
-	# Should the management interface be configured using DHCP or static IP?
-	MGMT_CONFIG_TYPE: 'static'
-	# If MGMT_CONFIG_TYPE=static, then provide the details here.
-	# If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-	ADDRESS: '172.16.81.127'
-	NETMASK: '255.255.255.0'
-	GATEWAY: '172.16.81.1'
-	NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
-	DOMAIN: 'sonionmaster.local.psi' 
+# MGMT_INTERFACE
+# Which network interface should be the management interface?
+MGMT_INTERFACE: 'ens160'
+# MGMT_CONFIG_TYPE
+# Should the management interface be configured using DHCP or static IP?
+MGMT_CONFIG_TYPE: 'static'
+# If MGMT_CONFIG_TYPE=static, then provide the details here.
+# If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
+ADDRESS: '172.16.81.127'
+NETMASK: '255.255.255.0'
+GATEWAY: '172.16.81.1'
+NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
+DOMAIN: 'sonionmaster.local.psi' 
 ```
 
 En la variable `LOG_SIZE_LIMIT` se configura la cantidad de disco que puede utilizar Elastic.
 
 ```yaml
-	# LOG_SIZE_LIMIT
-	# This setting controls how much disk space Elastic uses.
-	# 100GB = 100000000000
-	# LOG_SIZE_LIMIT='100000000000'
-	LOG_SIZE_LIMIT: '100000000000'
+# LOG_SIZE_LIMIT
+# This setting controls how much disk space Elastic uses.
+# 100GB = 100000000000
+# LOG_SIZE_LIMIT='100000000000'
+LOG_SIZE_LIMIT: '100000000000'
 ```
 
 En la variable `IDS_RULESET` se indica el ruleset de reglas que utilizara el motor de IDS.
 
 ```yaml
-    # IDS_RULESET
-	# Which IDS ruleset would you like to use?
-	# Emerging Threats Open (no oinkcode required): ETOPEN
-	# Emerging Threats PRO (requires ETPRO oinkcode): ETPRO
-	# Sourcefire Talos (requires Talos oinkcode): TALOS
-	# TALOS and ET (requires TALOS oinkcode): TALOSET
-	IDS_RULESET: 'ETOPEN'
+# IDS_RULESET
+# Which IDS ruleset would you like to use?
+# Emerging Threats Open (no oinkcode required): ETOPEN
+# Emerging Threats PRO (requires ETPRO oinkcode): ETPRO
+# Sourcefire Talos (requires Talos oinkcode): TALOS
+# TALOS and ET (requires TALOS oinkcode): TALOSET
+IDS_RULESET: 'ETOPEN'
 ```
 
 En la variable `IDS_ENGINE` se indica el motor IDS (Suricata o Snort) que se utilizara en los Forwards Nodes.
 
 ```yaml
-	# IDS_ENGINE
-	# Which IDS engine would you like to run?  snort/suricata
-	# Whatever you choose here will apply to the master server
-	# and then sensors inherit this setting from the master server.
-	# To run Snort:
-	# IDS_ENGINE='snort'
-	# To run Suricata:
-	# IDS_ENGINE='suricata'
-	IDS_ENGINE: 'suricata'
+# IDS_ENGINE
+# Which IDS engine would you like to run?  snort/suricata
+# Whatever you choose here will apply to the master server
+# and then sensors inherit this setting from the master server.
+# To run Snort:
+# IDS_ENGINE='snort'
+# To run Suricata:
+# IDS_ENGINE='suricata'
+IDS_ENGINE: 'suricata'
 ```
 
 
@@ -106,18 +106,18 @@ La variable `DAYSTOREPAIR` indica en caso de falla la longitud en dias de los da
 
 
 ```yaml
-	# WARN_DISK_USAGE
-	# Begin warning when disk usage reaches this level
-	WARN_DISK_USAGE: '80'
-	# CRIT_DISK_USAGE
-	# Begin purging old files when disk usage reaches this level
-	CRIT_DISK_USAGE: '90'
-	# DAYSTOKEEP
-	# Only applies to Sguil database ('securityonion_db')
-	DAYSTOKEEP: '30'
-	# DAYSTOREPAIR
-	# Only applies to Sguil database ('securityonion_db')
-	DAYSTOREPAIR: '7'
+# WARN_DISK_USAGE
+# Begin warning when disk usage reaches this level
+WARN_DISK_USAGE: '80'
+# CRIT_DISK_USAGE
+# Begin purging old files when disk usage reaches this level
+CRIT_DISK_USAGE: '90'
+# DAYSTOKEEP
+# Only applies to Sguil database ('securityonion_db')
+DAYSTOKEEP: '30'
+# DAYSTOREPAIR
+# Only applies to Sguil database ('securityonion_db')
+DAYSTOREPAIR: '7'
 ```
 
 - La seccion `Install Telegraf` indica si se llaveara a cabo la integracion del host con Telegraf. 
@@ -125,7 +125,7 @@ La variable `DAYSTOREPAIR` indica en caso de falla la longitud en dias de los da
   Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
 
 ```yaml
-   INSTALL_TELEGRAF: 'yes' #'no'
+INSTALL_TELEGRAF: 'yes' #'no'
 ```        
 
 - La seccion `Configuring firewall for analyst for administration purposes` indica si se deben habilitar 
@@ -134,8 +134,8 @@ La variable `DAYSTOREPAIR` indica en caso de falla la longitud en dias de los da
   la red desde la que accedera el analista.
 
 ```yaml
-	allow_analyst_network: 'yes' #no
-	analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24)
+allow_analyst_network: 'yes' #no
+analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24)
 ```
 
         
