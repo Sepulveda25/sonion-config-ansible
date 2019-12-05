@@ -1,5 +1,3 @@
----
-
 - name: Install Security Onion
   hosts: all
 #  become: yes
@@ -16,13 +14,6 @@
     when: "'forward_nodes' in group_names"
 
   tasks:
-
-    - debug:
-        msg: 'Logging in as {{holis}}'
-
-    - debug:
-        msg: 'Logging in as {{ group_names }}'
-      when: "'master' in group_names"
 
     - name: Execute sosetup for forward
       include_role:

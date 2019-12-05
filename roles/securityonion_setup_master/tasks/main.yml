@@ -5,6 +5,9 @@
     msg: "Interface {{ MGMT_INTERFACE }} no existe "
   failed_when: not (ansible_interfaces | intersect(MGMT_INTERFACE))
 
+- name: Change hostname
+  import_tasks: change_hostname.yml
+
 - name: Install pexpect
   become: yes
   become_user: root

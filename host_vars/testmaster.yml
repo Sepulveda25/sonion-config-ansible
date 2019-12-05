@@ -1,5 +1,11 @@
-ansible_host: '172.16.81.120'
-ansible_user: 'sonionmaster'
+ansible_host: '172.16.81.59'
+ansible_user: 'root'
+
+##########################################
+#Hostname variable
+##########################################
+
+HOST_NAME: 'csirt-sonion-master'
 
 ##########################################
 #Variables for file sosetup_forward.conf
@@ -7,13 +13,13 @@ ansible_user: 'sonionmaster'
 
 # MGMT_INTERFACE
 # Which network interface should be the management interface?
-MGMT_INTERFACE: 'ens160'
+MGMT_INTERFACE: 'ens192'
 # MGMT_CONFIG_TYPE
 # Should the management interface be configured using DHCP or static IP?
 MGMT_CONFIG_TYPE: 'static'
 # If MGMT_CONFIG_TYPE=static, then provide the details here.
 # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-ADDRESS: '172.16.81.120'
+ADDRESS: '172.16.81.59'
 NETMASK: '255.255.255.0'
 GATEWAY: '172.16.81.1'
 NAMESERVER: '200.16.16.1 200.16.16.2'

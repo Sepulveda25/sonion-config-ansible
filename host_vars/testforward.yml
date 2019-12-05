@@ -2,6 +2,12 @@ ansible_host: '172.16.81.121'
 ansible_user: 'sonionfaud'
 
 ##########################################
+#Hostname variable
+##########################################
+
+HOST_NAME: 'csirt-sonion-faud-forward'
+
+##########################################
 #Variables for file sosetup_forward.conf
 ##########################################
 

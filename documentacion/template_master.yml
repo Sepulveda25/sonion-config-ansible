@@ -2,6 +2,12 @@ ansible_host: '172.16.81.127'
 ansible_user: 'soniontest2'
 
 ##########################################
+#Hostname variable
+##########################################
+
+HOST_NAME: 'csirt-sonion-master'
+
+##########################################
 #Variables for file sosetup_forward.conf
 ##########################################
 
@@ -75,6 +81,5 @@ INSTALL_TELEGRAF: 'yes' #'no'
 allow_analyst_network: 'yes' #no
 
 analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24)
-
 
 

@@ -1,0 +1,23 @@
+
+- name: Change hostname "{{ansible_hostname}}" to "{{HOST_NAME}}" in /etc/hostname
+  become: yes
+  become_user: root
+  replace:
+    path: /etc/hostname
+    regexp: "{{ansible_hostname}}" 
+    replace: "{{ HOST_NAME }}"
+
+- name: Change hostname "{{ansible_hostname}}" to "{{HOST_NAME}}" in /etc/hosts
+  become: yes
+  become_user: root
+  replace:
+    path: /etc/hosts
+    regexp: "{{ansible_hostname}}"
+    replace: "{{ HOST_NAME }}" 
+
+- name: Reboot machine
+  become: yes
+  become_user: root
+  reboot:
+    reboot_timeout: 1000
+

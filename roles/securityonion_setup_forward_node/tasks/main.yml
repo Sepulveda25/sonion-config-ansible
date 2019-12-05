@@ -3,6 +3,9 @@
 - name: Check interfaces configuration
   import_tasks: interfaces_check.yml
 
+- name: Change hostname
+  import_tasks: change_hostname.yml
+
 - name: Install pexpect
   become: yes
   become_user: root
