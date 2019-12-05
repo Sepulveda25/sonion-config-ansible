@@ -11,8 +11,7 @@
 
 1. Contar con un servidor de Security Onion con la interfaz de red pre-configurada: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
 
-2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion
-   (No agregar claves SSH  sobre el usuario ROOT del servidor con SECURITY ONION ).
+2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion. (Ej. usar comando ssh-copy-id)
 
 3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
    Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
@@ -38,6 +37,13 @@ ansible_host: '172.16.81.127'
 ansible_user: 'soniontest2'
 ```
 
+- La seccion `Hostname variable` define el hostname que tendra el Server Forward:
+ 
+```yaml
+    
+    HOST_NAME: 'csirt-sonion-master'
+        
+```
 - La seccion `Variables for file sosetup_forward.conf` incluye todos los campos necesarios para ejecutar el setup de Security Onion:
 
 Se selecciona la interfaz de administracion, se coloca el nombre de la misma en el campo `MGMT_INTERFACE`
@@ -155,6 +161,14 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
 *  Ejecutar Ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
 
     ```bash
-    $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
+     $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
     ```
-Una vez ejecutado el comando se le solicitara el pass root para el servidor.
+    
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD), 
+   el pass del servidor Master y una pass para el usuario que se creara en el Master para la integracion del mismo con el Forward. 
+   (El usuario que se creara en el Master tendra el mismo nombre que el hostname del Forward definido en la variable `HOST_NAME`. En caso de existir el usuario
+   en el Master se verifica si la contraseña ingresada es correcta y se reutiliza el usuario).
+
+   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la IP publica 
+   en el servidor destino cuando se solicite el BECOME PASSWORD no debe ser ingresado (presionar enter).
+
