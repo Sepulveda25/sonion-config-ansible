@@ -8,7 +8,7 @@
 
 ## Pre-requisitos
 
-1. Contar con un servidor de Security Onion con la interfaz de red pre-configurada: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
+1. Contar con un servidor con la ISO de Security Onion instalada o Ubuntu Server 16.04: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
    Se debe contar con al menos dos interfaces una para administracion y otra para realizar el monitoreo. 
 
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion
@@ -77,7 +77,7 @@ Se indica el nombre de la interfaz de monitoreo `SNIFFING_INTERFACES`, esta inte
 ```yaml
     # Which interface(s) will be sniffing network traffic?
     # For multiple interfaces, please separate them with spaces.
-    SNIFFING_INTERFACES: 'ens160'
+    SNIFFING_INTERFACES: 'ens192'
 ```
 
 
@@ -92,7 +92,7 @@ Las variable `SERVERNAME` y `SSH_USERNAME` corresponden a la direccion IP y User
     SSH_USERNAME: 'soniontest2' 
 ```
 
-La variable `PF_RING_SLOTS` indica la cabtidad de slots de pf_ring. ###???????????????????
+La variable `PF_RING_SLOTS` indica la cantidad de slots de pf_ring.
 
 ```yaml
     # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
