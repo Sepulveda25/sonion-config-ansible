@@ -47,7 +47,7 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
     ansible_user: 'sonionforward'
 ```
 
-- La seccion `Hostname variable` define el hostname que tendra el Server Forward:
+- La seccion `Hostname variable` define el hostname que tendra el Server Master:
  
 ```yaml
     
