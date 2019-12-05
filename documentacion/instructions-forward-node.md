@@ -236,6 +236,6 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     
    Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD).
 
-   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la IP publica 
+   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la clave publica 
    en el servidor destino cuando se solicite el BECOME PASSWORD no debe ser ingresado (presionar enter).
   
