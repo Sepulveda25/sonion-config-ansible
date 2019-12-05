@@ -169,6 +169,6 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
    (El usuario que se creara en el Master tendra el mismo nombre que el hostname del Forward definido en la variable `HOST_NAME`. En caso de existir el usuario
    en el Master se verifica si la contraseña ingresada es correcta y se reutiliza el usuario).
 
-   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la IP publica 
+   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la clave publica 
    en el servidor destino cuando se solicite el BECOME PASSWORD no debe ser ingresado (presionar enter).
 
