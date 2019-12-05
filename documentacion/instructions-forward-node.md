@@ -11,8 +11,7 @@
 1. Contar con un servidor con la ISO de Security Onion instalada o Ubuntu Server 16.04: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
    Se debe contar con al menos dos interfaces una para administracion y otra para realizar el monitoreo. 
 
-2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion
-   (No agregar claves SSH  sobre el usuario ROOT del servidor con SECURITY ONION ).
+2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion. (Ej. usar comando ssh-copy-id)
 
 3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
    Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
@@ -45,7 +44,7 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
 
 ```yaml
     ansible_host: '172.16.81.126'
-    ansible_user: 'sonionforwar
+    ansible_user: 'sonionforward'
 ```
 
 - La seccion `Hostname variable` define el hostname que tendra el Server Forward:
@@ -234,9 +233,11 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
     
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME PASSWORD), 
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD), 
    el pass del servidor Master y una pass para el usuario que se creara en el Master para la integracion del mismo con el Forward. 
    (El usuario que se creara en el Master tendra el mismo nombre que el hostname del Forward definido en la variable `HOST_NAME`. En caso de existir el usuario
    en el Master se verifica si la contraseña ingresada es correcta y se reutiliza el usuario).
 
-
+   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la IP publica 
+   en el servidor destino cuando se solicite el BECOME PASSWORD no debe ser ingresado (presionar enter).
+  
