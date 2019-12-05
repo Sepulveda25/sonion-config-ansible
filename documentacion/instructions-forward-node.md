@@ -48,6 +48,14 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
     ansible_user: 'sonionforwar
 ```
 
+- La seccion `Hostname variable` define el hostname que tendra el Server Forward:
+ 
+```yaml
+    
+    HOST_NAME: 'csirt-sonion-master'
+        
+```
+
 - La seccion `Variables for file sosetup_forward.conf` incluye todos los campos necesarios para ejecutar el setup de Security Onion:
 
 Se selecciona la interfaz de administracion, se coloca el nombre de la misma en el campo `MGMT_INTERFACE`
@@ -228,7 +236,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     
    Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME PASSWORD), 
    el pass del servidor Master y una pass para el usuario que se creara en el Master para la integracion del mismo con el Forward. 
-   (El usuario que se creara en el Master tendra el mismo nombre que el del Forward `ansible_user`. En caso de existir el usuario
+   (El usuario que se creara en el Master tendra el mismo nombre que el hostname del Forward definido en la variable `HOST_NAME`. En caso de existir el usuario
    en el Master se verifica si la contraseña ingresada es correcta y se reutiliza el usuario).
 
 
