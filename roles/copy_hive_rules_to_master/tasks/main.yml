@@ -73,7 +73,7 @@
 
 - name: Change permisions in Master Node folder /etc/elastalert/rules
   expect: 
-   command: ssh "{{ ansible_user }}"@"{{ SERVERNAME }}" 'sudo chmod 757 /etc/elastalert/rules'
+   command: ssh "{{ ansible_hostname }}"@"{{ SERVERNAME }}" 'sudo chmod 757 /etc/elastalert/rules'
    responses:
      'password': "{{ so_ssh_foward_pass_to_master }}"
      'Are you sure you want to continue connecting.': "yes"
@@ -81,14 +81,14 @@
 
 #- name: Copy TheHive Rules in Master Node folder /etc/elastalert/rules
 #  expect: 
-#   command: scp -r "{{ thehiverules.path }}.tar" {{ ansible_user }}@{{ SERVERNAME }}:/etc/elastalert/rules/
+#   command: scp -r "{{ thehiverules.path }}.tar" {{ ansible_hostname }}@{{ SERVERNAME }}:/etc/elastalert/rules/
 #   responses:
 #     'password': "{{ so_ssh_foward_pass_to_master }}"
 #     'Are you sure you want to continue connecting.': "yes"
 
 - name: Copy TheHive Rules in Master Node folder /etc/elastalert/rules
   expect: 
-   command: scp -r "{{ thehiverules.path }}" {{ ansible_user }}@{{ SERVERNAME }}:/etc/elastalert/rules/
+   command: scp -r "{{ thehiverules.path }}" {{ ansible_hostname }}@{{ SERVERNAME }}:/etc/elastalert/rules/
    responses:
      'password': "{{ so_ssh_foward_pass_to_master }}"
      'Are you sure you want to continue connecting.': "yes"
@@ -96,21 +96,21 @@
 
 #- name: Extract "/etc/elastalert/rules/thehiverules.tar" in /etc/elastalert/rules Master Node
 #  expect: 
-#   command: ssh "{{ ansible_user }}"@"{{ SERVERNAME }}" 'sudo tar -xvf /etc/elastalert/rules/thehiverules.tar -C /etc/elastalert/rules/'
+#   command: ssh "{{ ansible_hostname }}"@"{{ SERVERNAME }}" 'sudo tar -xvf /etc/elastalert/rules/thehiverules.tar -C /etc/elastalert/rules/'
 #   responses:
 #     'password': "{{ so_ssh_foward_pass_to_master }}"
 #     'Are you sure you want to continue connecting.': "yes"
 
 #- name: Remove "/etc/elastalert/rules/thehiverules.tar" in /etc/elastalert/rules Master Node
 #  expect: 
-#   command: ssh "{{ ansible_user }}"@"{{ SERVERNAME }}" 'sudo rm /etc/elastalert/rules/thehiverules.tar'
+#   command: ssh "{{ ansible_hostname }}"@"{{ SERVERNAME }}" 'sudo rm /etc/elastalert/rules/thehiverules.tar'
 #   responses:
 #     'password': "{{ so_ssh_foward_pass_to_master }}"
 #     'Are you sure you want to continue connecting.': "yes"
 
 - name: Restore permisions in Master Node folder /etc/elastalert/rules
   expect: 
-   command: ssh "{{ ansible_user }}"@"{{ SERVERNAME }}" 'sudo chmod 755 /etc/elastalert/rules/'
+   command: ssh "{{ ansible_hostname }}"@"{{ SERVERNAME }}" 'sudo chmod 755 /etc/elastalert/rules/'
    responses:
      'password': "{{ so_ssh_foward_pass_to_master }}"
      'Are you sure you want to continue connecting.': "yes"

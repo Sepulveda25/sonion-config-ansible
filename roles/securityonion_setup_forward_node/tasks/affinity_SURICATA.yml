@@ -47,3 +47,5 @@
    path: /etc/nsm/{{ansible_hostname}}-{{ SNIFFING_INTERFACES }}/sensor.conf
    regexp: '^SURICATA_CAPTURE'
    line: 'SURICATA_CAPTURE="{{SURICATA_CAPTURE}}"'
+
+

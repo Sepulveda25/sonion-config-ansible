@@ -1,15 +1,15 @@
 ---
 
-- name: Remove Sudo permissions to the user {{ansible_user}} in Master Node
+- name: Remove Sudo permissions to the user {{ansible_hostname}} in Master Node
   expect: 
-   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo rm /etc/sudoers.d/temp-sudo-{{ ansible_user }}'
+   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo rm /etc/sudoers.d/temp-sudo-{{ ansible_hostname }}'
    responses:
      'password': "{{ so_ssh_master_password }}" 
      'Are you sure you want to continue connecting.': "yes"
 
-- name: Remove user {{ansible_user}} to the Sudo group in Master Node
+- name: Remove user {{ansible_hostname}} to the Sudo group in Master Node
   expect: 
-   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo deluser {{ansible_user}} sudo'
+   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo deluser {{ansible_hostname}} sudo'
    responses:
      'password': "{{ so_ssh_master_password }}" 
      'Are you sure you want to continue connecting.': "yes"

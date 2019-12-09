@@ -8,6 +8,19 @@
 - name: Change hostname
   import_tasks: change_hostname.yml
 
+- name: Collect facts
+  setup:
+    gather_subset:
+       - all
+
+- name: Disable automatic updates (set Update-Package-Lists in /etc/apt/apt.conf.d/10periodic ) 
+  become: yes
+  become_user: root
+  replace:
+    path: /etc/apt/apt.conf.d/10periodic
+    regexp: (?<=Update-Package-Lists ").+?(?=\";) # toma y reemplaza lo que esta despues de "set-cpu-affinity:"
+    replace: 0
+
 - name: Install pexpect
   become: yes
   become_user: root

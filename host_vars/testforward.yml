@@ -5,7 +5,7 @@ ansible_user: 'sonionfaud'
 #Hostname variable
 ##########################################
 
-HOST_NAME: 'csirt-sonion-faud-forward'
+HOST_NAME: 'sonion-forward-faud-server'
 
 ##########################################
 #Variables for file sosetup_forward.conf
@@ -31,13 +31,13 @@ SNIFFING_INTERFACES: 'ens192'
 
 # SERVERNAME 
 # This should be the name/IP of the separate Master server:
-SERVERNAME: '172.16.81.120'
+SERVERNAME: '172.16.81.50'
 # SSH_USERNAME
 # This should be the name of an account on the separate Master server.
 SSH_USERNAME: 'sonionmaster' 
 
 # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
-PF_RING_SLOTS: 4096 
+PF_RING_SLOTS: 4096
 
 # IDS_ENGINE
 # Which IDS engine would you like to run?  snort/suricata
@@ -103,14 +103,14 @@ swappiness: 10
 #(Modify File roles/telegraf_install/files/telegraf.conf)
 #########################################################
 
-INSTALL_TELEGRAF: 'yes' #'no'
+INSTALL_TELEGRAF: 'no' #'no'
 
 #########################################################
 #Copy Rules TheHive to ElastAlert in Master Node
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
-COPY_THEHIVE_RULES: 'yes' #'no'
+COPY_THEHIVE_RULES: 'no' #'no'
 
 #IP del servidor con TheHive
 hive_host: 'http://172.16.81.250'

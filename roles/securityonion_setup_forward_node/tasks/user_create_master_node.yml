@@ -56,8 +56,8 @@
   when: user_exists.rc != 0
 
 
-- debug: 
-   msg: "{{ password_validation }}"
+#- debug: 
+#   msg: "{{ password_validation }}"
 
 - fail:
     msg: El usuario "{{ ansible_hostname }}" que existe en el Master tiene una contraseña distinta a la ingresada.
