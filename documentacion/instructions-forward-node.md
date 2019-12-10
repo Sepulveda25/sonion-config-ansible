@@ -242,7 +242,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     Como segunda contraseña a ingresar Ansible solicita el `password del Master Node` (que es el password del usuario `SSH_USERNAME` que se configuro en el template), en caso de que el `SSH_USERNAME` sea 'root' hay dos opciones: 
     
     - Ingresar el `password del Master Node` en caso de conocerlo. 
-    - En caso de no conocer la clave del usuario `root` del Master se debe agregar la clave publica del Forward en el Master (contra el usuario root) y cuando solicite el `password del Master Node` presionar enter (no se ingresa nada).
+    - En caso de querer usar autenticacion con clave publica por SSH, agregar la clave publica del Forward en el Master (contra el usuario root) y cuando solicite el `password del Master Node` presionar enter (no ingresar nada).
   
 
 
