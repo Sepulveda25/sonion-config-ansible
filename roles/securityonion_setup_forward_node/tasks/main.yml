@@ -5,13 +5,14 @@
   fail:
     msg: "Usar un usuario distinto a ROOT, con su password y agregar al grupo SUDO"
   failed_when: 
-   - ansible_user_id == 'root'
+   - ansible_user_id == 'root' 
 
 - name: Check interfaces configuration
   import_tasks: interfaces_check.yml
 
 - name: Change hostname
   import_tasks: change_hostname.yml
+  when: 'not ("{{ansible_hostname}}" == "{{HOST_NAME}}")'
 
 - name: Collect facts
   setup:
@@ -122,6 +123,7 @@
   become_user: root
   reboot:
     reboot_timeout: 1000
+
 
 
 

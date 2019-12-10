@@ -7,6 +7,7 @@
 
 - name: Change hostname
   import_tasks: change_hostname.yml
+  when: 'not ("{{ansible_hostname}}" == "{{HOST_NAME}}")'
 
 - name: Collect facts
   setup:
