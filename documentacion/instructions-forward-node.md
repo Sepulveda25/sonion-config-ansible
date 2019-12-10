@@ -13,7 +13,7 @@
 
 2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion. (Ej. usar comando ssh-copy-id)
 
-3. Para ejecutar el Ansible es necesario crear un usuario en el Forward, no debe usarse el usuario `root` (Security Onion restringe el uso del mismo), al usuario creado se le debe asignar una contraseña y agregarlo al grupo SUDO (este usuario es el que se agrega en la variable `ansible_user` del template - esto se realiza mas adelante -).  
+3. Para ejecutar el Ansible es necesario crear un usuario en el Forward, no debe usarse el usuario `root` (Security Onion restringe el uso del mismo), al usuario creado se le debe asignar una contraseña y agregarlo al grupo SUDO (este usuario es el que se agrega en la variable `ansible_user` del template - esto se realiza mas adelante).  
 En caso de utilizar el usuario root tener en cuenta que en la interfaz se mostraran logs de alertas de los IDS, este es un comportamiento normal en el usuario root de un sensor Forward, Securiy Onion  por defecto no permite hacer login al usuario root, es necesario la creacion de otro usuario si se desea hacer login mediante ssh al host. 
 
 4. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
