@@ -22,8 +22,7 @@
 
 ## Template Master Node
 
-*  En la carpeta `host_vars` agregar un archivo .yml que tiene la forma del archivo `template_master.yml`, renombrar de la forma `nombre_usuario.yml` 
- (Ej. sonionmaster.yml) y modificar las variables de configuracion para el despliguete del Master Node  (`nombre_usuario` es utilizado en el paso siguiente y en la variable `ansible_user`).
+*  En la carpeta `host_vars` copiar un archivo .yml que tiene la forma del archivo `template_master.yml` (que se encuentra en la carpeta Documentacion), y renombrar por ejemplo `sonionmaster.yml`, luego modificar las variables de configuracion para el despliegue del Master Node (El nombre que le damos a `template_master.yml` luego es agregado en el grupo correspondiente en el archivo `hosts`, por ejemplo si renombramos al archivo como `sonionmaster.yml` en el archivo host agregamos en el grupo Master a  `sonionmaster` - esto se reliza en pasos posteriores - ).
     
    
 
