@@ -231,8 +231,20 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
     
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD).
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward Node (`BECOME_PASSWORD o SUDO_PASSWORD`), el `password del Master Node` y el `password para el usuario que se creara en el Master Node` para la integracion del sensor Forward (la integracion entre Master y Forward implica la creacion de un usuario en el Master con el mismo nombre del `host_name` del Forward, la integracion se realiza con este usuario creado en el Master).
 
-   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la clave publica 
-   en el servidor destino cuando se solicite el BECOME PASSWORD no debe ser ingresado (presionar enter).
+   `[IMPORTANTE]` 
+
+    Sobre la cuestion de passwords solicitados: 
+
+    Para ejecutar el ansible es necesario crear un usuario en el Forward, no debe usarse el usuario `root` (Security Onion restringe el uso del mismo), al usuario creado se le debe asignar una contraseña y agregarlo al grupo SUDO (este usuario es el que se agrega en la variable `ansible_user` del template)
+
+    Como segunda contraseña a ingresar Ansible solicita el `password del Master Node` (que es el password del usuario `SSH_USERNAME` que se configuro en el template), en caso de que el `SSH_USERNAME` sea 'root' hay dos opcciones: 
+    
+    - Ingresar el `password del Master Node` en caso de conocerlo. 
+    - En caso de no conocer la clave del usuario `root` del Master se debe agregar la clave publica del Forward en el Master (contra el usuario root) y cuando solicite el `password del Master Node` presionar enter (no se ingresa nada).
+  
+
+
+
   

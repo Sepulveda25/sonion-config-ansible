@@ -160,8 +160,7 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
      $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
     ```
     
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD).
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD o SUDO_PASSWORD).
 
-   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la clave publica 
-   en el servidor destino cuando se solicite el BECOME PASSWORD no debe ser ingresado (presionar enter).
+   `[IMPORTANTE]` Si el Ansible se despliega contra el usuario root (` ansible_user: 'root' `) en el destino (donde se despliega el Master) y en caso de contar con la clave publica del host origen (host desde el cual se ejecuta el ansible) en el servidor destino (donde se despliega el Master), cuando se solicite el BECOME_PASSWORD (o SUDO_PASSWORD) no debe ser ingresado (presionar enter).
 
