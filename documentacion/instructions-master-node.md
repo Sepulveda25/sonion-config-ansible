@@ -146,9 +146,7 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
         
 ## Despliegue con Ansible
 
-
-*  Agregar nombre de usuario del nodo Master al archivo `hosts` en el grupo `[master]` 
-(Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
+*  Agregar el nombre con el que renombramos el archivo `template_master.yml` al archivo `hosts` en el grupo `[master]`. (Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
 
     ```yaml
     [master]
@@ -156,8 +154,7 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
     
     ```
 
-
-*  Ejecutar Ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
+*  Ejecutar Ansible sobre `"sonionmaster"` que se define en `extra-var`:
 
     ```bash
      $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass

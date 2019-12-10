@@ -218,15 +218,14 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
 
 ## Despliegue con Ansible
 
-*  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `[forward_nodes]` 
-(Ej. como en el paso anterior se crea el archivo `sonionforward.yml` agregar `sonionforward` en el archivo `hosts`):
+*  Agregar el nombre con el que renombramos el archivo `template_forward.yml` al archivo `hosts` en el grupo `[forward_nodes]`. (Ej. como en el paso anterior se crea el archivo `sonionforward.yml` agregar `sonionforward` en el archivo `hosts`):
 
     ```yaml
     [forward_nodes]
     sonionforward
     ```
     
-*  Ejecutar Ansible sobre el servidor `"sonionforward"` (el username se define en la opcion extra_var):
+*  Ejecutar Ansible sobre el servidor `"sonionforward"` que se define en `extra-var`:
     
     ```bash
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
