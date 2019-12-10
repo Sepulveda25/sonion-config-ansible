@@ -1,4 +1,4 @@
-ansible_host: '172.16.81.59'
+ansible_host: '172.16.81.50'
 ansible_user: 'root'
 
 ##########################################
@@ -8,7 +8,7 @@ ansible_user: 'root'
 HOST_NAME: 'csirt-sonion-master'
 
 ##########################################
-#Variables for file sosetup_forward.conf
+#Variables for file sosetup_master.conf
 ##########################################
 
 # MGMT_INTERFACE
@@ -19,7 +19,7 @@ MGMT_INTERFACE: 'ens192'
 MGMT_CONFIG_TYPE: 'static'
 # If MGMT_CONFIG_TYPE=static, then provide the details here.
 # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-ADDRESS: '172.16.81.59'
+ADDRESS: '172.16.81.50'
 NETMASK: '255.255.255.0'
 GATEWAY: '172.16.81.1'
 NAMESERVER: '200.16.16.1 200.16.16.2'
@@ -70,7 +70,7 @@ DAYSTOREPAIR: '7'
 #(Modify File roles/telegraf_install/files/telegraf.conf)
 #########################################################
 
-INSTALL_TELEGRAF: 'yes' #'no'
+INSTALL_TELEGRAF: 'no' #'no'
 
 
 #########################################################

@@ -8,7 +8,7 @@ ansible_user: 'soniontest2'
 HOST_NAME: 'csirt-sonion-master'
 
 ##########################################
-#Variables for file sosetup_forward.conf
+#Variables for file sosetup_master.conf
 ##########################################
 
 # MGMT_INTERFACE
