@@ -103,7 +103,7 @@ swappiness: 10
 #(Modify File roles/telegraf_install/files/telegraf.conf)
 #########################################################
 
-INSTALL_TELEGRAF: 'yes' #'no'
+INSTALL_TELEGRAF: 'no' #'no'
 
 
 #########################################################
@@ -111,7 +111,7 @@ INSTALL_TELEGRAF: 'yes' #'no'
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
-COPY_THEHIVE_RULES: 'yes' #'no'
+COPY_THEHIVE_RULES: 'no' #'no'
 
 #IP del servidor con TheHive
 hive_host: 'http://172.16.81.110'

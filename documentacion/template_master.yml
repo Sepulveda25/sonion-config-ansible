@@ -70,7 +70,7 @@ DAYSTOREPAIR: '7'
 #(Modify File roles/telegraf_install/files/telegraf.conf)
 #########################################################
 
-INSTALL_TELEGRAF: 'yes' #'no'
+INSTALL_TELEGRAF: 'no' #'no'
 
 #########################################################
 #Configuring firewall for analyst for administration purposes
