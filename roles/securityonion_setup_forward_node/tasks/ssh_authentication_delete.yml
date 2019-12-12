@@ -1,0 +1,15 @@
+
+---
+
+- name: '[LOCALLY] Delete public key in Master Node (remove line match with {{ansible_hostname}} in authorized_keys)'
+  delegate_to: localhost 
+  command: ssh {{SSH_USERNAME}}@{{SERVERNAME}} "sed -i '/{{ansible_hostname}}/ {$!N;d;}' ~/.ssh/authorized_keys"
+
+- name: '[LOCALLY] Delete private key for Forward Node'
+  delegate_to: localhost 
+  command: ssh -t {{ ansible_user }}"@"{{ ansible_host }} 'rm ~/.ssh/{{ansible_hostname}}'
+
+- name: '[LOCALLY] Remove the key /tmp/{{ansible_hostname}} if exists locally'
+  delegate_to: localhost 
+  command:  rm -f /tmp/{{ansible_hostname}} /tmp/{{ansible_hostname}}.pub
+  ignore_errors: yes

@@ -1,52 +1,25 @@
+
 ---
 
-- name: Create a User {{ansible_hostname}} in Master Node # crea un usuario en el master del mismo nombre
-  expect: 
-   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo useradd -m {{ansible_hostname}}'
-   responses:
-     'password': "{{ so_ssh_master_password }}"
-     'Are you sure you want to continue connecting.': "yes"
+- name: '[LOCALLY] Create a User {{ansible_hostname}} in Master Node' # crea un usuario en el master del mismo nombre que el host_name
+  delegate_to: localhost 
+  command: ssh -t {{ SSH_USERNAME }}"@"{{ SERVERNAME }} 'sudo useradd -m {{ansible_hostname}}'
   ignore_errors: True
   register: user_exists
 
-#- debug:
-#   msg: "{{ user_exists }}"
+  ## SI EL USUARIO NO EXISTE CREA SU CONTRASEÑA
 
-
-## SI EL USUARIO NO EXISTE LO CREA 
-
-
-- name: Create a password for user {{ansible_hostname}} in Master Node
-  expect:
-   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo passwd {{ansible_hostname}}'
-   responses:
-     '^(?!.*\bUNIX\b)(?=.*\bpassword\b).*$': "{{ so_ssh_master_password }}"  #MATCHEA SI NO CONTIENE UNIX y si contiene password
-     'UNIX password': "{{ so_ssh_foward_pass_to_master }}" #contraseña creada
-     'Are you sure you want to continue connecting.': "yes"
+- name: '[LOCALLY] Create a password for user {{ansible_hostname}} in Master Node'
+  delegate_to: localhost 
+  command: ssh -t {{ SSH_USERNAME }}"@"{{ SERVERNAME }} 'echo -e "{{ so_ssh_foward_pass_to_master }}\n{{ so_ssh_foward_pass_to_master }}" | sudo passwd {{ansible_hostname}}'
+  ignore_errors: True
   when: user_exists.rc == 0
+ 
+ ## SI EL USUARIO EXISTE VERIFICA SI EL PASSWORD BRINDADO ES VALIDO PARA EL USUARIO
 
-- name: Add user {{ansible_hostname}} to the Sudo group in Master Node
-  expect: 
-   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo adduser {{ansible_hostname}} sudo'
-   responses:
-     'password': "{{ so_ssh_master_password }}" 
-     'Are you sure you want to continue connecting.': "yes"
-  when:  user_exists.rc == 0
-
-- name: Add user "{{ansible_hostname}}" to the Sudo group in Master Node
-  expect: 
-   command: >
-      ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo bash -c "echo '{{ ansible_hostname }} ALL=NOPASSWD: ALL' > /etc/sudoers.d/temp-sudo-{{ ansible_hostname }}"'
-   responses:
-     'password': "{{ so_ssh_master_password }}" 
-     'Are you sure you want to continue connecting.': "yes"
-  when:  user_exists.rc == 0
-
-
-## SI EL USUARIO EXISTE VERIFICA SI EL PASSWORD BRINDADO ES VALIDO PARA EL USUARIO
-
-- name: Verify password to  user {{ansible_hostname}} in Master Node
-  expect: 
+- name: '[LOCALLY] Verify password to user {{ansible_hostname}} in Master Node'
+  delegate_to: localhost 
+  expect:
    command: ssh -t "{{ ansible_hostname }}"@"{{ SERVERNAME }}" 'sudo -v'
    responses:
      'password': "{{ so_ssh_foward_pass_to_master }}" 
@@ -55,35 +28,22 @@
   ignore_errors: True
   when: user_exists.rc != 0
 
-
-#- debug: 
-#   msg: "{{ password_validation }}"
-
 - fail:
     msg: El usuario "{{ ansible_hostname }}" que existe en el Master tiene una contraseña distinta a la ingresada.
   when: 
     - user_exists.rc != 0 
     - password_validation.rc != 0
 
+  #####################
 
-- name: Add or verify if user {{ansible_hostname}} i the Sudo group in Master Node
-  expect: 
-   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo adduser {{ansible_hostname}} sudo'
-   responses:
-     'password': "{{ so_ssh_master_password }}" 
-     'Are you sure you want to continue connecting.': "yes"
-  when: user_exists.rc != 0
+- name: '[LOCALLY] Add user {{ansible_hostname}} to the Sudo group in Master Node'
+  delegate_to: localhost
+  command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo adduser {{ansible_hostname}} sudo'
+  ignore_errors: True
 
-- name: Add user "{{ansible_hostname}}" to the Sudo group in Master Node
-  expect: 
-   command: >
-      ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo bash -c "echo '{{ ansible_hostname }} ALL=NOPASSWD: ALL' > /etc/sudoers.d/temp-sudo-{{ ansible_hostname }}"'
-   responses:
-     'password': "{{ so_ssh_master_password }}" 
-     'Are you sure you want to continue connecting.': "yes"
-  when:  user_exists.rc != 0
+- name: '[LOCALLY]  Add user "{{ansible_hostname}}" to sudoers with NOPASSWD in Master Node'
+  delegate_to: localhost 
+  command: >
+     ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo bash -c "echo '{{ ansible_hostname }} ALL=NOPASSWD: ALL' > /etc/sudoers.d/temp-sudo-{{ ansible_hostname }}"'
+  ignore_errors: True
 
-
- 
- 
- 

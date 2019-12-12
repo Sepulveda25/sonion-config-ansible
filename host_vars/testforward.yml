@@ -34,7 +34,7 @@ SNIFFING_INTERFACES: 'ens192'
 SERVERNAME: '172.16.81.50'
 # SSH_USERNAME
 # This should be the name of an account on the separate Master server.
-SSH_USERNAME: 'sonionmaster' 
+SSH_USERNAME: 'root' 
 
 # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
 PF_RING_SLOTS: 4096
@@ -110,10 +110,10 @@ INSTALL_TELEGRAF: 'no' #'no'
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
-COPY_THEHIVE_RULES: 'no' #'no'
+COPY_THEHIVE_RULES: 'yes' #'no'
 
 #IP del servidor con TheHive
-hive_host: 'http://172.16.81.250'
+hive_host: 'http://172.16.81.252'
 #Puerto del servicio TheHive
 hive_port: '9000'
 #API-KEY del user creado en TheHive

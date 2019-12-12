@@ -1,0 +1,20 @@
+
+
+- name: '[LOCALLY] Remove the key /tmp/{{ansible_hostname}} if exists'
+  delegate_to: localhost 
+  command:  rm -f /tmp/{{ansible_hostname}} /tmp/{{ansible_hostname}}.pub
+  ignore_errors: yes
+
+# Generate an OpenSSH keypair with the default values (4096 bits, rsa)
+- name: '[LOCALLY] Generate keypair SSH in /etc/tmp RSA LOCALY'
+  delegate_to: localhost 
+  command: ssh-keygen -q -t rsa -f /tmp/{{ansible_hostname}} -C "{{ansible_hostname}}-temp" -N ""
+
+- name: '[LOCALLY] Copy public Key to Master Node'
+  delegate_to: localhost 
+  command: ssh-copy-id -i /tmp/{{ansible_hostname}}.pub {{SSH_USERNAME}}@{{SERVERNAME}}
+
+- name: '[LOCALLY] Copy private key to Forward Node'
+  delegate_to: localhost 
+  command: scp /tmp/{{ansible_hostname}} {{ansible_user}}@{{ansible_host}}:~/.ssh
+

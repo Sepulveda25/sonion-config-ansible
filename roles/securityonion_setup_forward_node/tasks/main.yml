@@ -5,12 +5,16 @@
   fail:
     msg: "Usar un usuario distinto a ROOT, con su password y agregar al grupo SUDO"
   failed_when: 
-   - ansible_user_id == 'root' 
+   - ansible_user_id == 'root'
 
-- name: Check interfaces configuration
+- name: Check interfaces configuration #Si usa SUDO
   import_tasks: interfaces_check.yml
 
-- name: Change hostname
+- name: Generate and copy public key to Master
+  import_tasks: ssh_authentication_generate.yml
+
+# Siempre y cuando sea distinto al actual hostname cambia el Host name
+- name: Change hostname #Si usa SUDO
   import_tasks: change_hostname.yml
   when: 'not ("{{ansible_hostname}}" == "{{HOST_NAME}}")'
 
@@ -19,30 +23,30 @@
     gather_subset:
        - all
 
-- name: Install pexpect
+- name: Install pexpect #Si usa SUDO
   become: yes
   become_user: root
   apt:
     name: python-pexpect
     update_cache: yes
 
-- name: Install python3-pexpect
+- name: Install python3-pexpect #Si usa SUDO
   become: yes
   become_user: root
   apt:
     name: python3-pexpect
     update_cache: yes
 
-- name: Check if Security Onion package exists 
+- name: Check if Security Onion package exists #Si usa SUDO
   shell: command -v sosetup
   register: installed_sosetup
   ignore_errors: True
 
-- name: Install Security Onion packages if they do not exist in the system
+- name: Install Security Onion packages if they do not exist in the system #Si usa SUDO
   import_tasks: install_packages_forward.yml
-  when: installed_sosetup is failed 
+  when: installed_sosetup is failed
 
-- name: Create user "{{ ansible_user_id }}" with Sudo privileges in Master Node #crea usuario ansible_username en sonion Master
+- name: Create user "{{ ansible_hostname }}" with Sudo privileges in Master Node  #Si usa SUDO del Master
   import_tasks: user_create_master_node.yml
 
 - name: Create a file named ansible.{random}.conf
@@ -56,7 +60,7 @@
     src:  sosetup_forward.conf #from files folder in this role
     dest: "{{ temp_config.path }}"
 
-- name: Remplazo variables de host_vars en el config para el forward en "{{ temp_config.path }}"
+- name: Remplazo variables de host_vars en el config para el forward en "{{ temp_config.path }}" 
   lineinfile: 
    path: "{{ temp_config.path }}"
    regexp:  "{{ item.regexp }}"
@@ -81,22 +85,22 @@
 
 
 
-- name: Execute sosetup for forward
+- name: Execute sosetup for forward #Si usa SUDO
   include_role:
     name: securityonion_run_sosetup
   vars:
     sosetupfilepath: "{{ temp_config.path }}"
 
-- name: Execute BRO config
+- name: Execute BRO config #Si usa SUDO
   import_tasks: affinity_BRO.yml
 
-- name:  Execute SURICATA config
+- name:  Execute SURICATA config #Si usa SUDO
   import_tasks: affinity_SURICATA.yml
 
-- name:  Configure Linux Disk Caching
+- name:  Configure Linux Disk Caching #Si usa SUDO
   import_tasks: cache_linux.yml
 
-- name: Copy classification.config in /etc/nsm/rules/ (backup)
+- name: Copy classification.config in /etc/nsm/rules/ (and create a backup) #Si usa SUDO
   become: yes
   become_user: root
   copy:
@@ -105,20 +109,25 @@
     backup: yes
     mode: 'preserve' #preserve permissions
 
-- name: Copy TheHive rules to elastalert in MasterNode
+- name: Copy TheHive rules to elastalert in MasterNode #Si usa SUDO del Master
   include_role:
     name: copy_hive_rules_to_master
   when:  ' "{{ COPY_THEHIVE_RULES }}" in "yes" '
 
-- name: Install telegraf
+- name: Install telegraf #Si usa SUDO
   include_role:
     name: telegraf_install
   when:  ' "{{ INSTALL_TELEGRAF }}" in "yes" '
 
-- name: Delete privileges for user "{{ ansible_user_id }}" in Master Node #Elimina los privilegios del usuario en el nodo master
+#Elimina los privilegios del usuario en el nodo master
+- name: Delete privileges for user "{{ ansible_hostname }}" in Master Node #Si usa SUDO 
   import_tasks: user_delete_master_node.yml
 
-- name: Reboot machine
+#Elimina los privilegios del usuario en el nodo master
+- name: Delete SSH keys created for this Ansible in Master and Forward 
+  import_tasks: ssh_authentication_delete.yml
+
+- name: Reboot machine #Si usa SUDO 
   become: yes
   become_user: root
   reboot:

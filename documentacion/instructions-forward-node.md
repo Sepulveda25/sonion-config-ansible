@@ -232,8 +232,15 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
     
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD).
+   [IMPORTANTE] Como pre-requistos se debe:
 
-   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la clave publica 
-   en el servidor destino cuando se solicite el BECOME PASSWORD no debe ser ingresado (presionar enter).
-  
+    1) Crear un usuario distinto a root (sudo useradd -m USUARIOCREADO), asignarle un password (sudo PASSWD USUARIOCREADO) se lo debe agregar al grupo sudo (sudo adduser USUARIOCREADO sudo).  
+    2) Se debe pegar el public key de nuestro host en el Forward Node (en el archivo autorized_keys de la carpeta /home/USUARIOCREADO/.ssh), una forma de hacer esto es con el comando: ssh-copy-id USUARIOCREADO@IPFORWARD.
+    3) El host tambien debe tener conexion con el master, para ello repetir el paso 2 para el Master Node sobre el usuario del Master que es el mismo que configuramos en el template (SSH_USERNAME: 'USERMASTER'), esto se hace ya que se crea localmente un par de claves ssh (RSA), y se distribuye en el Master la public key y en el Forward la private key para la comunicacion entre ellos al momento de ejecutar el comando SOSETUP. Ademas se utiliza para pegar las reglas de TheThive en el master correspondientes al Forward (esto es en caso de estar habilitada la opcion pegar reglas).
+    4) En el Master permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USERMASTER ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USERMASTER y agregando la misma linea).
+
+   Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario creado en el servidor Forward, en este caso podemos. 
+   5.a) Ingresar el Password en caso de conocerlo.
+   5.b) O se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOCREADO ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter).
+
+
