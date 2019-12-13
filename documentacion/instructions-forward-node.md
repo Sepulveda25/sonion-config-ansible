@@ -241,15 +241,16 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
     
-   [IMPORTANTE] Como se indico de forma detallada en la seccion pre-requistos se debe:
+   [IMPORTANTE] Como se indico de forma detallada en la seccion pre-requistos se debe:  
 
     1. Crear un usuario distinto a root.
     2. Pegar el public key de nuestro host en el Forward Node.
     3. Tener conexion con Master node.
-    4. Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password (en caso de que no se trate del usuario root).
+    4. Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password (en caso de que no se trate del usuario root).  
     
-    Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario creado en el servidor Forward, en este caso tenemos dos alternativas:
+    &nbsp;
 
+    Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario creado en el servidor Forward, en este caso tenemos dos alternativas:
    * Ingresar el Password en caso de conocerlo.
    * O se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOCREADO ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
 
