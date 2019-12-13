@@ -250,7 +250,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     
     &nbsp;
 
-    Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario creado en el servidor Forward, en este caso tenemos dos alternativas:
+[IMPORTANTE] Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario creado en el servidor Forward, en este caso tenemos dos alternativas:
    * Ingresar el Password en caso de conocerlo.
    * O se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOCREADO ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
 
