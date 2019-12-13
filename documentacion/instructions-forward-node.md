@@ -16,16 +16,11 @@
         - sudo PASSWD USUARIOCREADO
         - sudo adduser USUARIOCREADO sudo
 
-<<<<<<< HEAD
-3. Para ejecutar el Ansible es necesario crear un usuario en el Forward, no debe usarse el usuario `root` (Security Onion restringe el uso del mismo), al usuario creado se le debe asignar una contraseña y agregarlo al grupo SUDO (este usuario es el que se agrega en la variable `ansible_user` del template - esto se realiza mas adelante).  
-En caso de utilizar el usuario root tener en cuenta que en la interfaz se mostraran logs de alertas de los IDS, este es un comportamiento normal en el usuario root de un sensor Forward, Securiy Onion  por defecto no permite hacer login al usuario root, es necesario la creacion de otro usuario si se desea hacer login mediante ssh al host. 
-=======
 3. Agregar clave SSH publica del host desde el cual se realiza el despliegue en el servidor con Security Onion, para hacer esto se puede copiar manualmente la public key del host en el archivo autorized_keys de la carpeta /home/USUARIOCREADO/.ssh o con el comando: ssh-copy-id USUARIOCREADO@IPFORWARD (tambien ejecutado desde el host).
 
 4. El host (desde el que realizamos el despliegue) tambien debe tener conexion con el Master Node, para ello repetir el paso 3 para el Master Node sobre el usuario del Master que es el mismo que configuraremos mas adelante en el template (SSH_USERNAME: 'USERMASTER') - Esto se hace ya que se crea localmente en el host un par de claves ssh (RSA), y se distribuye en el Master la public key y en el Forward la private key para la comunicacion entre ellos al momento de ejecutar el comando SOSETUP ya demas se utiliza para pegar las reglas de TheThive en el Master correspondientes al Forward (esto es en caso de estar habilitada la opcion pegar reglas de TheHive).
 
 5. Si el usuario mencionado en el paso anterior (SSH_USERNAME) va a ser el usuario `root` saltar este paso, caso contrario al usuario del Master (SSH_USERNAME) se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USERMASTER ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USERMASTER y agregando la misma linea).
->>>>>>> 275b00a4001c03529117094b5f72ddfa2ce38b70
 
 4. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
    Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
@@ -45,7 +40,6 @@ En caso de utilizar el usuario root tener en cuenta que en la interfaz se mostra
    
    Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a la variable
    `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`, en el archivo de variables de la carpeta `host_vars`.
-
 
 ## Template Forward Node
 
@@ -233,25 +227,21 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
 
 ## Despliegue con Ansible
 
-*  Agregar el nombre con el que renombramos el archivo `template_forward.yml` al archivo `hosts` en el grupo `[forward_nodes]`. (Ej. como en el paso anterior se crea el archivo `sonionforward.yml` agregar `sonionforward` en el archivo `hosts`):
+*  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `[forward_nodes]` 
+(Ej. como en el paso anterior se crea el archivo `sonionforward.yml` agregar `sonionforward` en el archivo `hosts`):
 
     ```yaml
     [forward_nodes]
     sonionforward
     ```
     
-*  Ejecutar Ansible sobre el servidor `"sonionforward"` que se define en `extra-var`:
+*  Ejecutar Ansible sobre el servidor `"sonionforward"` (el username se define en la opcion extra_var):
     
     ```bash
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
     
-<<<<<<< HEAD
-<<<<<<< HEAD
-   [IMPORTANTE] Como pre-requistos se debe:
-=======
    [IMPORTANTE] Como se indico de forma detallada en la seccion pre-requistos se debe:  
->>>>>>> 275b00a4001c03529117094b5f72ddfa2ce38b70
 
     1. Crear un usuario distinto a root.
     2. Pegar el public key de nuestro host en el Forward Node.
@@ -265,22 +255,3 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
    * O se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOCREADO ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
 
 
-=======
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward Node (`BECOME_PASSWORD o SUDO_PASSWORD`), el `password del Master Node` y el `password para el usuario que se creara en el Master Node` para la integracion del sensor Forward (la integracion entre Master y Forward implica la creacion de un usuario en el Master con el mismo nombre del `host_name` del Forward, la integracion se realiza con este usuario creado en el Master).
-
-   `[IMPORTANTE]` 
-
-    Sobre la cuestion de passwords solicitados: 
-
-    Para ejecutar el Ansible es necesario crear un usuario en el Forward, no debe usarse el usuario `root` (Security Onion restringe el uso del mismo), al usuario creado se le debe asignar una contraseña y agregarlo al grupo SUDO (este usuario es el que se agrega en la variable `ansible_user` del template).
-
-    Como segunda contraseña a ingresar Ansible solicita el `password del Master Node` (que es el password del usuario `SSH_USERNAME` que se configuro en el template), en caso de que el `SSH_USERNAME` sea 'root' hay dos opciones: 
-    
-    - Ingresar el `password del Master Node` en caso de conocerlo. 
-    - En caso de querer usar autenticacion con clave publica por SSH, agregar la clave publica del Forward en el Master (contra el usuario root) y cuando solicite el `password del Master Node` presionar enter (no ingresar nada).
-  
-
-
-
-  
->>>>>>> 835a3c5bd3c5db71c77eb6f334dc0bc8e8c33c3b
