@@ -20,7 +20,7 @@
 
 4. El host (desde el que realizamos el despliegue) tambien debe tener conexion con el Master Node, para ello repetir el paso 3 para el Master Node sobre el usuario del Master que es el mismo que configuraremos mas adelante en el template (SSH_USERNAME: 'USERMASTER') - Esto se hace ya que se crea localmente en el host un par de claves ssh (RSA), y se distribuye en el Master la public key y en el Forward la private key para la comunicacion entre ellos al momento de ejecutar el comando SOSETUP ya demas se utiliza para pegar las reglas de TheThive en el Master correspondientes al Forward (esto es en caso de estar habilitada la opcion pegar reglas de TheHive).
 
-5. Al usuario del Master mencionado en el paso anterior se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USERMASTER ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USERMASTER y agregando la misma linea).
+5. Si el usuario mencionado en el paso anterior (SSH_USERNAME) va a ser el usuario `root` saltar este paso, caso contrario al usuario del Master (SSH_USERNAME) se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USERMASTER ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USERMASTER y agregando la misma linea).
 
 4. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
    Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
@@ -241,15 +241,16 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
     
-   [IMPORTANTE] Como se indico en la seccion pre-requistos se debe:
+   [IMPORTANTE] Como se indico de forma detallada en la seccion pre-requistos se debe:
 
-    1) Crear un usuario distinto a root.
-    2) Pegar el public key de nuestro host en el Forward Node.
-    3) Tener conexion con Master node.
-    4) Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password.
+    1. Crear un usuario distinto a root.
+    2. Pegar el public key de nuestro host en el Forward Node.
+    3. Tener conexion con Master node.
+    4. Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password (en caso de que no se trate del usuario root).
     
-   Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario creado en el servidor Forward, en este caso podemos. 
-   5.a) Ingresar el Password en caso de conocerlo.
-   5.b) O se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOCREADO ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter).
+    Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario creado en el servidor Forward, en este caso tenemos dos alternativas:
+
+   * Ingresar el Password en caso de conocerlo.
+   * O se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOCREADO ALL=NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
 
 
