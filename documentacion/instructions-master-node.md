@@ -146,9 +146,7 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
         
 ## Despliegue con Ansible
 
-
-*  Agregar nombre de usuario del nodo Master al archivo `hosts` en el grupo `[master]` 
-(Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
+*  Agregar el nombre con el que renombramos el archivo `template_master.yml` al archivo `hosts` en el grupo `[master]`. (Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
 
     ```yaml
     [master]
@@ -156,15 +154,13 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
     
     ```
 
-
-*  Ejecutar Ansible sobre el servidor `"sonionmaster"` (el username se define en la opcion extra_var):
+*  Ejecutar Ansible sobre `"sonionmaster"` que se define en `extra-var`:
 
     ```bash
      $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
     ```
     
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD).
+   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD o SUDO_PASSWORD).
 
-   [IMPORTANTE] Si el Ansible se despliega contra el usuario root (ansible_user: 'root') y en caso de contar con la clave publica 
-   en el servidor destino cuando se solicite el BECOME PASSWORD no debe ser ingresado (presionar enter).
+   `[IMPORTANTE]` Si el Ansible se despliega contra el usuario root (` ansible_user: 'root' `) en el destino (donde se despliega el Master) y en caso de contar con la clave publica del host origen (host desde el cual se ejecuta el ansible) en el servidor destino, cuando se solicite el BECOME_PASSWORD (o SUDO_PASSWORD) no debe ser ingresado (presionar enter).
 
