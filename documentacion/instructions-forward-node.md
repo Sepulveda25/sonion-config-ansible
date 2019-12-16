@@ -61,11 +61,11 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
     ansible_user: 'sonionforward'
 ```
 
-- La seccion `Hostname variable` define el hostname que tendra el Server Master:
+- La seccion `Hostname variable` define el hostname que tendra el Forward Node:
  
 ```yaml
     
-    HOST_NAME: 'csirt-sonion-master'
+    HOST_NAME: 'csirt-sonion-forward'
         
 ```
 
