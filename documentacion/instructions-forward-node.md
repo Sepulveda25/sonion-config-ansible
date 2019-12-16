@@ -21,9 +21,9 @@
    Se debe contar con al menos dos interfaces una para administracion y otra para realizar el monitoreo. 
 
 3. Security Onion recomienda no utilizar el usuario root, se debe crear un usuario distinto a root, asginarle un password y agregarlo al grupo sudo, los comandos para realizar esto son:
- *  sudo useradd -m USUARIOCREADO
- *  sudo passwd USUARIOCREADO
- *  sudo adduser USUARIOCREADO sudo
+     *  sudo useradd -m USUARIOCREADO
+     *  sudo passwd USUARIOCREADO
+     *  sudo adduser USUARIOCREADO sudo
 
 4. Agregar clave SSH publica del host desde el cual se realiza el despliegue en el servidor con Security Onion, para hacer esto se puede copiar manualmente la public key del host en el archivo autorized_keys de la carpeta /home/USUARIOCREADO/.ssh o con el comando: ssh-copy-id USUARIOCREADO@IPFORWARD (tambien ejecutado desde el host).
 
