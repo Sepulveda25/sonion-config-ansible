@@ -245,7 +245,7 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
 
     1. Crear un usuario distinto a root.
     2. Pegar el public key de nuestro host en el Forward Node.
-    3. Tener conexion con Master node.
+    3. Tener conexion con el master Master node desde nuestro host.
     4. Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password (en caso de que no se trate del usuario root).  
     
     &nbsp;
