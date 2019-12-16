@@ -1,11 +1,11 @@
-ansible_host: '172.16.81.51'
-ansible_user: 'sonionfcefyn'
+ansible_host: '172.18.32.141'
+ansible_user: 'sonionfce'
 
 ##########################################
 #Hostname variable
 ##########################################
 
-HOST_NAME: 'sonion-forward-fcefyn-server'
+HOST_NAME: 'sonion-forward-eco'
 
 ##########################################
 #Variables for file sosetup_forward.conf
@@ -19,11 +19,11 @@ MGMT_INTERFACE: 'ens160'
 MGMT_CONFIG_TYPE: 'static'
 # If MGMT_CONFIG_TYPE=static, then provide the details here.
 # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-ADDRESS: '172.16.81.51'
+ADDRESS: '172.18.32.141'
 NETMASK: '255.255.255.0'
-GATEWAY: '172.16.81.1'
-NAMESERVER: '200.16.16.1 200.16.16.2'
-DOMAIN: 'soniontest.local.psi'
+GATEWAY: '172.18.32.4'
+NAMESERVER: '200.16.22.1 200.16.16.1 200.16.16.2'
+DOMAIN: 'sonion-forward-eco.psi'
 
 # Which interface(s) will be sniffing network traffic?
 # For multiple interfaces, please separate them with spaces.
@@ -110,7 +110,7 @@ INSTALL_TELEGRAF: 'no' #'no'
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
-COPY_THEHIVE_RULES: 'yes' #'no'
+COPY_THEHIVE_RULES: 'no' #'no'
 
 #IP del servidor con TheHive
 hive_host: 'http://172.16.81.252'
