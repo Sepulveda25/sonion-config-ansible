@@ -1,6 +1,14 @@
 
 ---
 
+- name: Check if the user is not root
+  fail:
+    msg: "Usar un usuario distinto a ROOT, con su password y agregar al grupo SUDO"
+  failed_when: 
+   - ansible_user_id == 'root'
+
+- name: Check interfaces configuration #Si usa SUDO
+  import_tasks: interfaces_check.yml
 
 - name: Generate and copy public key to Master
   import_tasks: ssh_authentication_generate.yml
