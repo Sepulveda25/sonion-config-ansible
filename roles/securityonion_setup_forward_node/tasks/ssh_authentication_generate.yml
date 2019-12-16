@@ -22,11 +22,5 @@
   delegate_to: localhost 
   command: scp -p /tmp/{{ansible_hostname}} {{ansible_user}}@{{ansible_host}}:~/.ssh
 
-- name: '[LOCALLY] Start SSH authentication agent ( ssh-agent ) in Forward Node'
-  delegate_to: localhost 
-  command:  ssh -t {{ansible_user}}@{{ansible_host}} 'eval "$(ssh-agent -s)"' 
-
-- name: '[LOCALLY] Add private key to ssh-agent in Forward Node'
-  delegate_to: localhost 
-  command:  ssh -t {{ansible_user}}@{{ansible_host}} '  ssh-add ~/.ssh/{{ansible_hostname}} '
-
+- name: '[LOCALLY] Start SSH authentication agent ( ssh-agent ) and add private key to ssh-agent in Forward Node'
+  command: ssh {{ansible_user}}@{{ansible_host}} 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/{{ansible_hostname}}'
