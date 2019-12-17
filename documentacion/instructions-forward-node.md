@@ -20,10 +20,8 @@
 2. Contar con un servidor con la ISO de Security Onion instalada o Ubuntu Server 16.04: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
    Se debe contar con al menos dos interfaces una para administracion y otra para realizar el monitoreo. 
 
-3. Security Onion recomienda no utilizar el usuario root, se debe crear un usuario distinto a root, asginarle un password y agregarlo al grupo sudo, los comandos para realizar esto son:
-        * sudo useradd -m USUARIOCREADO
-        * sudo passwd USUARIOCREADO
-        * sudo adduser USUARIOCREADO sudo
+3. Security Onion recomienda no utilizar el usuario root, se debe crear un usuario distinto a root, asginarle un password y agregarlo al grupo sudo, los comandos para realizar esto son: *  sudo useradd -m USUARIOCREADO *  sudo passwd USUARIOCREADO  *  sudo adduser USUARIOCREADO sudo  
+  
 
 4. Agregar clave SSH publica del host desde el cual se realiza el despliegue en el servidor con Security Onion, para hacer esto se puede copiar manualmente la public key del host en el archivo autorized_keys de la carpeta /home/USUARIOCREADO/.ssh o con el comando: ssh-copy-id USUARIOCREADO@IPFORWARD (tambien ejecutado desde el host).
 
@@ -63,11 +61,11 @@ Dentro del archivo `template_forward.yml` tenemos las siguientes variables:
     ansible_user: 'sonionforward'
 ```
 
-- La seccion `Hostname variable` define el hostname que tendra el Server Master:
+- La seccion `Hostname variable` define el hostname que tendra el Forward Node:
  
 ```yaml
     
-    HOST_NAME: 'csirt-sonion-master'
+    HOST_NAME: 'csirt-sonion-forward'
         
 ```
 
