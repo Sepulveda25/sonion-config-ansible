@@ -103,19 +103,19 @@ swappiness: 10
 #(Modify File roles/telegraf_install/files/telegraf.conf)
 #########################################################
 
-INSTALL_TELEGRAF: 'no' #'no'
+INSTALL_TELEGRAF: 'yes' #'no'
 
 #########################################################
 #Copy Rules TheHive to ElastAlert in Master Node
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
-COPY_THEHIVE_RULES: 'no' #'no'
+COPY_THEHIVE_RULES: 'yes' #'no'
 
 #IP del servidor con TheHive
-hive_host: 'http://172.16.81.252'
+hive_host: 'http://172.16.81.110'
 #Puerto del servicio TheHive
 hive_port: '9000'
 #API-KEY del user creado en TheHive
-hive_apikey: 'CpnlZ7Hh4yUtPLttQbAk/e5YWj40Z7Aq'
+hive_apikey: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
 
