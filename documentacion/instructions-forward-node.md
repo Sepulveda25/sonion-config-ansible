@@ -20,33 +20,29 @@
 2. Contar con un servidor con la ISO de Security Onion instalada o Ubuntu Server 16.04: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
    Se debe contar con al menos dos interfaces una para administracion y otra para realizar el monitoreo. 
 
-3. Security Onion recomienda no utilizar el usuario root, se debe crear un usuario distinto a root, asginarle un password y agregarlo al grupo sudo, los comandos para realizar esto son: *  sudo useradd -m USUARIOCREADO *  sudo passwd USUARIOCREADO  *  sudo adduser USUARIOCREADO sudo  
-  
+3. Agregar clave SSH publica del host desde el cual se realiza el despliegue en el servidor con Security Onion, para hacer esto se puede copiar manualmente la public key del host en el archivo autorized_keys de la carpeta /home/USUARIOFORWARD/.ssh o con el comando: ssh-copy-id USUARIOFORWARD@IPFORWARD (tambien ejecutado desde el host).
 
-4. Agregar clave SSH publica del host desde el cual se realiza el despliegue en el servidor con Security Onion, para hacer esto se puede copiar manualmente la public key del host en el archivo autorized_keys de la carpeta /home/USUARIOCREADO/.ssh o con el comando: ssh-copy-id USUARIOCREADO@IPFORWARD (tambien ejecutado desde el host).
+4. El host (desde el que realizamos el despliegue) tambien debe tener conexion con el Master Node, para ello repetir el paso 3 para el Master Node sobre el usuario del Master que es el mismo que configuraremos mas adelante en el template (SSH_USERNAME: 'USERMASTER') - Esto se hace ya que se crea localmente en el host un par de claves ssh (RSA), y se distribuye en el Master la public key y en el Forward la private key para la comunicacion entre ellos al momento de ejecutar el comando SOSETUP y ademas se utiliza para pegar las reglas de TheThive en el Master correspondientes al Forward (esto es en caso de estar habilitada la opcion copiar reglas de TheHive).
 
-5. El host (desde el que realizamos el despliegue) tambien debe tener conexion con el Master Node, para ello repetir el paso 3 para el Master Node sobre el usuario del Master que es el mismo que configuraremos mas adelante en el template (SSH_USERNAME: 'USERMASTER') - Esto se hace ya que se crea localmente en el host un par de claves ssh (RSA), y se distribuye en el Master la public key y en el Forward la private key para la comunicacion entre ellos al momento de ejecutar el comando SOSETUP ya demas se utiliza para pegar las reglas de TheThive en el Master correspondientes al Forward (esto es en caso de estar habilitada la opcion pegar reglas de TheHive).
+5. Si el usuario del Master mencionado en el paso anterior (SSH_USERNAME) va a ser el usuario `root` saltar este paso, caso contrario al usuario del Master (SSH_USERNAME) se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USERMASTER ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USERMASTER y agregando la misma linea).
 
-6. Si el usuario mencionado en el paso anterior (SSH_USERNAME) va a ser el usuario `root` saltar este paso, caso contrario al usuario del Master (SSH_USERNAME) se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USERMASTER ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USERMASTER y agregando la misma linea).
+6. Mantener actualizado el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Forward node.
 
-7. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
+7. [Opcional] Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
    Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
  
    Este paso es opcional, en caso de no contar con el servidor con InfluxDB y Grafana instalados setear a la variable
    `INSTALL_TELEGRAF: 'no'` en lugar de  `INSTALL_TELEGRAF: 'yes'`
 
-8. Mantener actualizado el archivo `/roles/securityonion_setup_master/files/clasiffication_rules` con la clasificacion de reglas del Forward node.
-
-9. Contar con un servidor con TheHive instalado y mantener actualizadas las reglas de TheHive que seran copiadas en el Master Node desde el Forward Node. 
-   Las reglas actualizadas se encuentran en el [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive) 
-   y deben guardarse en `/roles/copy_hive_rules_to_master/files/thehive_rules`, es necesario definir dentro del archivo de variables
-   del Foward Node (en carpeta host_vars) las variables:
+8. [Opcional] Si se cuenta con servidores de The Hive instalados (uno principal -o master- y otro para la dependencia -o secundario-) es posible copiar para ambos The Hive (principal y secundario) las reglas en el Master de Security Onion (en el Master de Security Onion se crearan dos carpetas con reglas para cada The Hive). Es necesario mantener actualizadas las reglas de TheHive que seran copiadas en el Master Node. Las reglas actualizadas se encuentran en el [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive) y deben guardarse en `/roles/copy_hive_rules_to_master/files/thehive_rules`. Mas adelante en el template del Forward se definen las variables, para cada TheHive:
     *  hive_host
     *  hive_port
     *  hive_apikey
    
-   Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a la variable
-   `COPY_THEHIVE_RULES: 'no'` en lugar de `COPY_THEHIVE_RULES: 'yes'`, en el archivo de variables de la carpeta `host_vars`.
+   Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a las variables en el archivo template Forward de la carpeta `host_vars`: 
+   `COPY_THEHIVE_RULES_MASTER: 'no'` en lugar de `COPY_THEHIVE_RULES_MASTER: 'yes'` para el nodo principal o master de TheHive.
+   `COPY_THEHIVE_RULES_SECUNDARY: 'no'` en lugar de `COPY_THEHIVE_RULES_SECUNDARY: 'yes'` para el nodo secundario y de dependencia.
+
 
 ## Template Forward Node
 
@@ -213,7 +209,18 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
 ```        
 
 -  La seccion `Copy Rules TheHive to ElastAlert in Master Node` indica si las reglas para TheHive ubicadas en 
-  `/roles/securityonion_setup_master/files/clasiffication_rules` seran copiadas en el Master Node.
+ `/roles/securityonion_setup_master/files/clasiffication_rules` seran copiadas en el Master Node.
+   Si se cuenta con servidores de The Hive instalados (uno principal -o master- y otro para la dependencia -o secundario-) es posible copiar para ambos The Hive (principal y secundario) las reglas en el Master de Security Onion (en el Master de Security Onion se crearan dos carpetas con reglas para cada The Hive). Es necesario mantener actualizadas las reglas de TheHive que seran copiadas en el Master Node. Las reglas actualizadas se encuentran en el [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive) y deben guardarse en `/roles/copy_hive_rules_to_master/files/thehive_rules`. Mas adelante en el template del Forward se definen las variables, para cada TheHive:
+    *  hive_host
+    *  hive_port
+    *  hive_apikey
+   
+   Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a las variables en el archivo template Forward de la carpeta `host_vars`: 
+   `COPY_THEHIVE_RULES_MASTER: 'no'` en lugar de `COPY_THEHIVE_RULES_MASTER: 'yes'` para el nodo principal o master de TheHive.
+   `COPY_THEHIVE_RULES_SECUNDARY: 'no'` en lugar de `COPY_THEHIVE_RULES_SECUNDARY: 'yes'` para el nodo secundario y de dependencia.
+   
+   
+   
    En caso de setear la variable `COPY_THEHIVE_RULES` como 'yes' sera necesario contar con un servidor con TheHive 
    instalado y mantener actualizadas las reglas de TheHive que seran copiadas en el Master Node desde el Forward Node. 
    Las reglas actualizadas se encuentran en el [Repositorio con The Hive Rules](https://gitlab.unc.edu.ar/csirt/elastalert-thehive) 
@@ -249,16 +256,17 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     ```
     
    [IMPORTANTE] Como se indico de forma detallada en la seccion pre-requistos se debe:  
-
-    1. Crear un usuario distinto a root.
-    2. Pegar el public key de nuestro host en el Forward Node.
-    3. Tener conexion con el master Master node desde nuestro host.
-    4. Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password (en caso de que no se trate del usuario root).  
+    
+    1. Pegar el public key de nuestro host en el Forward Node.
+    2. Tener conexion con el master Master node desde nuestro host.
+    3. Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password (en caso de que no se trate del usuario root en el Master).  
     
     &nbsp;
 
-[IMPORTANTE] Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario creado en el servidor Forward, en este caso tenemos dos alternativas:
-   * Ingresar el Password en caso de conocerlo.
-   * O se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOCREADO ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
+[IMPORTANTE] Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario del servidor Forward, en este caso tenemos tres alternativas:
+   * Ingresar el password en caso de conocerlo.
+   * Si el usuario es root presionar enter y no ingresar nada (presionar enter).
+   * O en caso de no cumplirse ninguna de las opciones anteriores se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOFORWARD ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
 
+[IMPORTANTE]  Tambien se solicitara el ingreso de una contraseña para un usuario `admin` que se va a crear en el Forward Node, a este usuario se puede ingresar para propositos de administracion una vez completado el despliegue. Tambien esta contraseña se utilizara para la creacion de un usuario en el Master que se utiliza para integrar el nodo Forward y el Master (esto se realiza de forma automatica)( en caso de existir el usuario en el Master Node lo que se hace es chequear que la contraseña ingresada coincida con el user del Master).
 
