@@ -9,7 +9,7 @@
 #    private: yes
 #    when: "'forward_nodes' in group_names"
    - name: 'forward_password_to_admin_user'
-     prompt: 'Create a password for admin user in Forward Node and SSH password for Forward user created in Master Server '
+     prompt: 'Create a password used for "admin" user created in Forward Node and user created in Master Server for Forward [enter password]'
      private: yes
      when: "'forward_nodes' in group_names"
   # when: 'not "forward_nodes" == group_names"'

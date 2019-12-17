@@ -22,7 +22,7 @@
        responses:
          'Type yes to continue or anything else to exit.': "yes"
          'Are you sure you want to continue connecting.': "yes"
-         'password': "{{ so_ssh_foward_pass_to_master }}" #si contiene la cadena password
+         'password': "{{ forward_password_to_admin_user }}" #si contiene la cadena password
      register: sosetup_output
      when: "'forward_nodes' in group_names"
 

@@ -1,11 +1,11 @@
-ansible_host: '172.16.81.126'
-ansible_user: 'soniontest'
+ansible_host: '172.18.32.141'
+ansible_user: 'sonionfce'
 
 ##########################################
 #Hostname variable
 ##########################################
 
-HOST_NAME: 'csirt-sonion-faud-forward'
+HOST_NAME: 'sonion-forward-eco'
 
 ##########################################
 #Variables for file sosetup_forward.conf
@@ -19,25 +19,25 @@ MGMT_INTERFACE: 'ens160'
 MGMT_CONFIG_TYPE: 'static'
 # If MGMT_CONFIG_TYPE=static, then provide the details here.
 # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-ADDRESS: '172.16.81.126'
+ADDRESS: '172.18.32.141'
 NETMASK: '255.255.255.0'
-GATEWAY: '172.16.81.1'
-NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
-DOMAIN: 'soniontest.local.psi'
+GATEWAY: '172.18.32.4'
+NAMESERVER: '200.16.22.1 200.16.16.1 200.16.16.2'
+DOMAIN: 'sonion-forward-eco.psi'
 
 # Which interface(s) will be sniffing network traffic?
 # For multiple interfaces, please separate them with spaces.
-SNIFFING_INTERFACES: 'ens160'
+SNIFFING_INTERFACES: 'ens192'
 
 # SERVERNAME 
 # This should be the name/IP of the separate Master server:
-SERVERNAME: '172.16.81.127'
+SERVERNAME: '172.16.81.50'
 # SSH_USERNAME
 # This should be the name of an account on the separate Master server.
-SSH_USERNAME: 'soniontest2' 
+SSH_USERNAME: 'root' 
 
 # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
-PF_RING_SLOTS: 4096 
+PF_RING_SLOTS: 4096
 
 # IDS_ENGINE
 # Which IDS engine would you like to run?  snort/suricata
@@ -103,19 +103,35 @@ swappiness: 10
 #(Modify File roles/telegraf_install/files/telegraf.conf)
 #########################################################
 
-INSTALL_TELEGRAF: 'no' #'no'
-
+INSTALL_TELEGRAF: 'yes' #'no'
 
 #########################################################
-#Copy Rules TheHive to ElastAlert in Master Node
+#Copy Rules TheHive to ElastAlert in Master Node for The Hive Master
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
-COPY_THEHIVE_RULES: 'no' #'no'
+COPY_THEHIVE_RULES_MASTER: 'yes' #'no'
 
 #IP del servidor con TheHive
-hive_host: 'http://172.16.81.110'
+hive_host_master: 'http://172.16.81.110'
 #Puerto del servicio TheHive
-hive_port: '9000'
+hive_port_master: '9000'
 #API-KEY del user creado en TheHive
-hive_apikey: 'xLuixewzDP6zXcVgLvyaFUoeUZcZgKu4'
+hive_apikey_master: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
+
+
+#########################################################
+#Copy Rules TheHive to ElastAlert in Master Node for The Hive secundary
+#(From file /roles/securityonion_setup_master/files/thehive_rules)
+#########################################################
+
+COPY_THEHIVE_RULES_SECUNDARY: 'yes' #'no'
+
+#IP del servidor con TheHive
+hive_host_secundary: 'http://172.16.81.110'
+#Puerto del servicio TheHive
+hive_port_master_secundary: '9000'
+#API-KEY del user creado en TheHive
+hive_apikey_master_secundary: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
+
+
