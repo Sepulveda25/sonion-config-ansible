@@ -1,22 +1,30 @@
 
 ---
 
-- name: Check if the user is not root
-  fail:
-    msg: "Usar un usuario distinto a ROOT, con su password y agregar al grupo SUDO"
-  failed_when: 
-   - ansible_user_id == 'root'
-
 - name: Check interfaces configuration #Si usa SUDO
   import_tasks: interfaces_check.yml
 
-- name: Generate and copy public key to Master
-  import_tasks: ssh_authentication_generate.yml
-
-# Siempre y cuando sea distinto al actual hostname cambia el Host name
+  # Siempre y cuando sea distinto al actual hostname cambia el Host name
 - name: Change hostname #Si usa SUDO
   import_tasks: change_hostname.yml
   when: 'not ("{{ansible_hostname}}" == "{{HOST_NAME}}")'
+
+- name: Create user "admin" for managment Forward Node.
+  become: yes
+  become_user: root
+  user:
+    name: admin
+    password: "{{ forward_password_to_admin_user | password_hash('sha512') }}"
+    groups: # Empty by default, here we give it some groups
+     - admin
+     - sudo
+    state: present
+    shell: /bin/bash       # Defaults to /bin/bash
+    system: no             # Defaults to no
+    createhome: yes        # Defaults to yes
+
+- name: Generate and copy public key to Master
+  import_tasks: ssh_authentication_generate.yml
 
 - name: Collect facts
   setup:
@@ -117,10 +125,25 @@
     backup: yes
     mode: 'preserve' #preserve permissions
 
-- name: Copy TheHive rules to elastalert in MasterNode #Si usa SUDO del Master
+- name: Copy TheHive rules to elastalert in MasterNode for The Hive master #Si usa SUDO del Master
   include_role:
     name: copy_hive_rules_to_master
-  when:  ' "{{ COPY_THEHIVE_RULES }}" in "yes" '
+  when:  ' "{{ COPY_THEHIVE_RULES_MASTER }}" in "yes" '
+  vars:
+    aux_name: "master" 
+    hive_host: "{{ hive_host_master }}"
+    hive_port: "{{ hive_port_master }}"
+    hive_apikey: "{{ hive_apikey_master }}"
+
+- name: Copy TheHive rules to elastalert in MasterNode for The Hive secundary #Si usa SUDO del Master
+  include_role:
+    name: copy_hive_rules_to_master
+  when:  ' "{{ COPY_THEHIVE_RULES_SECUNDARY }}" in "yes" '
+  vars:
+    aux_name: "secundary" 
+    hive_host: "{{ hive_host_secundary }}"
+    hive_port: "{{ hive_port_master_secundary }}"
+    hive_apikey: "{{ hive_apikey_master_secundary }}"
 
 - name: Install telegraf #Si usa SUDO
   include_role:

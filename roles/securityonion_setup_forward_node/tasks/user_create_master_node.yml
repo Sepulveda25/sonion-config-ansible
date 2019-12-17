@@ -11,7 +11,7 @@
 
 - name: '[LOCALLY] Create a password for user {{ansible_hostname}} in Master Node'
   delegate_to: localhost 
-  command: ssh -t {{ SSH_USERNAME }}"@"{{ SERVERNAME }} 'echo -e "{{ so_ssh_foward_pass_to_master }}\n{{ so_ssh_foward_pass_to_master }}" | sudo passwd {{ansible_hostname}}'
+  command: ssh -t {{ SSH_USERNAME }}"@"{{ SERVERNAME }} 'echo -e "{{ forward_password_to_admin_user }}\n{{ forward_password_to_admin_user }}" | sudo passwd {{ansible_hostname}}'
   ignore_errors: True
   when: user_exists.rc == 0
  
@@ -22,7 +22,7 @@
   expect:
    command: ssh -t "{{ ansible_hostname }}"@"{{ SERVERNAME }}" 'sudo -v'
    responses:
-     'password': "{{ so_ssh_foward_pass_to_master }}" 
+     'password': "{{ forward_password_to_admin_user }}" 
      'Are you sure you want to continue connecting.': "yes"
   register: password_validation
   ignore_errors: True

@@ -6,7 +6,7 @@
 - name: '[LOCALLY] Create a temporary folder for TheHive Rules in "/tmp/thehiverules_{{ ansible_hostname }}"'
   delegate_to: localhost 
   file: 
-    path: "/tmp/thehiverules_{{ ansible_hostname }}"
+    path: "/tmp/thehiverules_{{ ansible_hostname }}_{{aux_name}}"
     state: directory
   register: thehiverules
 
@@ -34,17 +34,17 @@
 #find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_host: \)\(.*\)/\1 REEMPLAZO/' {} \;
 - name: '[LOCALLY] Replace the value hive_host for "{{ hive_host_escape }}" in all files in "{{ thehiverules.path }}"'
   delegate_to: localhost 
-  shell: find "{{ thehiverules.path }}" -type f -exec sudo sed -i 's/\(hive_host:\)\(.*\)/\1 {{ hive_host_escape }} /' {} \;
+  shell: find "{{ thehiverules.path }}" -type f -exec sed -i 's/\(hive_host:\)\(.*\)/\1 {{ hive_host_escape }} /' {} \;
 
 #find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_port: \)\(.*\)/\1 REEMPLAZO/' {} \;
 - name: '[LOCALLY] Replace the value hive_port for "{{ hive_port }}" in all files in "{{ thehiverules.path }}"'
   delegate_to: localhost 
-  shell: find "{{ thehiverules.path }}" -type f -exec sudo sed -i 's/\(hive_port:\)\(.*\)/\1 {{ hive_port }}/' {} \;
+  shell: find "{{ thehiverules.path }}" -type f -exec sed -i 's/\(hive_port:\)\(.*\)/\1 {{ hive_port }}/' {} \;
 
 #find /etc/elastalert/rules -type f -exec sudo sed -i 's/\(hive_apikey: \)\(.*\)/\1 REEMPLAZO/' {} \;
 - name: '[LOCALLY] Replace the value hive_apikey for "{{ hive_apikey_escape }}" in all files in "{{ thehiverules.path }}"'
   delegate_to: localhost 
-  shell: find "{{ thehiverules.path }}" -type f -exec sudo sed -i 's/\(hive_apikey:\)\(.*\)/\1 {{ hive_apikey_escape }}/' {} \;
+  shell: find "{{ thehiverules.path }}" -type f -exec sed -i 's/\(hive_apikey:\)\(.*\)/\1 {{ hive_apikey_escape }}/' {} \;
 
 - name: '[LOCALLY]  Search all files in "{{ thehiverules.path }}"'
   delegate_to: localhost 
@@ -53,13 +53,13 @@
    recurse: yes
   register: rules_in_directory
 
-- name: '[LOCALLY] Add "{{ ansible_hostname }}" in the field "name" of the rule'
+- name: '[LOCALLY] Add "{{ ansible_hostname }}_{{aux_name}}" in the field "name" of the rule'
   delegate_to: localhost 
   lineinfile:
     path: "{{ item.path }}"
     backrefs: yes
     regexp: '(^name:.*$)'
-    line: '\1 - Node {{ ansible_hostname }}'
+    line: '\1 - Node {{ ansible_hostname }}_{{aux_name}}'
   with_items: "{{ rules_in_directory.files }}" #para iterar sobre todas las reglas
 
 - name: Change permisions in Master Node folder /etc/elastalert/rules in Master Node 

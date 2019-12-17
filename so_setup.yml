@@ -8,8 +8,8 @@
 #    prompt: 'SSH password for Security Onion Master'
 #    private: yes
 #    when: "'forward_nodes' in group_names"
-   - name: 'so_ssh_foward_pass_to_master'
-     prompt: 'SSH password for Forward user created in Master Server'
+   - name: 'forward_password_to_admin_user'
+     prompt: 'Create a password for admin user in Forward Node and SSH password for Forward user created in Master Server '
      private: yes
      when: "'forward_nodes' in group_names"
   # when: 'not "forward_nodes" == group_names"'
