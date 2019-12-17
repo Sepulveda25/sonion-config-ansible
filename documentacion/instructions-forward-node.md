@@ -241,6 +241,20 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
 
 ## Despliegue con Ansible
 
+`[IMPORTANTE]` Como se indico de forma detallada en la seccion pre-requistos se debe:  
+    
+    1. Pegar el public key de nuestro host en el Forward Node.
+    2. Tener conexion con el master Master node desde nuestro host.
+    3. Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password (en caso de que no se trate del usuario root en el Master).  
+    
+`[IMPORTANTE]` Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario del servidor Forward, en este caso tenemos tres alternativas:
+   * Ingresar el password en caso de conocerlo.
+   * Si el usuario es root presionar enter y no ingresar nada (presionar enter).
+   * O en caso de no cumplirse ninguna de las opciones anteriores se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOFORWARD ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
+
+`[IMPORTANTE]`  Tambien se solicitara el ingreso de una contraseña para un usuario `admin` que se va a crear en el Forward Node, a este usuario se puede ingresar para propositos de administracion una vez completado el despliegue. Tambien esta contraseña se utilizara para la creacion de un usuario en el Master que se utiliza para integrar el nodo Forward y el Master (esto se realiza de forma automatica)( en caso de existir el usuario en el Master Node lo que se hace es chequear que la contraseña ingresada coincida con el user del Master).
+
+
 *  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `[forward_nodes]` 
 (Ej. como en el paso anterior se crea el archivo `sonionforward.yml` agregar `sonionforward` en el archivo `hosts`):
 
@@ -255,18 +269,5 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
     ```
     
-   [IMPORTANTE] Como se indico de forma detallada en la seccion pre-requistos se debe:  
-    
-    1. Pegar el public key de nuestro host en el Forward Node.
-    2. Tener conexion con el master Master node desde nuestro host.
-    3. Permitir al usuario del Master (SSH_USERNAME: 'USERMASTER') ejecutar sudo sin solicitar el password (en caso de que no se trate del usuario root en el Master).  
-    
-    &nbsp;
 
-[IMPORTANTE] Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario del servidor Forward, en este caso tenemos tres alternativas:
-   * Ingresar el password en caso de conocerlo.
-   * Si el usuario es root presionar enter y no ingresar nada (presionar enter).
-   * O en caso de no cumplirse ninguna de las opciones anteriores se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOFORWARD ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
-
-[IMPORTANTE]  Tambien se solicitara el ingreso de una contraseña para un usuario `admin` que se va a crear en el Forward Node, a este usuario se puede ingresar para propositos de administracion una vez completado el despliegue. Tambien esta contraseña se utilizara para la creacion de un usuario en el Master que se utiliza para integrar el nodo Forward y el Master (esto se realiza de forma automatica)( en caso de existir el usuario en el Master Node lo que se hace es chequear que la contraseña ingresada coincida con el user del Master).
 
