@@ -16,7 +16,6 @@
     name: admin
     password: "{{ forward_password_to_admin_user | password_hash('sha512') }}"
     groups: # Empty by default, here we give it some groups
-     - admin
      - sudo
     state: present
     shell: /bin/bash       # Defaults to /bin/bash
