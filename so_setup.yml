@@ -4,10 +4,6 @@
   gather_facts: yes
 
   vars_prompt:
-#  - name: 'so_ssh_master_password'
-#    prompt: 'SSH password for Security Onion Master'
-#    private: yes
-#    when: "'forward_nodes' in group_names"
    - name: 'forward_password_to_admin_user'
      prompt: 'Create a password used for "admin" user created in Forward Node and user created in Master Server for Forward [enter password]'
      private: yes

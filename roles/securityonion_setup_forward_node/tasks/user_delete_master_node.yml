@@ -4,9 +4,9 @@
   delegate_to: localhost 
   command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo rm /etc/sudoers.d/temp-sudo-{{ ansible_hostname }}'
 
-- name: '[LOCALLY] Remove user {{ansible_hostname}} to the Sudo group in Master Node'
-  delegate_to: localhost 
-  command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo deluser {{ansible_hostname}} sudo'
+#- name: '[LOCALLY] Remove user {{ansible_hostname}} to the Sudo group in Master Node'
+#  delegate_to: localhost 
+#  command: ssh -t "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo deluser {{ansible_hostname}} sudo'
 
 
 
