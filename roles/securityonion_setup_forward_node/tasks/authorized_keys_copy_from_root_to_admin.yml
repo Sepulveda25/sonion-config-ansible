@@ -1,0 +1,23 @@
+
+---
+
+- name: Create a directory .ssh if it does not exist for user admin
+  become: yes
+  become_user: root
+  file:
+    path: /home/admin/.ssh
+    state: directory
+    owner: admin
+    group: admin
+    mode: '0700'
+
+- name: Copy authorized_keys from root to /home/admin/.ssh/
+  become: yes
+  become_user: root
+  copy:
+    src: ~/.ssh/authorized_keys
+    dest: /home/admin/.ssh/authorized_keys
+    remote_src: yes
+    owner: admin
+    group: admin
+    mode: '0600'

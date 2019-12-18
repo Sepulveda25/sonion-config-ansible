@@ -4,16 +4,28 @@
   gather_facts: yes
 
   vars_prompt:
-   - name: 'forward_password_to_admin_user'
-     prompt: 'Create a password used for "admin" user created in Forward Node and user created in Master Server for Forward [enter password]'
+
+   - name: 'admin_password'
+     prompt: 'Create a password used for "admin" user created automatically [enter password]'
      private: yes
-     when: "'forward_nodes' in group_names"
-  # when: 'not "forward_nodes" == group_names"'
- #  when: '"root" == ansible_user_id"'
 
   tasks:
 
-    - name: Execute sosetup for forward
-      include_role:
-       name: securityonion_setup
+   - debug:
+      msg: 
+        - "The password entered will also be used to create a user on the Master Server." 
+        - "The user created in the Master will have a username to the Forward Hostname."
+        - "(if the user already exists, this password must match, otherwise the execution will fail)."
+     when: "'forward_nodes' in group_names"
+   
+   - pause:
+      seconds: 1
 
+   - name: Execute sosetup for forward
+     include_role:
+      name: securityonion_setup
+
+
+# when: 'not "forward_nodes" == group_names"'
+# when: '"root" == ansible_user_id"'
+# when: "'forward_nodes' in group_names"

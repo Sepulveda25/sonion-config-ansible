@@ -9,7 +9,7 @@
        responses:
          'Type yes to continue or anything else to exit.': "yes"
          'Are you sure you want to continue connecting.': "yes"
-         'password': "{{ so_ssh_master_password }}" #si contiene la cadena password
+         'password': "{{ BECOME_PASS<WORD }}" #si contiene la cadena password
      register: sosetup_output
      when: "'master' in group_names"
 

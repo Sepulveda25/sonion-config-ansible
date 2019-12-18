@@ -14,13 +14,16 @@
   become_user: root
   user:
     name: admin
-    password: "{{ forward_password_to_admin_user | password_hash('sha512') }}"
+    password: "{{ admin_password | password_hash('sha512') }}"
     groups: # Empty by default, here we give it some groups
      - sudo
     state: present
     shell: /bin/bash       # Defaults to /bin/bash
     system: no             # Defaults to no
     createhome: yes        # Defaults to yes
+
+- name: Copy authorized_key from root to admin user
+  import_tasks: authorized_keys_copy_from_root_to_admin.yml
 
 - name: Generate and copy public key to Master
   import_tasks: ssh_authentication_generate.yml
