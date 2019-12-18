@@ -9,7 +9,7 @@
        responses:
          'Type yes to continue or anything else to exit.': "yes"
          'Are you sure you want to continue connecting.': "yes"
-         'password': "{{ BECOME_PASS<WORD }}" #si contiene la cadena password
+         'password': "{{ BECOME_PASSWORD }}" #si contiene la cadena password
      register: sosetup_output
      when: "'master' in group_names"
 
@@ -22,7 +22,7 @@
        responses:
          'Type yes to continue or anything else to exit.': "yes"
          'Are you sure you want to continue connecting.': "yes"
-         'password': "{{ forward_password_to_admin_user }}" #si contiene la cadena password
+         'password': "{{ admin_password }}" #si contiene la cadena password
      register: sosetup_output
      when: "'forward_nodes' in group_names"
 
