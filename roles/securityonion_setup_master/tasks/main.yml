@@ -73,7 +73,7 @@
     dest: "{{ temp_config.path }}"
 
     
-- name: Remplazo variables de host_vars en el config para el forward
+- name: Remplazo variables de host_vars en el config para el Master
   lineinfile: 
    path: "{{ temp_config.path }}"
    regexp:  "{{ item.regexp }}"
@@ -103,6 +103,10 @@
     name: securityonion_run_sosetup
   vars:
     sosetupfilepath: "{{ temp_config.path }}"
+
+- name: Change docker bridge IPs
+  include_role:
+    name: docker_bridge_ip_change
 
 - name: Allow Analyst ports 22/tcp, 443/tcp, and 7734/tcp for {{analyst_network}}
   become: yes

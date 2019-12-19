@@ -1,0 +1,59 @@
+---
+
+- name: Remove a file in /etc/docker/daemon.json
+  become: yes
+  become_user: root
+  file:
+    path: /etc/docker/daemon.json
+    state: absent
+
+- name: Create a file in /etc/docker/daemon.json
+  become: yes
+  become_user: root
+  file:
+    path: /etc/docker/daemon.json
+    state: touch
+
+- name: Insert bip and default-address-pools in /etc/docker/daemon.json
+  become: yes
+  become_user: root
+  blockinfile:
+    path: /etc/docker/daemon.json
+    marker: ""
+    block: |
+        {
+          "bip": "10.11.0.1/24",
+          "default-address-pools":[
+            {"base":"10.10.0.0/16","size":24}
+          ]
+        }
+
+- name: Stop service docker
+  become: yes
+  become_user: root
+  service:
+    name: docker
+    state: stopped
+
+- name: Start service docker
+  become: yes
+  become_user: root
+  service:
+    name: docker
+    state: started
+
+- name: Recreate the docker network "docker network remove so-elastic-net"
+  become: yes
+  become_user: root
+  command:
+    cmd: docker network remove so-elastic-net
+
+- name: Recreate the docker network "sudo docker network create so-elastic-net --driver=bridge"
+  become: yes
+  become_user: root
+  command:
+    cmd: docker network create so-elastic-net --driver=bridge
+
+
+
+

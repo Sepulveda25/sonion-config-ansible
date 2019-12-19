@@ -101,8 +101,6 @@
    - {regexp: '^BRO_LB_PROCS=', line: "BRO_LB_PROCS='{{ BRO_LB_PROCS }}'"}
    - {regexp: '^PCAP_OPTIONS=', line: "PCAP_OPTIONS='{{ PCAP_OPTIONS }}'"}
 
-
-
 - name: Execute sosetup for forward #Si usa SUDO
   include_role:
     name: securityonion_run_sosetup
