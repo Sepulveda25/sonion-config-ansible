@@ -67,9 +67,9 @@
     suffix: .conf
   register: temp_config
   
-- name: Copy content sosetup_forward.conf in "{{ temp_config.path }}"
+- name: Copy content sosetup_master.conf in "{{ temp_config.path }}"
   copy:
-    src:  sosetup_forward.conf #from files folder in this role
+    src:  sosetup_master.conf #from files folder in this role
     dest: "{{ temp_config.path }}"
 
     

@@ -55,12 +55,30 @@ HOME_NET: '192.168.1.1/16,10.0.0.0/8,172.16.0.0/12,200.16.0.0/16'
 # This value should be lower than your number of CPU cores.
 BRO_LB_PROCS: '3'
 
+# PCAP_SIZE
+# How large do you want your pcap files to be?
+# The default is 150MB.
+PCAP_SIZE: '150'
+
+# PCAP_RING_SIZE
+# How big of a ring buffer should be allocated for netsniff-ng?
+# The default is 64MB.
+PCAP_RING_SIZE: '64'
+
 # PCAP_OPTIONS
 # The default option here of '-c' is intended for low-volume environments.
 # If monitoring lots of traffic, you will want to remove the -c to use
 # netsniff-ng's default scatter/gather I/O or consider netsniff-ng's --mmap option. 
 #option: b <cpu>, --bind-cpu <cpu> Pin netsniff-ng to a specific CPU and also pin resp.
 PCAP_OPTIONS: '--mmap -b0'
+
+# WARN_DISK_USAGE
+# Begin warning when disk usage reaches this level
+WARN_DISK_USAGE: '80'
+
+# CRIT_DISK_USAGE
+# Begin purging old files when disk usage reaches this level
+CRIT_DISK_USAGE: '90'
 
 
 ##########################################

@@ -1,5 +1,5 @@
-ansible_host: '172.16.81.127'
-ansible_user: 'soniontest2'
+ansible_host: '172.16.81.50'
+ansible_user: 'root'
 
 ##########################################
 #Hostname variable
@@ -13,16 +13,16 @@ HOST_NAME: 'csirt-sonion-master'
 
 # MGMT_INTERFACE
 # Which network interface should be the management interface?
-MGMT_INTERFACE: 'ens160'
+MGMT_INTERFACE: 'ens192'
 # MGMT_CONFIG_TYPE
 # Should the management interface be configured using DHCP or static IP?
 MGMT_CONFIG_TYPE: 'static'
 # If MGMT_CONFIG_TYPE=static, then provide the details here.
 # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-ADDRESS: '172.16.81.127'
+ADDRESS: '172.16.81.50'
 NETMASK: '255.255.255.0'
 GATEWAY: '172.16.81.1'
-NAMESERVER: '200.16.16.1 200.16.16.2 8.8.8.8'
+NAMESERVER: '200.16.16.1 200.16.16.2'
 DOMAIN: 'sonionmaster.local.psi' 
 
 # LOG_SIZE_LIMIT
@@ -71,6 +71,7 @@ DAYSTOREPAIR: '7'
 #########################################################
 
 INSTALL_TELEGRAF: 'no' #'no'
+
 
 #########################################################
 #Configuring firewall for analyst for administration purposes
