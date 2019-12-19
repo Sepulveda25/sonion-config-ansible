@@ -1,5 +1,5 @@
 ansible_host: '172.18.32.141'
-ansible_user: 'sonionfce'
+ansible_user: 'admin'
 
 ##########################################
 #Hostname variable
