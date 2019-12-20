@@ -55,6 +55,13 @@
     name: python3-pexpect
     update_cache: yes
 
+- name: Install python-ipaddress #Si usa SUDO
+  become: yes
+  become_user: root
+  apt:
+    name:  python-ipaddress
+    update_cache: yes
+
 - name: Check if Security Onion package exists #Si usa SUDO
   shell: command -v sosetup
   register: installed_sosetup
