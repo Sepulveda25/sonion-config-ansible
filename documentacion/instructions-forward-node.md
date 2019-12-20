@@ -154,6 +154,21 @@ Configuracion de netsniff-ng, la variable `PCAP_OPTIONS` permite configurar opci
     PCAP_OPTIONS: '--mmap -b0'
 ```
 
+En las siguientes variables se definen caracteristicas que tiene que ver con el uso del almacenamiento. <br/>
+La variable `WARN_DISK_USAGE` indica a partir de que porcentaje de uso de disco se comenzara a emitir alertas. <br/>
+La variable `CRIT_DISK_USAGE` indica a partir de que porcentaje de uso de disco se comenzara a eliminar archivos viejos. <br/>
+
+
+```yaml
+# WARN_DISK_USAGE
+# Begin warning when disk usage reaches this level
+WARN_DISK_USAGE: '80'
+# CRIT_DISK_USAGE
+# Begin purging old files when disk usage reaches this level
+CRIT_DISK_USAGE: '90'
+```
+
+
 - La seccion `Variables for file /opt/bro/etc/node.cfg` asigna los procesos de BRO a cada uno de los CPUs inidicados en la variable `BRO_PIN_CPU`. 
   La cantidad de CPUs inidicados debe ser menor o igual al numero de `BRO_LB_PROCS` definido en la seccion `Variables for file sosetup_forward.conf`.
 
