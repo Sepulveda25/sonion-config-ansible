@@ -19,7 +19,7 @@
      when: "'forward_nodes' in group_names"
    
    - pause:
-      seconds: 10
+      seconds: 2
 
    - name: Execute sosetup for forward
      include_role:

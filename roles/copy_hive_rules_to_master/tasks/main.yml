@@ -53,13 +53,23 @@
    recurse: yes
   register: rules_in_directory
 
-- name: '[LOCALLY] Add "{{ ansible_hostname }}_{{aux_name}}" in the field "name" of the rule'
+- name: '[LOCALLY] Add "{{ ansible_hostname }}-{{aux_name}}" in the field "name" of the rule'
   delegate_to: localhost 
   lineinfile:
     path: "{{ item.path }}"
     backrefs: yes
     regexp: '(^name:.*$)'
-    line: '\1 - Node {{ ansible_hostname }}_{{aux_name}}'
+    line: '\1 - Node {{ ansible_hostname }}-{{aux_name}}'
+  with_items: "{{ rules_in_directory.files }}" #para iterar sobre todas las reglas
+
+- name: '[LOCALLY] Add "{{ansible_hostname}}-{{ SNIFFING_INTERFACES }}" in the field "interface" in "filter" section of the rule'
+  delegate_to: localhost 
+  replace:
+    path: "{{ item.path }}"
+    after:  'filter:'
+    before: 'alert:'
+    regexp: '(?<=\interface: ").+?(?=\")'
+    replace: '{{ ansible_hostname }}-{{aux_name}}'
   with_items: "{{ rules_in_directory.files }}" #para iterar sobre todas las reglas
 
 - name: Change permisions in Master Node folder /etc/elastalert/rules in Master Node 
@@ -73,6 +83,12 @@
 - name: Restore permisions in Master Node folder /etc/elastalert/rules
   delegate_to: localhost 
   command: ssh "{{ SSH_USERNAME }}"@"{{ SERVERNAME }}" 'sudo chmod 755 /etc/elastalert/rules/'
+
+
+
+
+
+
 
 
 

@@ -147,16 +147,16 @@
     hive_port: "{{ hive_port_master }}"
     hive_apikey: "{{ hive_apikey_master }}"
 
-- name: Copy TheHive rules to elastalert in MasterNode for The Hive secundary #Si usa SUDO del Master
+- name: Copy TheHive rules to elastalert in MasterNode for The Hive secondary #Si usa SUDO del Master
   include_role:
     name: copy_hive_rules_to_master
-  when:  ' "{{ COPY_THEHIVE_RULES_SECUNDARY }}" in "yes" '
+  when:  ' "{{ COPY_THEHIVE_RULES_SECONDARY }}" in "yes" '
   vars:
-    aux_name: "secundary" 
-    hive_host: "{{ hive_host_secundary }}"
-    hive_port: "{{ hive_port_master_secundary }}"
-    hive_apikey: "{{ hive_apikey_master_secundary }}"
-
+    aux_name: "secondary" 
+    hive_host: "{{ hive_host_secondary }}"
+    hive_port: "{{ hive_port_master_secondary }}"
+    hive_apikey: "{{ hive_apikey_master_secondary }}"
+    
 - name: Install telegraf #Si usa SUDO
   include_role:
     name: telegraf_install

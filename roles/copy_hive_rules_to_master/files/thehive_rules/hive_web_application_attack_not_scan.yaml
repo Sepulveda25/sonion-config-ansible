@@ -15,7 +15,7 @@ realalert:
 
 filter:
 - query_string:
-    query: '("classification: Web Application Attack") -"category: scan"'
+    query: '("classification: Web Application Attack") - "category: scan" - "interface: "sonion-forward-eco-holis"''
 
 alert: hivealerter
 

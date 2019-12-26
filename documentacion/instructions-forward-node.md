@@ -41,7 +41,7 @@
    
    Este paso es opcional, en caso de no contar con el servidor con TheHive instalado setear a las variables en el archivo template Forward de la carpeta `host_vars`: 
    `COPY_THEHIVE_RULES_MASTER: 'no'` en lugar de `COPY_THEHIVE_RULES_MASTER: 'yes'` para el nodo principal o master de TheHive.
-   `COPY_THEHIVE_RULES_SECUNDARY: 'no'` en lugar de `COPY_THEHIVE_RULES_SECUNDARY: 'yes'` para el nodo secundario y de dependencia.
+   `COPY_THEHIVE_RULES_SECONDARY: 'no'` en lugar de `COPY_THEHIVE_RULES_SECONDARY: 'yes'` para el nodo secundario y de dependencia.
 
 
 ## Template Forward Node

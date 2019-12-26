@@ -139,17 +139,17 @@ hive_apikey_master: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
 
 
 #########################################################
-#Copy Rules TheHive to ElastAlert in Master Node for The Hive secundary
+#Copy Rules TheHive to ElastAlert in Master Node for The Hive secondary
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
-COPY_THEHIVE_RULES_SECUNDARY: 'no' #'no'
+COPY_THEHIVE_RULES_SECONDARY: 'no' #'no'
 
 #IP del servidor con TheHive
-hive_host_secundary: 'http://172.16.81.110'
+hive_host_secondary: 'http://172.16.81.110'
 #Puerto del servicio TheHive
-hive_port_master_secundary: '9000'
+hive_port_master_secondary: '9000'
 #API-KEY del user creado en TheHive
-hive_apikey_master_secundary: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
+hive_apikey_master_secondary: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
 
 
