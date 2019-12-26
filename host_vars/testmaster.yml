@@ -1,5 +1,5 @@
 ansible_host: '172.16.81.50'
-ansible_user: 'root'
+ansible_user: 'admincsirt'
 
 ##########################################
 #Hostname variable
@@ -13,7 +13,7 @@ HOST_NAME: 'csirt-sonion-master'
 
 # MGMT_INTERFACE
 # Which network interface should be the management interface?
-MGMT_INTERFACE: 'ens192'
+MGMT_INTERFACE: 'ens160'
 # MGMT_CONFIG_TYPE
 # Should the management interface be configured using DHCP or static IP?
 MGMT_CONFIG_TYPE: 'static'

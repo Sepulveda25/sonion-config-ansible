@@ -1,28 +1,23 @@
 es_host: elasticsearch
 es_port: 9200
+
 # (Required)
 # Rule name, must be unique
 index: "*:logstash-ids-*"
-name: The hive Web Application Attack not scan
+name: The Hive para ECO
 
-type: frequency
-num_events: 3
-timeframe:
-    minutes: 3
-realalert:
-    minutes: 0
-
+type: any
 
 filter:
 - query_string:
-    query: '(("classification: Web Application Attack") -"category: scan") AND interface: "sonion-forward-eco-ens192"'
+    query: 'priority: "1" AND interface: "sonion-forward-eco-ens192"'
 
 alert: hivealerter
 
 hive_connection:
-  hive_host: http://172.16.81.110
+  hive_host: http://172.16.81.115
   hive_port: 9000
-  hive_apikey: xLuixewzDP6zXcVgLvyaFUoeUZcZgKu3
+  hive_apikey: 4bwfXyKyyFL7Nq7YacMCpTBPrXyJnGI4 #API key 
 
 hive_proxies:
   http: ''

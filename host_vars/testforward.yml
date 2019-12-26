@@ -131,11 +131,11 @@ INSTALL_TELEGRAF: 'no' #'no'
 COPY_THEHIVE_RULES_MASTER: 'no' #'no'
 
 #IP del servidor con TheHive
-hive_host_master: 'http://172.16.81.110'
+hive_host_master: 'http://172.16.81.115'
 #Puerto del servicio TheHive
 hive_port_master: '9000'
 #API-KEY del user creado en TheHive
-hive_apikey_master: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
+hive_apikey_master: '4bwfXyKyyFL7Nq7YacMCpTBPrXyJnGI4'
 
 
 #########################################################
@@ -146,10 +146,10 @@ hive_apikey_master: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
 COPY_THEHIVE_RULES_SECONDARY: 'no' #'no'
 
 #IP del servidor con TheHive
-hive_host_secondary: 'http://172.16.81.110'
+hive_host_secondary: 'http://172.16.81.115'
 #Puerto del servicio TheHive
 hive_port_master_secondary: '9000'
 #API-KEY del user creado en TheHive
-hive_apikey_master_secondary: 'nEhr732aMnzG0X+dXj8zwB9xvr9mWdc7'
+hive_apikey_master_secondary: '4bwfXyKyyFL7Nq7YacMCpTBPrXyJnGI4'
 
 

@@ -3,19 +3,19 @@ es_port: 9200
 # (Required)
 # Rule name, must be unique
 index: "*:logstash-ids-*"
-name: The hive Web Application Attack not scan
+name: The Hive Unsuccessful User
 
 type: frequency
-num_events: 3
+num_events: 1
 timeframe:
-    minutes: 3
+    minutes: 10
 realalert:
     minutes: 0
 
 
 filter:
 - query_string:
-    query: '(("classification: Web Application Attack") -"category: scan") AND interface: "sonion-forward-eco-ens192"'
+    query: 'classification:"Unsuccessful User" AND interface: "sonion-forward-eco-ens192"'
 
 alert: hivealerter
 
@@ -49,3 +49,4 @@ hive_observable_data_mapping:
   - classification: '{match[classification]}'
   - alert: '{match[alert]}'
   - category: '{match[category]}'
+
