@@ -23,8 +23,8 @@
     system: no             # Defaults to no
     createhome: yes        # Defaults to yes
 
-- name: Copy authorized_key from root to admincsirt user
-  import_tasks: authorized_keys_copy_from_root_to_admincsirt.yml
+#- name: Copy authorized_key from root to admincsirt user
+# import_tasks: authorized_keys_copy_from_root_to_admincsirt.yml
 
 - name: Collect facts
   setup:
