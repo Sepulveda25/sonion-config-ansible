@@ -164,3 +164,5 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
 
    `[IMPORTANTE]` Si el Ansible se despliega contra el usuario root (` ansible_user: 'root' `) en el destino (donde se despliega el Master) y en caso de contar con la clave publica del host origen (host desde el cual se ejecuta el ansible) en el servidor destino, cuando se solicite el BECOME_PASSWORD (o SUDO_PASSWORD) no debe ser ingresado (presionar enter).
 
+  `[IMPORTANTE]`  Tambien se solicitara el ingreso de una contraseña para un usuario `admincsirt` que se va a crear en el Master Node, a este usuario se puede ingresar para propositos de administracion una vez completado el despliegue. 
+

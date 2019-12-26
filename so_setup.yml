@@ -6,7 +6,7 @@
   vars_prompt:
 
    - name: 'admin_password'
-     prompt: 'Create a password used for "admin" user created automatically [enter password]'
+     prompt: 'Create a password used for "admincsirt" user created automatically [enter password]'
      private: yes
 
   tasks:
@@ -19,7 +19,7 @@
      when: "'forward_nodes' in group_names"
    
    - pause:
-      seconds: 1
+      seconds: 10
 
    - name: Execute sosetup for forward
      include_role:

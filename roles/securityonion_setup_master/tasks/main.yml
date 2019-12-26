@@ -10,11 +10,11 @@
   import_tasks: change_hostname.yml
   when: 'not ("{{ansible_hostname}}" == "{{HOST_NAME}}")'
 
-- name: Create user "admin" for managment Forward Node.
+- name: Create user "admincsirt" for managment Forward Node.
   become: yes
   become_user: root
   user:
-    name: admin
+    name: admincsirt
     password: "{{ admin_password | password_hash('sha512') }}"
     groups: # Empty by default, here we give it some groups
      - sudo
@@ -23,8 +23,8 @@
     system: no             # Defaults to no
     createhome: yes        # Defaults to yes
 
-- name: Copy authorized_key from root to admin user
-  import_tasks: authorized_keys_copy_from_root_to_admin.yml
+- name: Copy authorized_key from root to admincsirt user
+  import_tasks: authorized_keys_copy_from_root_to_admincsirt.yml
 
 - name: Collect facts
   setup:

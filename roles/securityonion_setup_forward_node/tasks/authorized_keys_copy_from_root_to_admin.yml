@@ -5,19 +5,19 @@
   become: yes
   become_user: root
   file:
-    path: /home/admin/.ssh
+    path: /home/admincsirt/.ssh
     state: directory
-    owner: admin
-    group: admin
+    owner: admincsirt
+    group: admincsirt
     mode: '0700'
 
-- name: Copy authorized_keys from root to /home/admin/.ssh/
+- name: Copy authorized_keys from root to /home/admincsirt/.ssh/
   become: yes
   become_user: root
   copy:
     src: ~/.ssh/authorized_keys
-    dest: /home/admin/.ssh/authorized_keys
+    dest: /home/admincsirt/.ssh/authorized_keys
     remote_src: yes
-    owner: admin
-    group: admin
+    owner: admincsirt
+    group: admincsirt
     mode: '0600'

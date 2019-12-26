@@ -267,7 +267,7 @@ CRIT_DISK_USAGE: '90'
    * Si el usuario es root presionar enter y no ingresar nada (presionar enter).
    * O en caso de no cumplirse ninguna de las opciones anteriores se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOFORWARD ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOCREADO y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
 
-`[IMPORTANTE]`  Tambien se solicitara el ingreso de una contraseña para un usuario `admin` que se va a crear en el Forward Node, a este usuario se puede ingresar para propositos de administracion una vez completado el despliegue. Tambien esta contraseña se utilizara para la creacion de un usuario en el Master que se utiliza para integrar el nodo Forward y el Master (esto se realiza de forma automatica)( en caso de existir el usuario en el Master Node lo que se hace es chequear que la contraseña ingresada coincida con el user del Master).
+`[IMPORTANTE]`  Tambien se solicitara el ingreso de una contraseña para un usuario `admincsirt` que se va a crear en el Forward Node, a este usuario se puede ingresar para propositos de administracion una vez completado el despliegue. Tambien esta contraseña se utilizara para la creacion de un usuario en el Master que se utiliza para integrar el nodo Forward y el Master (esto se realiza de forma automatica)( en caso de existir el usuario en el Master Node lo que se hace es chequear que la contraseña ingresada coincida con el user del Master).
 
 
 *  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `[forward_nodes]` 
