@@ -164,7 +164,9 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
 `[IMPORTANTE]` Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario del servidor Master, en este caso tenemos tres alternativas:
    * Ingresar el password en caso de conocerlo.
    * Si el usuario es root presionar enter y no ingresar nada (presionar enter).
-   * O en caso de no cumplirse ninguna de las opciones anteriores se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOMASTER ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOMASTER y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
+   * O en caso de no cumplirse ninguna de las opciones anteriores se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOMASTER ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOMASTER y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter).
+
+  `[IMPORTANTE]`  Tambien se solicitara el ingreso de una contraseña para un usuario `admincsirt` que se va a crear en el Master Node, a este usuario se puede ingresar para propositos de administracion una vez completado el despliegue. 
 
 Agregar el nombre con el que renombramos el archivo `template_master.yml` al archivo `hosts` en el grupo `[master]`. (Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
 
@@ -179,10 +181,5 @@ Ejecutar Ansible sobre `"sonionmaster"` que se define en `extra-var`:
     ```bash
      $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
     ```
-    
-   Una vez ejecutado el comando se le solicitara el pass root para el servidor Forward (BECOME_PASSWORD o SUDO_PASSWORD).
 
-   `[IMPORTANTE]` Si el Ansible se despliega contra el usuario root (` ansible_user: 'root' `) en el destino (donde se despliega el Master) y en caso de contar con la clave publica del host origen (host desde el cual se ejecuta el ansible) en el servidor destino, cuando se solicite el BECOME_PASSWORD (o SUDO_PASSWORD) no debe ser ingresado (presionar enter).
-
-  `[IMPORTANTE]`  Tambien se solicitara el ingreso de una contraseña para un usuario `admincsirt` que se va a crear en el Master Node, a este usuario se puede ingresar para propositos de administracion una vez completado el despliegue. 
 
