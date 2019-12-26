@@ -166,7 +166,7 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
    * Si el usuario es root presionar enter y no ingresar nada (presionar enter).
    * O en caso de no cumplirse ninguna de las opciones anteriores se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOMASTER ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOMASTER y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
 
-*  Agregar el nombre con el que renombramos el archivo `template_master.yml` al archivo `hosts` en el grupo `[master]`. (Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
+Agregar el nombre con el que renombramos el archivo `template_master.yml` al archivo `hosts` en el grupo `[master]`. (Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
 
     ```yaml
     [master]
@@ -174,7 +174,7 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
     
     ```
 
-*  Ejecutar Ansible sobre `"sonionmaster"` que se define en `extra-var`:
+Ejecutar Ansible sobre `"sonionmaster"` que se define en `extra-var`:
 
     ```bash
      $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
