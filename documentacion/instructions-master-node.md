@@ -9,15 +9,25 @@
 
 ## Pre-requisitos
 
-1. Contar con un servidor de Security Onion con la interfaz de red pre-configurada: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
+1. Instalar pexpect en nuestro host:
 
-2. Agregar clave SSH publica del dispositivo desde el cual se realiza el despliegue en el servidor con Security Onion. (Ej. usar comando ssh-copy-id)
+    ```
+    sudo apt install python-pexpect
+    ```
+    ```
+    sudo apt install python3-pexpec
 
-3. Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
+
+2. Contar con un servidor con la ISO de Security Onion instalada o Ubuntu Server 16.04: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
+
+3. Agregar clave SSH publica del host desde el cual se realiza el despliegue en el servidor con Security Onion, para hacer esto se puede copiar manualmente la public key del host en el archivo autorized_keys de la carpeta /home/USUARIOMASTER/.ssh o con el comando: ssh-copy-id USUARIOMASTER@IPFORWARD (tambien ejecutado desde el host).
+
+4. [Opcional] Contar con un servidor con InfluxDB y Grafana. Los servidores Master y Forwards configurados con Ansible seran integrados con Grafana. 
    Comprobar configuracion de archivo: `roles/telegraf_install/files/telegraf.conf`
  
    Este paso es opcional, en caso de no contar con el servidor con InfluxDB y Grafana instalados setear a la variable
    `INSTALL_TELEGRAF: 'no'` en lugar de  `INSTALL_TELEGRAF: 'yes'`
+
 
 
 ## Template Master Node
@@ -145,6 +155,16 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
 
         
 ## Despliegue con Ansible
+
+
+`[IMPORTANTE]` Como se indico de forma detallada en la seccion pre-requistos se debe:  
+    
+    1. Pegar el public key de nuestro host en el Master Node 
+
+`[IMPORTANTE]` Cuando se ejecute el comando para el despliegue del Ansible se le solicitara el pass de SUDO (BECOME_PASSWORD o SUDO_PASSWORD) para el usuario del servidor Master, en este caso tenemos tres alternativas:
+   * Ingresar el password en caso de conocerlo.
+   * Si el usuario es root presionar enter y no ingresar nada (presionar enter).
+   * O en caso de no cumplirse ninguna de las opciones anteriores se le debe permitir ejecutar sudo sin solicitar la contraseña, esto se hace agregando una entrada al archivo sudoers (sudo visudo), la entrada es: USUARIOMASTER ALL=(ALL) NOPASSWD: ALL (lo mismo se puede realizar creando un archivo temporal en /etc/sudoers.d/temporal_USUARIOMASTER y agregando la misma linea). En este caso no se debe ingresar contraseña (presionar enter). 
 
 *  Agregar el nombre con el que renombramos el archivo `template_master.yml` al archivo `hosts` en el grupo `[master]`. (Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
 
