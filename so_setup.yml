@@ -13,13 +13,18 @@
 
    - debug:
       msg: 
+        - "******************************************************************************************"
+        - "******************************************************************************************"
         - "The password entered will also be used to create a user on the Master Server." 
         - "The user created in the Master will have a username to the Forward Hostname."
         - "(if the user already exists, this password must match, otherwise the execution will fail)."
+        - "******************************************************************************************"
+        - "******************************************************************************************"
+
      when: "'forward_nodes' in group_names"
    
    - pause:
-      seconds: 2
+      seconds: 5
 
    - name: Execute sosetup for forward
      include_role:

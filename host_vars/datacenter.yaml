@@ -1,11 +1,11 @@
-ansible_host: '172.18.32.141'
-ansible_user: 'admin'
+ansible_host: '172.16.81.55'
+ansible_user: 'root'
 
 ##########################################
 #Hostname variable
 ##########################################
 
-HOST_NAME: 'sonion-forward-eco'
+HOST_NAME: 'csirt-sonion-forward-data-center'
 
 ##########################################
 #Variables for file sosetup_forward.conf
@@ -13,28 +13,28 @@ HOST_NAME: 'sonion-forward-eco'
 
 # MGMT_INTERFACE
 # Which network interface should be the management interface?
-MGMT_INTERFACE: 'ens160'
+MGMT_INTERFACE: 'ens192'
 # MGMT_CONFIG_TYPE
 # Should the management interface be configured using DHCP or static IP?
 MGMT_CONFIG_TYPE: 'static'
 # If MGMT_CONFIG_TYPE=static, then provide the details here.
 # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-ADDRESS: '172.18.32.141'
+ADDRESS: '172.16.81.55'
 NETMASK: '255.255.255.0'
-GATEWAY: '172.18.32.4'
+GATEWAY: '172.16.81.1'
 NAMESERVER: '200.16.22.1 200.16.16.1 200.16.16.2'
-DOMAIN: 'sonion-forward-eco.psi'
+DOMAIN: 'csirt-sonion-forward-data-center.psi'
 
 # Which interface(s) will be sniffing network traffic?
 # For multiple interfaces, please separate them with spaces.
-SNIFFING_INTERFACES: 'ens192'
+SNIFFING_INTERFACES: 'ens160'
 
 # SERVERNAME 
 # This should be the name/IP of the separate Master server:
 SERVERNAME: '172.16.81.50'
 # SSH_USERNAME
 # This should be the name of an account on the separate Master server.
-SSH_USERNAME: 'root' 
+SSH_USERNAME: 'admincsirt' 
 
 # PF_RING Config. The default is 4096. High traffic networks may need to increase this.
 PF_RING_SLOTS: 4096
@@ -45,7 +45,7 @@ PF_RING_SLOTS: 4096
 IDS_ENGINE: 'suricata' 
 # IDS_LB_PROCS. 
 #How many PF_RING load-balanced processes would you like to run? This value should be lower than your number of CPU cores.
-IDS_LB_PROCS: '3'
+IDS_LB_PROCS: '8'
 # HOME_NET
 # Setup by default configures Snort/Suricata's HOME_NET variable
 HOME_NET: '192.168.1.1/16,10.0.0.0/8,172.16.0.0/12,200.16.0.0/16'
@@ -53,7 +53,7 @@ HOME_NET: '192.168.1.1/16,10.0.0.0/8,172.16.0.0/12,200.16.0.0/16'
 # BRO_LB_PROCS
 # How many PF_RING load-balanced processes would you like Bro to run?
 # This value should be lower than your number of CPU cores.
-BRO_LB_PROCS: '3'
+BRO_LB_PROCS: '8'
 
 # PCAP_SIZE
 # How large do you want your pcap files to be?
@@ -81,12 +81,13 @@ WARN_DISK_USAGE: '80'
 CRIT_DISK_USAGE: '90'
 
 
+
 ##########################################
 #Variables for file /opt/bro/etc/node.cfg
 ##########################################
 #pin_cpus
 #Pin the BRO lb_procs processes to certain CPU cores.
-BRO_PIN_CPU: '5,6,7'
+BRO_PIN_CPU: '11,12,13,14,15,16,17,18'
 
 
 ##########################################
@@ -97,9 +98,9 @@ set_cpu_affinity: 'yes'
 # management-cpu-set is used for flow timeout handling, counters
 management_cpu_set: '1'
 # receive-cpu-set is used for capture threads
-receive_cpu_set: '1'
+receive_cpu_set: '2'
 # worker-cpu-set is used for 'worker' threads
-worker_cpu_set: '2-4'
+worker_cpu_set: '3-10'
 
 
 ##########################################
@@ -128,7 +129,7 @@ INSTALL_TELEGRAF: 'no' #'no'
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
-COPY_THEHIVE_RULES_MASTER: 'no' #'no'
+COPY_THEHIVE_RULES_MASTER: 'yes' #'no'
 
 #IP del servidor con TheHive
 hive_host_master: 'http://172.16.81.115'
@@ -139,17 +140,15 @@ hive_apikey_master: '4bwfXyKyyFL7Nq7YacMCpTBPrXyJnGI4'
 
 
 #########################################################
-#Copy Rules TheHive to ElastAlert in Master Node for The Hive secondary
+#Copy Rules TheHive to ElastAlert in Master Node for The Hive secundary
 #(From file /roles/securityonion_setup_master/files/thehive_rules)
 #########################################################
 
 COPY_THEHIVE_RULES_SECONDARY: 'no' #'no'
 
 #IP del servidor con TheHive
-hive_host_secondary: 'http://172.16.81.115'
+hive_host_secondary: 'http://172.16.81.110'
 #Puerto del servicio TheHive
 hive_port_master_secondary: '9000'
 #API-KEY del user creado en TheHive
 hive_apikey_master_secondary: '4bwfXyKyyFL7Nq7YacMCpTBPrXyJnGI4'
-
-

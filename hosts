@@ -4,7 +4,8 @@
 testmaster
 
 [forward_nodes]
-testforward
+cienciaseconomicas
+datacenter
 
 [storage_nodes]
 

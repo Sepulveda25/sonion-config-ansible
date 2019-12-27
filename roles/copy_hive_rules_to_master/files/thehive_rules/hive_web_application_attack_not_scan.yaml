@@ -3,7 +3,7 @@ es_port: 9200
 # (Required)
 # Rule name, must be unique
 index: "*:logstash-ids-*"
-name: The hive Web Application Attack not scan
+name: The hive - Web Application Attack not scan
 
 type: frequency
 num_events: 3
@@ -15,7 +15,7 @@ realalert:
 
 filter:
 - query_string:
-    query: '(("classification: Web Application Attack") -"category: scan") AND interface: "sonion-forward-eco-ens192"'
+    query: '(("classification: Web Application Attack") -"category: scan") AND syslog-host: "sonion-forward-eco-ens192"'
 
 alert: hivealerter
 
