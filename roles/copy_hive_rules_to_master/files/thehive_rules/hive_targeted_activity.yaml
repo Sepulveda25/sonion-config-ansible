@@ -3,7 +3,7 @@ es_port: 9200
 # (Required)
 # Rule name, must be unique
 index: "*:logstash-ids-*"
-name: The Hive - Targeted Activity
+name: Targeted Activity
 
 type: frequency
 num_events: 1
@@ -15,12 +15,14 @@ realalert:
 
 filter:
 - query_string:
-    query: 'classification:"Targeted Activity" AND syslog-host: "sonion-forward-eco-ens192"'
+    query: "classification: Targeted Activity"
+- query_string:
+    query: "syslog-host: sonion-forward-eco-ens192"
 
 alert: hivealerter
 
 hive_connection:
-  hive_host: http://172.16.81.110
+  hive_host: http://172.16.81.110:9000
   hive_port: 9000
   hive_apikey: xLuixewzDP6zXcVgLvyaFUoeUZcZgKu3
 
@@ -49,4 +51,3 @@ hive_observable_data_mapping:
   - classification: '{match[classification]}'
   - alert: '{match[alert]}'
   - category: '{match[category]}'
-

@@ -69,7 +69,7 @@
     path: "{{ item.path }}"
     after:  'filter:'
     before: 'alert:'
-    regexp: '(?<=\ syslog-host: ").+?(?=\")'
+    regexp: '(?<=\ "syslog-host: ).+?(?=\")'
     replace: '{{ ansible_hostname }}'
   with_items: "{{ rules_in_directory.files }}" #para iterar sobre todas las reglas
 

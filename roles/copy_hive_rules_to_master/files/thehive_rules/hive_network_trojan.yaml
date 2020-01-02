@@ -3,7 +3,7 @@ es_port: 9200
 # (Required)
 # Rule name, must be unique
 index: "*:logstash-ids-*"
-name: Web Application Attack and Scan
+name: Network Trojan
 
 type: frequency
 num_events: 3
@@ -15,9 +15,7 @@ realalert:
 
 filter:
 - query_string:
-    query: "classification: Web Application Attack"
-- query_string:
-    query: "category: scan"
+    query: "classification: Network Trojan"
 - query_string:
     query: "syslog-host: sonion-forward-eco-ens192"
 
