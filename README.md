@@ -1,5 +1,7 @@
 # Ansible para la instalacion de nodos FORWARD y MASTER para Security Onion.
 
+Se utilizo Ansible 2.8.4 o superior.
+
 ## Tabla de contenidos
 
 1. [Instrucciones para el despliegue de un nodo Master](#instrucciones-para-el-despliegue-de-un-nodo-master)
