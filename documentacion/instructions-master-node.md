@@ -9,13 +9,15 @@
 
 ## Pre-requisitos
 
+Se utilizo Ansible 2.8.4 o superior.
+
 1. Instalar pexpect en nuestro host:
 
     ```
     sudo apt install python-pexpect
     ```
     ```
-    sudo apt install python3-pexpec
+    sudo apt install python3-pexpect
 
 
 2. Contar con un servidor con la ISO de Security Onion instalada o Ubuntu Server 16.04: [Repositorio con instrucciones para la instalacion de Security Onion](https://gitlab.unc.edu.ar/csirt/csirt-docs)
