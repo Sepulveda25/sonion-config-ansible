@@ -256,6 +256,8 @@ CRIT_DISK_USAGE: '90'
 
 ## Despliegue con Ansible
 
+Se utilizo Ansible 2.8.4 o superior.
+
 `[IMPORTANTE]` Como se indico de forma detallada en la seccion pre-requistos se debe:  
     
     1. Pegar el public key de nuestro host en el Forward Node.
@@ -273,16 +275,16 @@ CRIT_DISK_USAGE: '90'
 *  Agregar nombre de usuario del nodo forward al archivo `hosts` en el grupo `[forward_nodes]` 
 (Ej. como en el paso anterior se crea el archivo `sonionforward.yml` agregar `sonionforward` en el archivo `hosts`):
 
-    ```yaml
+```yaml
     [forward_nodes]
     sonionforward
-    ```
+```
     
 *  Ejecutar Ansible sobre el servidor `"sonionforward"` (el username se define en la opcion extra_var):
     
-    ```bash
+```bash
     $ ansible-playbook -i hosts -l forward_nodes so_setup.yml --extra-var "target=sonionforward" --ask-become-pass
-    ```
+```
     
 
 

@@ -158,6 +158,7 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
         
 ## Despliegue con Ansible
 
+Se utilizo Ansible 2.8.4 o superior.
 
 `[IMPORTANTE]` Como se indico de forma detallada en la seccion pre-requistos se debe:  
     
@@ -174,8 +175,7 @@ Agregar el nombre con el que renombramos el archivo `template_master.yml` al arc
 
 ```yaml
     [master]
-    sonionmaster
-    
+    sonionmaster   
 ```
 
 Ejecutar Ansible sobre `"sonionmaster"` que se define en `extra-var`:
