@@ -172,16 +172,16 @@ analyst_network: '172.16.81.0/24' #IP address (or CIDR range like 172.16.81.0/24
 
 Agregar el nombre con el que renombramos el archivo `template_master.yml` al archivo `hosts` en el grupo `[master]`. (Ej. como en el paso anterior se crea el archivo `sonionmaster.yml` agregar `sonionmaster` en el archivo `hosts`):
 
-    ```yaml
+```yaml
     [master]
     sonionmaster
     
-    ```
+```
 
 Ejecutar Ansible sobre `"sonionmaster"` que se define en `extra-var`:
 
-    ```bash
+```bash
      $ ansible-playbook -i hosts -l master so_setup.yml --extra-var "target=sonionmaster" --ask-become-pass
-    ```
+```
 
 
