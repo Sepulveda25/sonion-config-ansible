@@ -1,4 +1,3 @@
-
 ---
 
 - name: Check if {{ MGMT_INTERFACE }} exist

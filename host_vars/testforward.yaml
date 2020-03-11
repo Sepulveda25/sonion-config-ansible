@@ -1,11 +1,11 @@
-ansible_host: '172.18.32.141'
+ansible_host: '172.16.81.81'
 ansible_user: 'root'
 
 ##########################################
 #Hostname variable
 ##########################################
 
-HOST_NAME: 'sonion-forward-eco'
+HOST_NAME: 'sonion-forward-test'
 
 ##########################################
 #Variables for file sosetup_forward.conf
@@ -13,25 +13,25 @@ HOST_NAME: 'sonion-forward-eco'
 
 # MGMT_INTERFACE
 # Which network interface should be the management interface?
-MGMT_INTERFACE: 'ens160'
+MGMT_INTERFACE: 'ens192'
 # MGMT_CONFIG_TYPE
 # Should the management interface be configured using DHCP or static IP?
 MGMT_CONFIG_TYPE: 'static'
 # If MGMT_CONFIG_TYPE=static, then provide the details here.
 # If you have multiple nameservers, please separate them with spaces like this: NAMESERVER='192.168.204.2 192.168.204.3'
-ADDRESS: '172.18.32.141'
+ADDRESS: '172.16.81.81'
 NETMASK: '255.255.255.0'
-GATEWAY: '172.18.32.4'
+GATEWAY: '172.16.81.1'
 NAMESERVER: '200.16.22.1 200.16.16.1 200.16.16.2'
-DOMAIN: 'sonion-forward-eco.psi'
+DOMAIN: 'sonion-forward-test.psi'
 
 # Which interface(s) will be sniffing network traffic?
 # For multiple interfaces, please separate them with spaces.
-SNIFFING_INTERFACES: 'ens192'
+SNIFFING_INTERFACES: 'ens160'
 
 # SERVERNAME 
 # This should be the name/IP of the separate Master server:
-SERVERNAME: '172.16.81.61'
+SERVERNAME: '172.16.81.80'
 # SSH_USERNAME
 # This should be the name of an account on the separate Master server.
 SSH_USERNAME: 'root' 

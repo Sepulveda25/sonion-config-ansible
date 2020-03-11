@@ -28,7 +28,7 @@
   find:
     path: /etc/network
     patterns: 'interfaces'
-    contains: .* {{ MGMT_INTERFACE }} .*
+    contains: .* ^(?!#).+{{ MGMT_INTERFACE }}.* #match linea no empiece con "#" y tenga MGMT_INTERFACE
   register: matched_MGMT_INTERFACE
 
 - name: Check initial entry for interface "{{ SNIFFING_INTERFACES }}" in file /etc/network/interface exists
@@ -37,7 +37,7 @@
   find:
     path: /etc/network
     patterns: 'interfaces'
-    contains: .* {{ SNIFFING_INTERFACES }} .*
+    contains: .* ^(?!#).+{{ SNIFFING_INTERFACES }}.*  #match linea no empiece con "#" y tenga SNIFFING_INTERFACES
   register: matched_SNIFFING_INTERFACES
 
 
